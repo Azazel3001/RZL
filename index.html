@@ -49,52 +49,50 @@
       <button onclick="logout()">Salir</button>
     </div>
 
-    <input id="search" placeholder="Buscar producto..." oninput="render()">
 
-    <div class="top-bar">
-      <input id="search" placeholder="🔍 Buscar..." oninput="render()">
+    <input id="search" placeholder="🔍 Buscar..." oninput="render()">
 
-      <select id="sort" onchange="render()">
-        <option value="">Ordenar</option>
-        <option value="price">Precio</option>
-        <option value="stock">Stock</option>
-      </select>
+    <select id="sort" onchange="render()">
+      <option value="">Ordenar</option>
+      <option value="price">Precio</option>
+      <option value="stock">Stock</option>
+    </select>
 
-      <span id="count"></span>
+    <span id="count"></span>
+  </div>
+  <div class="top-menu">
+
+    <div class="dev-code">
+      function develop() {
+      const system = new LZR();
+      system.build();
+      system.success();
+      }
     </div>
-    <div class="top-menu">
 
-      <div class="dev-code">
-        function develop() {
-        const system = new LZR();
-        system.build();
-        system.success();
-        }
-      </div>
+    <div id="alerts" class="alerts"></div>
 
-      <div id="alerts" class="alerts"></div>
+    <button onclick="openSupport()" class="support-btn">
+      Soporte
+    </button>
 
-      <button onclick="openSupport()" class="support-btn">
-        Soporte
-      </button>
+  </div>
+  <!-- INVENTARIO -->
+  <div class="inventory">
 
+    <h2>Inventario</h2>
+
+    <div class="form">
+      <input id="name" placeholder="Producto">
+      <input id="price" placeholder="Precio">
+      <input id="stock" placeholder="Stock">
+      <input id="img" placeholder="URL Imagen">
+      <button onclick="addProduct()">Agregar</button>
     </div>
-    <!-- INVENTARIO -->
-    <div class="inventory">
 
-      <h2>Inventario</h2>
+    <div id="products" class="grid"></div>
 
-      <div class="form">
-        <input id="name" placeholder="Producto">
-        <input id="price" placeholder="Precio">
-        <input id="stock" placeholder="Stock">
-        <input id="img" placeholder="URL Imagen">
-        <button onclick="addProduct()">Agregar</button>
-      </div>
-
-      <div id="products" class="grid"></div>
-
-    </div>
+  </div>
 
   </div>
 
@@ -119,12 +117,9 @@
         <p>📱 WhatsApp: +52 000 000 0000</p>
 
         <button onclick="closeSupport()">Cerrar</button>
+        <button onclick="saveEdit()">Guardar</button>
+        <button onclick="closeModal()">Cancelar</button>
       </div>
     </div>
-
-    <button onclick="saveEdit()">Guardar</button>
-    <button onclick="closeModal()">Cancelar</button>
-  </div>
-</div>
 
 </html>

@@ -92,7 +92,7 @@ function render() {
   filtered.forEach((p, i) => {
     container.innerHTML += `
       <div class="card-product">
-        <img src="${p.img}">
+      <img src="${p.img}" onerror="this.src='/logo.png'">
         <h4>${p.name}</h4>
         <p class="price">$${p.price}</p>
         <p class="${p.stock < 5 ? 'low' : ''}">
