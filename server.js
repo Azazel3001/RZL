@@ -6,8 +6,8 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-// 🔥 STATIC PRIMERO
-app.use(express.static(path.join(__dirname, "frontend")));
+// ✅ SERVIR FRONTEND (RUTA CORRECTA)
+app.use(express.static(path.join(__dirname, "../frontend")));
 
 // 🔐 LOGIN
 app.post("/login", (req, res) => {
@@ -20,11 +20,9 @@ app.post("/login", (req, res) => {
   res.json({ error: "Credenciales incorrectas" });
 });
 
-// ❗ IMPORTANTE: AL FINAL
+// ❗ SOLO AL FINAL
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend", "index.html"));
+  res.sendFile(path.join(__dirname, "../frontend/index.html"));
 });
 
-app.listen(PORT, () => console.log("🚀 LZR PRO"));
-
-// mongoose.connect(process.env.MONGO_URI)
+app.listen(PORT, () => console.log("🚀 LZR PRO ONLINE"));
