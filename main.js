@@ -1,5 +1,3 @@
-const BASE_URL = window.location.origin;
-
 // LOGIN
 const BASE_URL = window.location.origin;
 
