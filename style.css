@@ -115,3 +115,62 @@ button:hover {
 .support-btn {
     background: #222;
 }
+
+.inventory {
+    padding: 20px;
+}
+
+.form input {
+    margin: 5px;
+    padding: 8px;
+    border-radius: 8px;
+    border: none;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+/* TARJETA */
+.card-product {
+    background: #111;
+    border-radius: 15px;
+    padding: 10px;
+    box-shadow: 0 0 15px #7c3aed33;
+    transition: 0.3s;
+    animation: fadeIn 0.5s;
+}
+
+.card-product:hover {
+    transform: scale(1.05);
+}
+
+/* IMAGEN */
+.card-product img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* TEXTO */
+.card-product h4 {
+    margin: 5px 0;
+}
+
+.price {
+    color: #22c55e;
+}
+
+.low {
+    color: #ef4444;
+}
+
+/* BOTON */
+.delete {
+    background: #ef4444;
+    margin-top: 5px;
+}

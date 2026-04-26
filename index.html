@@ -9,11 +9,11 @@
 
 <body>
 
-  <div class="container">
+  <!-- LOGIN -->
+  <div id="login" class="container">
 
-    <!-- IZQUIERDA (FONDO + LZR) -->
+    <!-- IZQUIERDA -->
     <div class="left">
-
       <div class="code">
         function develop() {
         const system = new LZR();
@@ -24,28 +24,45 @@
 
       <h1 class="logo">LZR</h1>
       <p class="sub">SISTEMA PRO</p>
-
     </div>
 
-    <!-- LOGIN -->
+    <!-- DERECHA -->
     <div class="right">
-
       <div class="login-box">
-
         <h2>Bienvenido</h2>
         <p>Inicia sesión para continuar</p>
 
         <input id="userInput" placeholder="Usuario">
         <input id="passInput" type="password" placeholder="Contraseña">
 
-        <button onclick="login()">Entrar al sistema</button>
-
-        <div class="support">
-          <p>¿Necesitas ayuda?</p>
-          <button class="support-btn">Soporte</button>
-        </div>
-
+        <button onclick="login()">Entrar</button>
       </div>
+    </div>
+
+  </div>
+
+  <!-- APP (OCULTO) -->
+  <div id="app" style="display:none">
+
+    <div class="navbar">
+      <h2>LZR PANEL</h2>
+      <button onclick="logout()">Salir</button>
+    </div>
+
+    <!-- INVENTARIO -->
+    <div class="inventory">
+
+      <h2>Inventario</h2>
+
+      <div class="form">
+        <input id="name" placeholder="Producto">
+        <input id="price" placeholder="Precio">
+        <input id="stock" placeholder="Stock">
+        <input id="img" placeholder="URL Imagen">
+        <button onclick="addProduct()">Agregar</button>
+      </div>
+
+      <div id="products" class="grid"></div>
 
     </div>
 
