@@ -1,12 +1,13 @@
 const BASE_URL = window.location.origin;
 
+// LOGIN
 function login() {
   fetch(BASE_URL + "/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      username: userInput.value,
-      password: passInput.value
+      username: document.getElementById("userInput").value,
+      password: document.getElementById("passInput").value
     })
   })
     .then(r => r.json())
@@ -18,28 +19,31 @@ function login() {
 
       localStorage.setItem("user", data.username);
 
-      // animación entrada
       document.body.style.opacity = 0;
 
       setTimeout(() => {
         location.reload();
-      }, 500);
+      }, 400);
     });
 }
 
+// LOGOUT
 function logout() {
   localStorage.removeItem("user");
   location.reload();
 }
+
+// INVENTARIO
 let products = JSON.parse(localStorage.getItem("products")) || [];
 
 function addProduct() {
   const p = {
-    name: name.value,
-    price: price.value,
-    stock: stock.value,
-    img: img.value || "https://via.placeholder.com/150"
+    name: document.getElementById("name").value,
+    price: document.getElementById("price").value,
+    stock: document.getElementById("stock").value,
+    img: document.getElementById("img").value || "https://via.placeholder.com/150"
   };
+
 
   products.push(p);
   save();
@@ -56,20 +60,25 @@ function render() {
 
   container.innerHTML = "";
 
+  if (!p.name || !p.price || !p.stock) {
+    alert("Completa todos los campos");
+    return;
+  }
+
   products.forEach((p, i) => {
     container.innerHTML += `
-        <div class="card-product">
-            <img src="${p.img}">
-            <h4>${p.name}</h4>
-            <p class="price">$${p.price}</p>
-            <p class="${p.stock < 5 ? 'low' : ''}">
-                Stock: ${p.stock}
-            </p>
-            <button class="delete" onclick="removeProduct(${i})">
-                Eliminar
-            </button>
-        </div>
-        `;
+      <div class="card-product">
+        <img src="${p.img}">
+        <h4>${p.name}</h4>
+        <p class="price">$${p.price}</p>
+        <p class="${p.stock < 5 ? 'low' : ''}">
+          Stock: ${p.stock}
+        </p>
+        <button class="delete" onclick="removeProduct(${i})">
+          Eliminar
+        </button>
+      </div>
+    `;
   });
 }
 
@@ -79,5 +88,20 @@ function removeProduct(i) {
   render();
 }
 
-/* cargar */
-setTimeout(render, 500);
+// INICIO APP
+function start() {
+  const loginDiv = document.getElementById("login");
+  const appDiv = document.getElementById("app");
+
+  if (loginDiv) loginDiv.style.display = "none";
+  if (appDiv) appDiv.style.display = "block";
+
+  render();
+}
+
+// AUTO LOGIN
+if (localStorage.getItem("user")) {
+  start();
+} else {
+  document.getElementById("app").style.display = "none";
+}
