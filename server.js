@@ -6,24 +6,23 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-// 🔥 SERVIR FRONTEND
+// 🔥 STATIC PRIMERO
 app.use(express.static(path.join(__dirname, "frontend")));
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // 🔐 LOGIN
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
 
   if (username === "LZR" && password === "1234") {
-    return res.json({ success: true, username: "LZR", role: "admin" });
+    return res.json({ success: true, username: "LZR" });
   }
 
   res.json({ error: "Credenciales incorrectas" });
 });
 
-// 🔥 RUTA GLOBAL (IMPORTANTE PARA RENDER)
+// ❗ IMPORTANTE: AL FINAL
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "frontend", "index.html"));
 });
 
-app.listen(PORT, () => console.log("🚀 LZR PRO ONLINE"));
+app.listen(PORT, () => console.log("🚀 LZR PRO"));
