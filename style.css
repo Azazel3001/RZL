@@ -67,3 +67,43 @@ button {
     border-radius: 12px;
     border-left: 4px solid #c4b5fd;
 }
+
+/* LOGO */
+.logo {
+    width: 120px;
+    margin-bottom: 20px;
+    animation: float 3s ease-in-out infinite;
+}
+
+/* flotación */
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* glow LZR */
+.glow {
+    color: #c4b5fd;
+    text-shadow: 0 0 10px #7c3aed, 0 0 20px #c4b5fd;
+}
+
+/* transición pantalla */
+.fade-out {
+    animation: fadeOut 0.5s forwards;
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+}

@@ -1,40 +1,57 @@
 const BASE_URL = window.location.origin;
 
 // LOGIN
-function login() {
-  const username = document.getElementById("userInput").value;
-  const password = document.getElementById("passInput").value;
+const BASE_URL = window.location.origin;
 
+function login() {
   fetch(BASE_URL + "/login", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ username, password })
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      username: userInput.value,
+      password: passInput.value
+    })
   })
-    .then(res => res.json())
+    .then(r => r.json())
     .then(data => {
       if (data.error) {
         alert(data.error);
         return;
       }
 
+      // guardar usuario
       localStorage.setItem("user", data.username);
-      localStorage.setItem("role", data.role);
 
-      start();
-    })
-    .catch(() => alert("Error servidor"));
+      // 🎉 mensaje dinámico
+      document.getElementById("welcomeText").innerText =
+        "Bienvenido " + data.username + " 🚀";
+
+      // animación salida login
+      document.getElementById("login").classList.add("fade-out");
+
+      setTimeout(() => {
+        location.reload();
+      }, 500);
+    });
 }
 
 // INICIAR APP
 function start() {
   document.getElementById("login").style.display = "none";
   document.getElementById("app").style.display = "block";
+  login.style.display = "none";
+  app.style.display = "block";
 
-  const role = localStorage.getItem("role");
-  document.getElementById("roleTag").innerText = "👤 " + role;
+  const user = localStorage.getItem("user");
+
+  document.querySelector(".card").innerHTML = `
+        <h3>Bienvenido ${user} 👑</h3>
+        <p>Sistema LZR activo correctamente 🚀</p>
+    `;
 }
+const role = localStorage.getItem("role");
+document.getElementById("roleTag").innerText = "👤 " + role;
+
 
 // LOGOUT
 function logout() {
