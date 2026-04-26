@@ -26,3 +26,5 @@ app.get("*", (req, res) => {
 });
 
 app.listen(PORT, () => console.log("🚀 LZR PRO"));
+
+// mongoose.connect(process.env.MONGO_URI)
