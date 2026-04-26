@@ -49,6 +49,36 @@
       <button onclick="logout()">Salir</button>
     </div>
 
+    <input id="search" placeholder="Buscar producto..." oninput="render()">
+
+    <div class="top-bar">
+      <input id="search" placeholder="🔍 Buscar..." oninput="render()">
+
+      <select id="sort" onchange="render()">
+        <option value="">Ordenar</option>
+        <option value="price">Precio</option>
+        <option value="stock">Stock</option>
+      </select>
+
+      <span id="count"></span>
+    </div>
+    <div class="top-menu">
+
+      <div class="dev-code">
+        function develop() {
+        const system = new LZR();
+        system.build();
+        system.success();
+        }
+      </div>
+
+      <div id="alerts" class="alerts"></div>
+
+      <button onclick="openSupport()" class="support-btn">
+        Soporte
+      </button>
+
+    </div>
     <!-- INVENTARIO -->
     <div class="inventory">
 
@@ -71,5 +101,30 @@
   <script src="/main.js"></script>
 
 </body>
+
+<div id="modal" class="modal">
+  <div class="modal-box">
+    <h3>Editar producto</h3>
+
+    <input id="editName">
+    <input id="editPrice">
+    <input id="editStock">
+    <input id="editImg">
+
+    <div id="supportModal" class="modal">
+      <div class="modal-box">
+        <h3>Soporte LZR</h3>
+        <p>Contacto:</p>
+        <p>📧 soporte@lzr.com</p>
+        <p>📱 WhatsApp: +52 000 000 0000</p>
+
+        <button onclick="closeSupport()">Cerrar</button>
+      </div>
+    </div>
+
+    <button onclick="saveEdit()">Guardar</button>
+    <button onclick="closeModal()">Cancelar</button>
+  </div>
+</div>
 
 </html>

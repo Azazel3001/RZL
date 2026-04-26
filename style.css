@@ -178,3 +178,167 @@ button:hover {
 #app {
     animation: fadeIn 0.5s ease;
 }
+
+/* BUSCADOR */
+#search {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    margin-bottom: 15px;
+    background: #0f172a;
+    color: white;
+}
+
+/* TARJETA MEJORADA */
+.card-product {
+    background: linear-gradient(145deg, #0f172a, #020617);
+    border-radius: 15px;
+    padding: 12px;
+    box-shadow: 0 0 20px #7c3aed33;
+    transition: 0.3s;
+    position: relative;
+}
+
+.card-product:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px #7c3aed;
+}
+
+/* IMAGEN */
+.card-product img {
+    width: 100%;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* BOTONES */
+.actions {
+    display: flex;
+    gap: 5px;
+}
+
+.edit {
+    background: #3b82f6;
+}
+
+.delete {
+    background: #ef4444;
+}
+
+/* TOP BAR */
+.top-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+#search,
+#sort {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    background: #0f172a;
+    color: white;
+}
+
+/* CONTADOR */
+#count {
+    margin-left: auto;
+    align-self: center;
+    color: #a78bfa;
+}
+
+/* TARJETA PRO */
+.card-product {
+    background: linear-gradient(145deg, #020617, #0f172a);
+    border-radius: 15px;
+    padding: 12px;
+    transition: 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-product::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, #7c3aed33, transparent);
+    top: 0;
+    left: -100%;
+    transition: 0.5s;
+}
+
+.card-product:hover::before {
+    left: 100%;
+}
+
+.card-product:hover {
+    transform: translateY(-5px);
+}
+
+/* BOTONES */
+.actions {
+    display: flex;
+    gap: 5px;
+}
+
+.edit {
+    background: #3b82f6;
+}
+
+.delete {
+    background: #ef4444;
+}
+
+/* MODAL */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-box {
+    background: #020617;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px #7c3aed;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.top-menu {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+/* DEV CODE */
+.dev-code {
+    font-family: monospace;
+    color: #8b5cf6;
+    opacity: 0.6;
+    font-size: 12px;
+}
+
+/* ALERTAS */
+.alerts {
+    color: #facc15;
+    font-size: 13px;
+}
+
+/* SOPORTE */
+.support-btn {
+    margin-left: auto;
+    background: #7c3aed;
+}
