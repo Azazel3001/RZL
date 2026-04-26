@@ -1,88 +1,60 @@
 body {
     margin: 0;
     font-family: Arial;
-    background: linear-gradient(135deg, #0a0a1f, #1e1b4b);
+    background: black;
     color: white;
 }
 
-/* LOGIN */
-#login {
+/* CONTENEDOR */
+.container {
     display: flex;
     height: 100vh;
 }
 
+/* IZQUIERDA */
 .left {
     flex: 1;
-    background: linear-gradient(135deg, #4c1d95, #1e1b4b);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
-.left h1 {
-    font-size: 80px;
-    color: #c4b5fd;
-}
-
-.right {
-    flex: 1;
+    background: radial-gradient(circle at center, #2a0a4a, #000);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
+    overflow: hidden;
 }
 
-input {
-    width: 260px;
-    padding: 12px;
-    margin: 8px;
-    border: none;
-    border-radius: 12px;
-    background: #1f2937;
-    color: white;
-}
-
-button {
-    padding: 12px 25px;
-    border: none;
-    border-radius: 12px;
-    background: linear-gradient(90deg, #7c3aed, #c4b5fd);
-    color: white;
-    cursor: pointer;
-}
-
-/* APP */
-.navbar {
-    background: #111827;
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.card {
-    background: #1f2937;
-    margin: 10px;
-    padding: 15px;
-    border-radius: 12px;
-    border-left: 4px solid #c4b5fd;
+/* TEXTO CODIGO */
+.code {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    color: #8b5cf6;
+    font-family: monospace;
+    opacity: 0.3;
 }
 
 /* LOGO */
 .logo {
-    width: 120px;
-    margin-bottom: 20px;
-    animation: float 3s ease-in-out infinite;
+    font-size: 120px;
+    color: #c084fc;
+    text-shadow: 0 0 20px #9333ea, 0 0 60px #7e22ce;
+    animation: float 3s infinite ease-in-out;
 }
 
-/* flotación */
+/* SUB */
+.sub {
+    letter-spacing: 10px;
+    color: #aaa;
+}
+
+/* ANIMACION */
 @keyframes float {
     0% {
         transform: translateY(0);
     }
 
     50% {
-        transform: translateY(-10px);
+        transform: translateY(-20px);
     }
 
     100% {
@@ -90,20 +62,56 @@ button {
     }
 }
 
-/* glow LZR */
-.glow {
-    color: #c4b5fd;
-    text-shadow: 0 0 10px #7c3aed, 0 0 20px #c4b5fd;
+/* LOGIN */
+.right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #000, #1a012b);
 }
 
-/* transición pantalla */
-.fade-out {
-    animation: fadeOut 0.5s forwards;
+/* CAJA LOGIN */
+.login-box {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 0 40px #7c3aed;
+    width: 300px;
+    text-align: center;
 }
 
-@keyframes fadeOut {
-    to {
-        opacity: 0;
-        transform: scale(0.95);
-    }
+input {
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background: #111;
+    color: white;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #7c3aed, #c084fc);
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+/* SOPORTE */
+.support {
+    margin-top: 20px;
+}
+
+.support-btn {
+    background: #222;
 }

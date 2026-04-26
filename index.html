@@ -9,46 +9,48 @@
 
 <body>
 
-  <div id="login">
+  <div class="container">
+
+    <!-- IZQUIERDA (FONDO + LZR) -->
     <div class="left">
 
-      <!-- LOGO -->
-      <img src="/logo.png" class="logo">
-
-      <h1 class="glow">LZR</h1>
-      <p>Sistema Pro Inteligente</p>
-
-    </div>
-
-    <div class="right">
-      <h2 id="welcomeText">Bienvenido</h2>
-
-      <input id="userInput" placeholder="Usuario">
-      <input id="passInput" type="password" placeholder="Contraseña">
-
-      <button onclick="login()">Entrar</button>
-    </div>
-  </div>
-
-  <!-- APP -->
-  <div id="app" style="display:none">
-
-    <div class="navbar">
-      <h2>LZR PANEL</h2>
-      <div>
-        <span id="roleTag"></span>
-        <button onclick="logout()">Salir</button>
+      <div class="code">
+        function develop() {
+        const system = new LZR();
+        system.build();
+        system.success();
+        }
       </div>
+
+      <h1 class="logo">LZR</h1>
+      <p class="sub">SISTEMA PRO</p>
+
     </div>
 
-    <div class="card">
-      <h3>Bienvenido al sistema</h3>
-      <p>Ya estás dentro 🚀</p>
+    <!-- LOGIN -->
+    <div class="right">
+
+      <div class="login-box">
+
+        <h2>Bienvenido</h2>
+        <p>Inicia sesión para continuar</p>
+
+        <input id="userInput" placeholder="Usuario">
+        <input id="passInput" type="password" placeholder="Contraseña">
+
+        <button onclick="login()">Entrar al sistema</button>
+
+        <div class="support">
+          <p>¿Necesitas ayuda?</p>
+          <button class="support-btn">Soporte</button>
+        </div>
+
+      </div>
+
     </div>
 
   </div>
 
-  <!-- ✅ SOLO AQUÍ -->
   <script src="/main.js"></script>
 
 </body>

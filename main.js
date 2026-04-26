@@ -1,4 +1,3 @@
-// LOGIN
 const BASE_URL = window.location.origin;
 
 function login() {
@@ -17,15 +16,10 @@ function login() {
         return;
       }
 
-      // guardar usuario
       localStorage.setItem("user", data.username);
 
-      // 🎉 mensaje dinámico
-      document.getElementById("welcomeText").innerText =
-        "Bienvenido " + data.username + " 🚀";
-
-      // animación salida login
-      document.getElementById("login").classList.add("fade-out");
+      // animación entrada
+      document.body.style.opacity = 0;
 
       setTimeout(() => {
         location.reload();
@@ -33,31 +27,7 @@ function login() {
     });
 }
 
-// INICIAR APP
-function start() {
-  document.getElementById("login").style.display = "none";
-  document.getElementById("app").style.display = "block";
-  login.style.display = "none";
-  app.style.display = "block";
-
-  const user = localStorage.getItem("user");
-
-  document.querySelector(".card").innerHTML = `
-        <h3>Bienvenido ${user} 👑</h3>
-        <p>Sistema LZR activo correctamente 🚀</p>
-    `;
-}
-const role = localStorage.getItem("role");
-document.getElementById("roleTag").innerText = "👤 " + role;
-
-
-// LOGOUT
 function logout() {
-  localStorage.clear();
+  localStorage.removeItem("user");
   location.reload();
-}
-
-// AUTO LOGIN
-if (localStorage.getItem("user")) {
-  start();
 }
