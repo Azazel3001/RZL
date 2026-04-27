@@ -9,117 +9,58 @@
 
 <body>
 
+  <!-- LOGO ANIMADO -->
+  <div id="logo-container">
+    <img src="/logo.png" id="logo" alt="LZR">
+  </div>
+
   <!-- LOGIN -->
-  <div id="login" class="container">
-
-    <!-- IZQUIERDA -->
-    <div class="left">
-      <div class="code">
-        function develop() {
-        const system = new LZR();
-        system.build();
-        system.success();
-        }
-      </div>
-
-      <h1 class="logo">LZR</h1>
-      <p class="sub">SISTEMA PRO</p>
-    </div>
-
-    <!-- DERECHA -->
-    <div class="right">
-      <div class="login-box">
-        <h2>Bienvenido</h2>
-        <p>Inicia sesión para continuar</p>
-
-        <input id="userInput" placeholder="Usuario">
-        <input id="passInput" type="password" placeholder="Contraseña">
-
-        <button onclick="login()">Entrar</button>
-      </div>
-    </div>
-
+  <div id="login" class="panel">
+    <h2>Bienvenido a LZR PRO</h2>
+    <input id="userInput" placeholder="Usuario">
+    <input id="passInput" type="password" placeholder="Contraseña">
+    <button onclick="login()">Entrar al sistema</button>
   </div>
 
-  <!-- APP (OCULTO) -->
-  <div id="app" style="display:none">
+  <!-- APP -->
+  <div id="app" style="display:none" class="panel">
 
-    <div class="navbar">
-      <h2>LZR PANEL</h2>
+    <div class="top-bar">
+      <button onclick="openSupport()" class="support-btn">Soporte</button>
+      <span id="roleTag"></span>
       <button onclick="logout()">Salir</button>
+      <div id="alerts" class="alerts">✅ Todo en orden</div>
     </div>
 
+    <!-- INVENTARIO -->
+    <div class="inventory">
+      <h2>Inventario</h2>
 
-    <input id="search" placeholder="🔍 Buscar..." oninput="render()">
+      <div class="form">
+        <input id="name" placeholder="Producto">
+        <input id="price" placeholder="Precio">
+        <input id="stock" placeholder="Stock">
+        <input id="img" placeholder="URL Imagen">
+        <button onclick="addProduct()">Agregar</button>
+        <input id="search" placeholder="Buscar..." oninput="render()">
+      </div>
 
-    <select id="sort" onchange="render()">
-      <option value="">Ordenar</option>
-      <option value="price">Precio</option>
-      <option value="stock">Stock</option>
-    </select>
-
-    <span id="count"></span>
-  </div>
-  <div class="top-menu">
-
-    <div class="dev-code">
-      function develop() {
-      const system = new LZR();
-      system.build();
-      system.success();
-      }
+      <div id="products" class="grid"></div>
     </div>
 
-    <div id="alerts" class="alerts"></div>
-
-    <button onclick="openSupport()" class="support-btn">
-      Soporte
-    </button>
-
-  </div>
-  <!-- INVENTARIO -->
-  <div class="inventory">
-
-    <h2>Inventario</h2>
-
-    <div class="form">
-      <input id="name" placeholder="Producto">
-      <input id="price" placeholder="Precio">
-      <input id="stock" placeholder="Stock">
-      <input id="img" placeholder="URL Imagen">
-      <button onclick="addProduct()">Agregar</button>
+    <!-- MODAL SOPORTE -->
+    <div id="supportModal" class="modal">
+      <div class="modal-box">
+        <h3>Soporte LZR</h3>
+        <p>📧 soporte@lzr.com</p>
+        <p>📱 WhatsApp: +52 000 000 0000</p>
+        <button onclick="closeSupport()">Cerrar</button>
+      </div>
     </div>
-
-    <div id="products" class="grid"></div>
-
-  </div>
 
   </div>
 
   <script src="/main.js"></script>
-
 </body>
-
-<div id="modal" class="modal">
-  <div class="modal-box">
-    <h3>Editar producto</h3>
-
-    <input id="editName">
-    <input id="editPrice">
-    <input id="editStock">
-    <input id="editImg">
-
-    <div id="supportModal" class="modal">
-      <div class="modal-box">
-        <h3>Soporte LZR</h3>
-        <p>Contacto:</p>
-        <p>📧 soporte@lzr.com</p>
-        <p>📱 WhatsApp: +52 000 000 0000</p>
-
-        <button onclick="closeSupport()">Cerrar</button>
-        <button onclick="saveEdit()">Guardar</button>
-        <button onclick="closeModal()">Cancelar</button>
-      </div>
-    </div>
 
 </html>
