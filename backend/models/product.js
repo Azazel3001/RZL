@@ -4,7 +4,8 @@ const areaSchema = new mongoose.Schema({
     nombre: String,
     procesadas: Number,
     pendientes: Number,
-    responsable: String
+    responsable: String,
+    especificaciones: Object
 });
 
 const productSchema = new mongoose.Schema({
@@ -13,10 +14,7 @@ const productSchema = new mongoose.Schema({
     stock: Number,
     imagen: String,
     cliente: String,
-    areaActual: {
-        nombre: String,
-        responsable: String
-    },
+    areaActual: { nombre: String, responsable: String },
     areas: [areaSchema]
 });
 

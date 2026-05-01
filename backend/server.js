@@ -1,85 +1,75 @@
-console.log("🔥 Iniciando servidor...");
-
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const path = require("path");
 
-const User = require("./models/User");
 const Product = require("./models/Product");
+const User = require("./models/User");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
+
+// 🔥 Servir frontend correctamente
 app.use(express.static(path.join(__dirname, "../frontend")));
 
+// 🔥 Debug (puedes quitar después)
+console.log("MONGO_URI:", process.env.MONGO_URI);
+
+// 🔥 Conexión Mongo
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log("✅ Mongo conectado"))
-    .catch(err => console.log(err));
+    .catch(err => {
+        console.log("❌ Error Mongo:", err);
+        process.exit(1); // <- evita que Render quede colgado
+    });
 
-// CREAR USUARIOS INICIALES
-async function seedUsers() {
-    const count = await User.countDocuments();
-    if (count === 0) {
-        await User.insertMany([
-            { username: "admin", password: "1234", rol: "admin" },
-            { username: "juan", password: "123", rol: "encargado", area: "Corte" },
-            { username: "cliente", password: "demo", rol: "cliente", tiempoMaximo: 30 }
-        ]);
-        console.log("Usuarios creados");
-    }
-}
-seedUsers();
-
-// LOGIN
+// ================= LOGIN =================
 app.post("/login", async (req, res) => {
     const { username, password } = req.body;
+
     const user = await User.findOne({ username, password });
 
-    if (!user) return res.json({ error: "Credenciales incorrectas" });
+    if (!user) return res.json({ error: "Usuario o contraseña incorrecta" });
+    if (user.expirado) return res.json({ error: "Usuario bloqueado" });
 
     if (user.rol === "cliente" && user.tiempoMaximo) {
-        user.inicioSesion = Date.now();
+        user.inicioSesion = new Date();
         await user.save();
     }
 
     res.json(user);
 });
 
-// GET PRODUCTOS (con filtro por rol)
+// ================= PRODUCTOS =================
+
+// GET
 app.get("/products", async (req, res) => {
-    const { rol, username } = req.query;
-
-    let products;
-
-    if (rol === "admin") {
-        products = await Product.find();
-    } else if (rol === "encargado") {
-        products = await Product.find({ "areaActual.responsable": username });
-    } else {
-        products = await Product.find({ cliente: username });
-    }
-
-    res.json(products);
+    const data = await Product.find();
+    res.json(data);
 });
 
-// CREAR PRODUCTO
+// POST
 app.post("/products", async (req, res) => {
-    const product = new Product(req.body);
-    await product.save();
+    const p = new Product(req.body);
+    await p.save();
     res.json({ success: true });
 });
 
-// ELIMINAR
+// DELETE
 app.delete("/products/:id", async (req, res) => {
     await Product.findByIdAndDelete(req.params.id);
     res.json({ success: true });
 });
 
-app.listen(PORT, () => console.log("🚀 Server listo"));
+// 🔥 Fallback frontend
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend/index.html"));
+});
+
 app.listen(PORT, () => {
-    console.log("🚀 Server listo en puerto " + PORT);
+    console.log("🚀 LZR ONLINE en puerto:", PORT);
 });

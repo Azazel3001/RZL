@@ -5,8 +5,9 @@ const userSchema = new mongoose.Schema({
     password: String,
     rol: String,
     area: String,
+    expirado: Boolean,
     tiempoMaximo: Number,
-    inicioSesion: Number
+    inicioSesion: Date
 });
 
 module.exports = mongoose.model("User", userSchema);
