@@ -1,3 +1,5 @@
+console.log("🔥 Iniciando servidor...");
+
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
@@ -78,3 +80,6 @@ app.delete("/products/:id", async (req, res) => {
 });
 
 app.listen(PORT, () => console.log("🚀 Server listo"));
+app.listen(PORT, () => {
+    console.log("🚀 Server listo en puerto " + PORT);
+});
