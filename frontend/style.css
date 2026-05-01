@@ -1,0 +1,224 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* BODY */
+body {
+    background: #0b0b0f;
+    color: #fff;
+}
+
+/* PANEL GENERAL */
+.panel {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* LOGIN */
+#login {
+    background: radial-gradient(circle at top, #1a1a2e, #0b0b0f);
+}
+
+.logo {
+    width: 120px;
+    margin-bottom: 20px;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0)
+    }
+
+    50% {
+        transform: translateY(-10px)
+    }
+
+    100% {
+        transform: translateY(0)
+    }
+}
+
+input {
+    width: 250px;
+    padding: 12px;
+    margin: 8px;
+    border: none;
+    border-radius: 8px;
+    background: #1f1f2e;
+    color: #fff;
+}
+
+input:focus {
+    outline: 2px solid #7b2cff;
+}
+
+/* BOTONES */
+button {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(45deg, #7b2cff, #b84dff);
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px #7b2cff;
+}
+
+.support-btn {
+    background: #ff3b3b;
+}
+
+/* TOP BAR */
+.top-bar {
+    width: 100%;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #12121a;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* ALERTAS */
+.alerts {
+    color: #00ff88;
+    font-weight: bold;
+}
+
+/* TIMER */
+.timer {
+    color: #ffcc00;
+    font-weight: bold;
+}
+
+/* INVENTARIO */
+.inventory {
+    width: 90%;
+    margin-top: 20px;
+}
+
+.form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* GRID PRODUCTOS */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+/* TARJETA PRODUCTO */
+.card-product {
+    background: #161622;
+    padding: 15px;
+    border-radius: 15px;
+    transition: 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-product:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(123, 44, 255, 0.5);
+}
+
+.card-product img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* TEXTO */
+.card-product h4 {
+    margin-top: 10px;
+}
+
+.card-product p {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+/* PROGRESS BAR */
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #222;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 5px 0;
+}
+
+.progress {
+    height: 100%;
+    background: linear-gradient(90deg, #7b2cff, #ff3b3b);
+}
+
+/* STATUS */
+.status {
+    font-size: 12px;
+    opacity: 0.6;
+}
+
+/* MODAL */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-box {
+    background: #1a1a2e;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    width: 300px;
+}
+
+/* BOTÓN DEVELOP */
+#developBtn {
+    background: #00c3ff;
+}
+
+/* EFECTO GLOW GENERAL */
+.card-product::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(123, 44, 255, 0.2), transparent);
+    transform: rotate(25deg);
+}
+
+/* RESPONSIVE */
+@media(max-width:600px) {
+    input {
+        width: 90%;
+    }
+}

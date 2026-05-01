@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <title>LZR Services</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+  <div id="login" class="panel">
+    <h2>LZR Services</h2>
+    <input id="userInput" placeholder="Usuario">
+    <input id="passInput" type="password" placeholder="Contraseña">
+    <button onclick="login()">Entrar</button>
+  </div>
+
+  <div id="app" style="display:none;">
+    <h2>Inventario</h2>
+
+    <input id="name" placeholder="Producto">
+    <input id="type" placeholder="Tipo">
+    <input id="stock" placeholder="Stock">
+    <input id="client" placeholder="Cliente">
+    <button onclick="addProduct()">Agregar</button>
+
+    <div id="products"></div>
+  </div>
+
+  <script src="/main.js"></script>
+</body>
+
+</html>
