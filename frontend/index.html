@@ -6,25 +6,88 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LZR Services</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
-  <div class="login-container">
-    <div class="login-card">
-      <div class="login-logo">
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
         <img src="logo.png" alt="LZR Services">
       </div>
-      <h2>Iniciar sesión</h2>
-      <form action="/login" method="POST">
-        <input type="email" name="email" placeholder="Correo electrónico" required>
-        <input type="password" name="password" placeholder="Contraseña" required>
-        <label class="remember">
-          <input type="checkbox" name="remember"> Recordarme
-        </label>
-        <button type="submit">Iniciar sesión</button>
-        <a href="#">¿Olvidaste tu contraseña?</a>
-      </form>
-    </div>
+      <nav class="menu">
+        <a href="#">Producción</a>
+        <a href="#">Inventario</a>
+        <a href="#">Almacén</a>
+        <a href="#">Clientes</a>
+        <a href="#">Reportes</a>
+        <a href="#">Calendario</a>
+        <a href="#">Configuración</a>
+      </nav>
+      <button class="logout">Cerrar sesión</button>
+    </aside>
+
+    <!-- Main content -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="header">
+        <h1>Inventario & Seguimiento de Producción</h1>
+        <div class="user-info">
+          <span>Admin</span>
+          <img src="logo.png" alt="Usuario" class="user-avatar">
+        </div>
+      </header>
+
+      <!-- Production cards -->
+      <section class="production-cards">
+        <div class="card completed">
+          <h3>1. DISEÑO</h3>
+          <p>Completada</p>
+          <p>50/50 prendas</p>
+        </div>
+        <div class="card completed">
+          <h3>2. CORTE</h3>
+          <p>Completada</p>
+          <p>45/45 prendas</p>
+        </div>
+        <div class="card in-progress">
+          <h3>3. CONFECCIÓN</h3>
+          <p>En proceso</p>
+          <p>30/50 prendas</p>
+        </div>
+        <div class="card pending">
+          <h3>4. ACABADOS</h3>
+          <p>Pendiente</p>
+          <p>0/50 prendas</p>
+        </div>
+      </section>
+
+      <!-- Summary section -->
+      <section class="summary-section">
+        <div class="summary">
+          <h3>Resumen General</h3>
+          <p>Cantidad planificada: 50 prendas</p>
+          <p>Total procesadas: 30 prendas</p>
+          <div class="progress-bar">
+            <div class="progress" style="width:60%"></div>
+          </div>
+          <span>60% completado</span>
+        </div>
+
+        <div class="product-detail">
+          <h3>Detalle del Producto</h3>
+          <img src="logo.png" alt="Producto" class="product-image">
+          <p>Código: PRD-00012</p>
+          <p>Categoría: Playera</p>
+          <p>Tela: Algodón Premium</p>
+          <p>Color: Negro</p>
+          <p>Talla: M</p>
+        </div>
+      </section>
+    </main>
   </div>
 </body>
 
