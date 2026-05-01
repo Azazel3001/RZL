@@ -14,7 +14,10 @@ const productSchema = new mongoose.Schema({
     stock: Number,
     imagen: String,
     cliente: String,
-    areaActual: { nombre: String, responsable: String },
+    areaActual: {
+        nombre: String,
+        responsable: String
+    },
     areas: [areaSchema]
 });
 
