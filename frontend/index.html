@@ -3,32 +3,61 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LZR Services</title>
-  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-
-  <div id="login" class="panel">
-    <h2>LZR Services</h2>
-    <input id="userInput" placeholder="Usuario">
-    <input id="passInput" type="password" placeholder="Contraseña">
-    <button onclick="login()">Entrar</button>
+  <div id="loginPage" class="login-container">
+    <div class="login-box">
+      <h1>LZR Services</h1>
+      <form id="loginForm">
+        <input type="email" id="email" placeholder="Correo electrónico" required>
+        <input type="password" id="password" placeholder="Contraseña" required>
+        <button type="submit">Iniciar sesión</button>
+      </form>
+    </div>
   </div>
 
-  <div id="app" style="display:none;">
-    <h2>Inventario</h2>
-
-    <input id="name" placeholder="Producto">
-    <input id="type" placeholder="Tipo">
-    <input id="stock" placeholder="Stock">
-    <input id="client" placeholder="Cliente">
-    <button onclick="addProduct()">Agregar</button>
-
-    <div id="products"></div>
+  <div id="dashboardPage" class="dashboard-container" style="display:none;">
+    <aside class="sidebar">
+      <div class="logo">LZR Services</div>
+      <nav>
+        <ul>
+          <li data-section="produccion" class="active">Producción</li>
+          <li data-section="inventario">Inventario</li>
+          <li data-section="clientes">Clientes</li>
+          <li data-section="reportes">Reportes</li>
+          <li data-section="configuracion">Configuración</li>
+        </ul>
+      </nav>
+      <button id="cerrarSesion">Cerrar sesión</button>
+    </aside>
+    <main class="main-content">
+      <section id="produccion" class="section active">
+        <h2>Seguimiento de Producción</h2>
+        <div id="productionFlow" class="production-flow"></div>
+        <div id="resumenGeneral"></div>
+        <div id="detalleArea"></div>
+        <h3>Usuarios de muestra</h3>
+        <table id="tablaUsuarios"></table>
+      </section>
+      <section id="inventario" class="section"></section>
+      <section id="clientes" class="section"></section>
+      <section id="reportes" class="section"></section>
+      <section id="configuracion" class="section"></section>
+    </main>
   </div>
 
-  <script src="/main.js"></script>
+  <div id="modalDetalle" class="modal">
+    <div class="modal-content">
+      <span id="closeModal" class="close-button">&times;</span>
+      <div id="detalleProductoModal"></div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
 </body>
 
 </html>

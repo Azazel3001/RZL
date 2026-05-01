@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 const areaSchema = new mongoose.Schema({
     nombre: String,
     procesadas: Number,
@@ -7,18 +6,13 @@ const areaSchema = new mongoose.Schema({
     responsable: String,
     especificaciones: Object
 });
-
 const productSchema = new mongoose.Schema({
     nombre: String,
     tipo: String,
     stock: Number,
     imagen: String,
     cliente: String,
-    areaActual: {
-        nombre: String,
-        responsable: String
-    },
+    areaActual: { nombre: String, responsable: String },
     areas: [areaSchema]
 });
-
 module.exports = mongoose.model("Product", productSchema);
