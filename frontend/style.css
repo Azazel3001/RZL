@@ -1,4 +1,4 @@
-/* RESET */
+/* Reset básico */
 * {
     margin: 0;
     padding: 0;
@@ -6,91 +6,81 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* FONDO Y CENTRADO */
 body {
     height: 100vh;
+    background: linear-gradient(135deg, #0b0c18 0%, #1a1c29 100%);
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #0f0f1a, #1a1a2e);
-    color: #fff;
 }
 
-/* CONTENEDOR DEL LOGIN */
 .login-container {
-    background: rgba(20, 20, 35, 0.95);
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-card {
+    background: #1f202c;
     padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
-    width: 400px;
-    max-width: 90%;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     text-align: center;
 }
 
-/* LOGO */
-.login-container img {
-    width: 180px;
-    margin-bottom: 30px;
-}
-
-/* TITULO */
-.login-container h1 {
-    font-size: 24px;
-    margin-bottom: 25px;
-    font-weight: 600;
-    letter-spacing: 1px;
-}
-
-/* INPUTS */
-.login-container input[type="email"],
-.login-container input[type="password"] {
-    width: 100%;
-    padding: 14px 16px;
+.login-logo img {
+    width: 120px;
     margin-bottom: 20px;
-    border-radius: 8px;
-    border: none;
-    outline: none;
-    font-size: 16px;
 }
 
-/* BOTÓN */
-.login-container button {
-    width: 100%;
-    padding: 14px;
-    background: linear-gradient(90deg, #ff416c, #1b9aff);
-    border: none;
-    border-radius: 8px;
+.login-card h2 {
     color: #fff;
-    font-size: 18px;
-    font-weight: bold;
+    margin-bottom: 30px;
+    font-weight: 500;
+}
+
+.login-card input[type="email"],
+.login-card input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+}
+
+.login-card input[type="email"]::placeholder,
+.login-card input[type="password"]::placeholder {
+    color: #aaa;
+}
+
+.login-card .remember {
+    display: block;
+    color: #ccc;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+.login-card button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #5a7c1e;
+    /* verde similar a tu panel */
+    color: #fff;
+    font-size: 1rem;
     cursor: pointer;
-    transition: 0.3s ease;
+    transition: background 0.3s;
 }
 
-.login-container button:hover {
-    opacity: 0.9;
-    transform: translateY(-2px);
+.login-card button:hover {
+    background: #44700f;
 }
 
-/* LINK OLVIDASTE CONTRASEÑA */
-.login-container a {
+.login-card a {
     display: block;
     margin-top: 15px;
-    color: #1b9aff;
+    color: #7a7fff;
     text-decoration: none;
-    font-size: 14px;
-}
-
-.login-container a:hover {
-    text-decoration: underline;
-}
-
-/* RECORDARME CHECKBOX */
-.login-container .remember-me {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 8px;
-    font-size: 14px;
-    margin-bottom: 20px;
+    font-size: 0.9rem;
 }
