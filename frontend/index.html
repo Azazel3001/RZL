@@ -3,81 +3,24 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LZR Services - Dashboard</title>
+  <title>Login</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
-  <div class="dashboard">
-    <aside class="sidebar">
-      <img src="logo.png" alt="LZR Services" class="sidebar-logo">
-      <nav>
-        <ul>
-          <li>Producción</li>
-          <li>Inventario</li>
-          <li>Almacén</li>
-          <li>Clientes</li>
-          <li>Reportes</li>
-          <li>Calendario</li>
-          <li>Configuración</li>
-        </ul>
-      </nav>
-    </aside>
+<body class="login-body">
 
-    <main class="main-content">
-      <header>
-        <div class="user">
-          <img src="logo.png" alt="Admin" class="user-avatar">
-          <span>Admin</span>
-        </div>
-      </header>
+  <div class="login-box">
+    <img src="logo.png" class="login-logo">
+    <h2>Iniciar sesión</h2>
 
-      <section class="production-flow">
-        <h2>Inventario & Seguimiento de Producción</h2>
-        <div class="cards">
-          <div class="card completed">
-            <h3>1. Diseño</h3>
-            <p>Completada</p>
-            <p>50/50 prendas</p>
-          </div>
-          <div class="card completed">
-            <h3>2. Corte</h3>
-            <p>Completada</p>
-            <p>45/45 prendas</p>
-          </div>
-          <div class="card in-process">
-            <h3>3. Confección</h3>
-            <p>En proceso</p>
-            <p>30/50 prendas</p>
-          </div>
-          <div class="card pending">
-            <h3>4. Acabados</h3>
-            <p>Pendiente</p>
-            <p>0/50 prendas</p>
-          </div>
-          <div class="card pending">
-            <h3>5. Control de calidad</h3>
-            <p>Pendiente</p>
-            <p>0/50 prendas</p>
-          </div>
-          <div class="card pending">
-            <h3>6. Almacén / Entrega</h3>
-            <p>Pendiente</p>
-            <p>0/50 prendas</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="summary">
-        <h2>Resumen General</h2>
-        <p>Cantidad planificada: 50 prendas</p>
-        <p>Total procesadas: 30 prendas</p>
-        <p>Progreso general: 60%</p>
-        <p>Fecha estimada de entrega: 25/05/2024</p>
-      </section>
-    </main>
+    <form id="loginForm">
+      <input id="email" placeholder="Usuario" required>
+      <input id="password" type="password" placeholder="Contraseña" required>
+      <button>Entrar</button>
+    </form>
   </div>
+
+  <script src="main.js"></script>
 </body>
 
 </html>

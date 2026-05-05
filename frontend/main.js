@@ -14,34 +14,30 @@ document.getElementById("loginForm")?.addEventListener("submit", async (e) => {
   if (res.ok) {
     window.location.href = "/dashboard";
   } else {
-    alert("Login incorrecto");
+    alert("Error login");
   }
 });
 
-// ========================
-// PRODUCTOS DINÁMICOS
-// ========================
+// ================= CRUD =================
+
 async function loadProducts() {
   const res = await fetch("/api/products");
-  const products = await res.json();
+  const data = await res.json();
 
   const container = document.getElementById("products");
   if (!container) return;
 
   container.innerHTML = "";
 
-  products.forEach(p => {
-    const div = document.createElement("div");
-    div.className = "card";
-
-    div.innerHTML = `
-      <h3>${p.name}</h3>
-      <p>Cantidad: ${p.quantity}</p>
-      <p>Estado: ${p.status}</p>
-      <button onclick="deleteProduct('${p._id}')">Eliminar</button>
+  data.forEach(p => {
+    container.innerHTML += `
+      <div class="card">
+        <h3>${p.name}</h3>
+        <p>${p.quantity}</p>
+        <p>${p.status}</p>
+        <button onclick="deleteProduct('${p._id}')">Eliminar</button>
+      </div>
     `;
-
-    container.appendChild(div);
   });
 }
 
@@ -64,5 +60,4 @@ async function deleteProduct(id) {
   loadProducts();
 }
 
-// Cargar productos en dashboard
 loadProducts();
