@@ -14,44 +14,35 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "../frontend")));
 
+// MongoDB
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log("✅ MongoDB conectado"))
-    .catch(err => {
-        console.error("❌ Error MongoDB:", err);
-        process.exit(1);
-    });
+    .catch(e => console.log("❌ MongoDB error:", e));
 
 // LOGIN
 app.post("/login", async (req, res) => {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email });
-    if (!user || user.password !== password) return res.json({ error: "Usuario o contraseña incorrecta" });
-    res.json(user);
+    const { username, password } = req.body;
+    const user = await User.findOne({ username, password });
+    if (!user) return res.json({ error: "Usuario o contraseña incorrecta" });
+    if (user.expirado) return res.json({ error: "Usuario bloqueado" });
+
+    if (user.rol === "cliente" && user.tiempoMaximo) user.inicioSesion = Date.now();
+    res.json({ success: true, username: user.username, rol: user.rol, area: user.area || null });
 });
 
-// PRODUCTOS
+// LISTAR PRODUCTOS
 app.get("/products", async (req, res) => {
-    const productos = await Product.find();
-    res.json(productos);
+    const { rol, username } = req.query;
+    let products = await Product.find();
+
+    if (rol === "encargado") products = products.filter(p => p.areaActual.responsable === username);
+    if (rol === "cliente") products = products.filter(p => p.cliente === username);
+
+    res.json(products);
 });
 
-app.post("/products", async (req, res) => {
-    const nuevo = new Product(req.body);
-    await nuevo.save();
-    res.json({ success: true });
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend/index.html"));
 });
 
-app.put("/products/:id", async (req, res) => {
-    await Product.findByIdAndUpdate(req.params.id, req.body);
-    res.json({ success: true });
-});
-
-app.delete("/products/:id", async (req, res) => {
-    await Product.findByIdAndDelete(req.params.id);
-    res.json({ success: true });
-});
-
-// Frontend fallback
-app.get("*", (req, res) => res.sendFile(path.join(__dirname, "../frontend/index.html")));
-
-app.listen(PORT, () => console.log(`🚀 LZR Services ONLINE en http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`🚀 Servidor en http://localhost:${PORT}`));

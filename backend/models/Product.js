@@ -1,18 +1,24 @@
 const mongoose = require("mongoose");
-const areaSchema = new mongoose.Schema({
-    nombre: String,
-    procesadas: Number,
-    pendientes: Number,
-    responsable: String,
-    especificaciones: Object
-});
+
 const productSchema = new mongoose.Schema({
     nombre: String,
     tipo: String,
     stock: Number,
     imagen: String,
     cliente: String,
-    areaActual: { nombre: String, responsable: String },
-    areas: [areaSchema]
+    areaActual: {
+        nombre: String,
+        responsable: String
+    },
+    areas: [
+        {
+            nombre: String,
+            procesadas: Number,
+            pendientes: Number,
+            responsable: String,
+            especificaciones: Object
+        }
+    ]
 });
+
 module.exports = mongoose.model("Product", productSchema);
