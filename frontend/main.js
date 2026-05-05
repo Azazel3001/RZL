@@ -42,12 +42,8 @@ function render(products) {
 }
 
 // Al cargar dashboard
-document.addEventListener("DOMContentLoaded", () => {
-  const user = localStorage.getItem("user");
-  if (user) {
-    currentUser = JSON.parse(user);
-    fetchProducts();
-  } else {
-    window.location.href = "index.html";
-  }
+document.getElementById('loginForm')?.addEventListener('submit', function (e) {
+  e.preventDefault();
+  // Redirige al dashboard
+  window.location.href = "dashboard.html";
 });
