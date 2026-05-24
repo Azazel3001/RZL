@@ -1,66 +1,132 @@
-const form = document.getElementById("productForm");
-const productosDiv = document.getElementById("productos");
+/* ================= LOGIN ================= */
 
-let productos = [];
+async function login() {
 
-form.addEventListener("submit", (e) => {
+  const email = document.getElementById("email")?.value;
+  const password = document.getElementById("password")?.value;
 
-  e.preventDefault();
+  if (!email || !password) {
 
-  const nombre = document.getElementById("nombre").value;
-  const cantidad = document.getElementById("cantidad").value;
-  const estado = document.getElementById("estado").value;
+    alert("Completa los campos");
 
-  const producto = {
-    nombre,
-    cantidad,
-    estado
-  };
+    return;
 
-  productos.push(producto);
+  }
 
-  renderProductos();
+  try {
 
-  form.reset();
+    const response = await fetch("/api/login", {
 
-});
+      method: "POST",
 
-function renderProductos() {
+      headers: {
+        "Content-Type": "application/json"
+      },
 
-  productosDiv.innerHTML = "";
+      body: JSON.stringify({
+        username: email,
+        password: password
+      })
 
-  productos.forEach((producto, index) => {
+    });
 
-    productosDiv.innerHTML += `
+    if (!response.ok) {
 
-        <div class="product-item">
+      alert("Usuario o contraseña incorrectos");
 
-            <div>
+      return;
 
-                <h3>${producto.nombre}</h3>
+    }
 
-                <p>Cantidad: ${producto.cantidad}</p>
+    window.location.href = "/dashboard";
 
-                <p>Estado: ${producto.estado}</p>
+  } catch (error) {
 
-            </div>
+    console.log(error);
 
-            <button class="delete-btn" onclick="eliminar(${index})">
-                Eliminar
-            </button>
+    alert("Error servidor");
 
-        </div>
-
-        `;
-
-  });
+  }
 
 }
 
-function eliminar(index) {
+/* ================= CRUD PRODUCTS ================= */
 
-  productos.splice(index, 1);
+const form = document.getElementById("productForm");
 
-  renderProductos();
+const productosDiv = document.getElementById("productos");
+
+/* SOLO ejecutar si existe dashboard */
+
+if (form && productosDiv) {
+
+  let productos = [];
+
+  form.addEventListener("submit", (e) => {
+
+    e.preventDefault();
+
+    const nombre = document.getElementById("nombre").value;
+
+    const cantidad = document.getElementById("cantidad").value;
+
+    const estado = document.getElementById("estado").value;
+
+    const producto = {
+      nombre,
+      cantidad,
+      estado
+    };
+
+    productos.push(producto);
+
+    renderProductos();
+
+    form.reset();
+
+  });
+
+  function renderProductos() {
+
+    productosDiv.innerHTML = "";
+
+    productos.forEach((producto, index) => {
+
+      productosDiv.innerHTML += `
+
+            <div class="product-item">
+
+                <div>
+
+                    <h3>${producto.nombre}</h3>
+
+                    <p>Cantidad: ${producto.cantidad}</p>
+
+                    <p>Estado: ${producto.estado}</p>
+
+                </div>
+
+                <button 
+                    class="delete-btn"
+                    onclick="eliminar(${index})"
+                >
+                    Eliminar
+                </button>
+
+            </div>
+
+            `;
+
+    });
+
+  }
+
+  window.eliminar = function (index) {
+
+    productos.splice(index, 1);
+
+    renderProductos();
+
+  };
 
 }
