@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
@@ -391,4 +391,33 @@ body {
         grid-template-columns: 1fr;
     }
 
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+/* FIX RENDER */
+
+main,
+section,
+div {
+    max-width: 100%;
+}
+
+/* SCROLL */
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0f0f0f;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ff1b1b;
+    border-radius: 20px;
 }
