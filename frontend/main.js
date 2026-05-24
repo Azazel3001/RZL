@@ -1,33 +1,7 @@
 const form = document.getElementById("productForm");
-const productList = document.getElementById("productList");
+const productosDiv = document.getElementById("productos");
 
-let productos = JSON.parse(localStorage.getItem("productos")) || [];
-
-function renderProductos() {
-
-  productList.innerHTML = "";
-
-  productos.forEach((producto, index) => {
-
-    productList.innerHTML += `
-      <div class="product">
-
-        <h3>${producto.nombre}</h3>
-
-        <p><strong>Cantidad:</strong> ${producto.cantidad}</p>
-
-        <p><strong>Estado:</strong> ${producto.estado}</p>
-
-        <button class="delete" onclick="eliminarProducto(${index})">
-          Eliminar
-        </button>
-
-      </div>
-    `;
-
-  });
-
-}
+let productos = [];
 
 form.addEventListener("submit", (e) => {
 
@@ -37,13 +11,13 @@ form.addEventListener("submit", (e) => {
   const cantidad = document.getElementById("cantidad").value;
   const estado = document.getElementById("estado").value;
 
-  productos.push({
+  const producto = {
     nombre,
     cantidad,
     estado
-  });
+  };
 
-  localStorage.setItem("productos", JSON.stringify(productos));
+  productos.push(producto);
 
   renderProductos();
 
@@ -51,14 +25,42 @@ form.addEventListener("submit", (e) => {
 
 });
 
-function eliminarProducto(index) {
+function renderProductos() {
+
+  productosDiv.innerHTML = "";
+
+  productos.forEach((producto, index) => {
+
+    productosDiv.innerHTML += `
+
+        <div class="product-item">
+
+            <div>
+
+                <h3>${producto.nombre}</h3>
+
+                <p>Cantidad: ${producto.cantidad}</p>
+
+                <p>Estado: ${producto.estado}</p>
+
+            </div>
+
+            <button class="delete-btn" onclick="eliminar(${index})">
+                Eliminar
+            </button>
+
+        </div>
+
+        `;
+
+  });
+
+}
+
+function eliminar(index) {
 
   productos.splice(index, 1);
-
-  localStorage.setItem("productos", JSON.stringify(productos));
 
   renderProductos();
 
 }
-
-renderProductos();
