@@ -421,3 +421,22 @@ div {
     background: #ff1b1b;
     border-radius: 20px;
 }
+
+.dashboard {
+    display: flex !important;
+    min-height: 100vh !important;
+}
+
+.sidebar {
+    width: 270px !important;
+    min-height: 100vh !important;
+}
+
+.main {
+    flex: 1 !important;
+    padding: 35px !important;
+}
+
+body {
+    background: #050505 !important;
+}
