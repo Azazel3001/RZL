@@ -2,135 +2,238 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LZR Dashboard</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LZR Services Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 
-    <div class="container">
+    <div class="dashboard">
 
         <!-- SIDEBAR -->
         <aside class="sidebar">
 
-            <div class="brand-sidebar">
-
+            <div class="logo">
                 <h1>
-                    <span class="l">L</span>
-                    <span class="z">Z</span>
-                    <span class="r">R</span>
+                    <span class="l-red">L</span>
+                    <span class="l-white">Z</span>
+                    <span class="l-blue">R</span>
                 </h1>
 
-                <p>Services</p>
-
+                <p>SERVICES</p>
             </div>
 
-            <ul class="menu">
-                <li class="active">Inicio</li>
-                <li>Producción</li>
-                <li>Inventario</li>
-                <li>Almacén</li>
-                <li>Clientes</li>
-                <li>Reportes</li>
-                <li>Configuración</li>
-            </ul>
+            <nav>
+                <ul>
 
-            <div class="support-box">
+                    <li class="active">
+                        🏠 Producción
+                    </li>
 
-                <h3>Asistente</h3>
+                    <li>
+                        📦 Inventario
+                    </li>
 
-                <p>📞 +52 000 000 0000</p>
+                    <li>
+                        🧵 Almacén
+                    </li>
+
+                    <li>
+                        👥 Clientes
+                    </li>
+
+                    <li>
+                        📊 Reportes
+                    </li>
+
+                    <li>
+                        📅 Calendario
+                    </li>
+
+                    <li>
+                        ⚙️ Configuración
+                    </li>
+
+                </ul>
+            </nav>
+
+            <div class="assistant-box">
+
+                <h3>Asistencia</h3>
+
+                <p>WhatsApp:</p>
+
+                <a href="https://wa.me/5210000000000" target="_blank">
+                    +52 1 000 000 0000
+                </a>
+
+                <p>Facebook:</p>
 
                 <a href="https://facebook.com/" target="_blank">
-                    Facebook
+                    LZR Services
                 </a>
 
             </div>
 
         </aside>
 
-        <!-- CONTENT -->
-        <main class="content">
+        <!-- MAIN -->
+        <main class="main-content">
 
+            <!-- HEADER -->
             <header class="topbar">
 
                 <div>
-                    <h1>Panel Principal</h1>
-                    <p>Gestión de producción e inventario</p>
+                    <h2>
+                        INVENTARIO & SEGUIMIENTO
+                    </h2>
+
+                    <span>
+                        PRENDAS PARA TALLER
+                    </span>
                 </div>
 
-                <div class="admin-box">
-                    <strong>Admin</strong>
+                <div class="admin">
+                    <div class="admin-circle">
+                        A
+                    </div>
+
+                    <div>
+                        <h4>Admin</h4>
+                        <p>Administrador</p>
+                    </div>
                 </div>
 
             </header>
 
-            <!-- CARDS -->
+            <!-- FLOW -->
             <section class="cards">
 
-                <div class="card done">
-                    <h3>Diseño</h3>
-                    <p>50 / 50 prendas</p>
-                    <span>Completado</span>
+                <div class="card complete">
+                    <h3>1. Diseño</h3>
+                    <p>Completado</p>
+                    <span>50/50</span>
+                </div>
+
+                <div class="card complete">
+                    <h3>2. Corte</h3>
+                    <p>Completado</p>
+                    <span>45/45</span>
                 </div>
 
                 <div class="card process">
-                    <h3>Confección</h3>
-                    <p>30 / 50 prendas</p>
-                    <span>En proceso</span>
+                    <h3>3. Confección</h3>
+                    <p>En proceso</p>
+                    <span>30/50</span>
                 </div>
 
                 <div class="card pending">
-                    <h3>Acabados</h3>
-                    <p>0 / 50 prendas</p>
-                    <span>Pendiente</span>
+                    <h3>4. Acabados</h3>
+                    <p>Pendiente</p>
+                    <span>0/50</span>
+                </div>
+
+                <div class="card pending">
+                    <h3>5. Calidad</h3>
+                    <p>Pendiente</p>
+                    <span>0/50</span>
+                </div>
+
+                <div class="card pending">
+                    <h3>6. Entrega</h3>
+                    <p>Pendiente</p>
+                    <span>0/50</span>
+                </div>
+
+            </section>
+
+            <!-- RESUMEN -->
+            <section class="summary">
+
+                <div class="summary-card">
+
+                    <h3>Resumen General</h3>
+
+                    <div class="circle">
+                        60%
+                    </div>
+
+                    <p>Producción completada</p>
+
+                </div>
+
+                <div class="summary-card">
+
+                    <h3>Detalle</h3>
+
+                    <ul>
+                        <li>Diseño - 100%</li>
+                        <li>Corte - 100%</li>
+                        <li>Confección - 60%</li>
+                        <li>Acabados - 0%</li>
+                    </ul>
+
                 </div>
 
             </section>
 
             <!-- CRUD -->
-            <section class="crud-box">
+            <section class="crud">
 
-                <h2>Agregar producto</h2>
+                <h2>Administrar Productos</h2>
 
-                <form id="productForm">
+                <div class="crud-form">
 
-                    <input type="text" id="nombre" placeholder="Nombre producto">
+                    <input type="text" placeholder="Nombre del producto">
 
-                    <input type="number" id="cantidad" placeholder="Cantidad">
+                    <input type="number" placeholder="Cantidad">
 
-                    <select id="estado">
-                        <option>Producción</option>
-                        <option>Confección</option>
-                        <option>Entrega</option>
+                    <select>
+                        <option>Estado</option>
+                        <option>En proceso</option>
+                        <option>Terminado</option>
                     </select>
 
-                    <button type="submit">
-                        Guardar
+                    <button>
+                        Agregar Producto
                     </button>
 
-                </form>
+                </div>
 
-            </section>
+                <div class="table">
 
-            <!-- PRODUCTOS -->
-            <section>
+                    <div class="table-header">
 
-                <h2 class="section-title">
-                    Productos
-                </h2>
+                        <span>Producto</span>
+                        <span>Cantidad</span>
+                        <span>Estado</span>
+                        <span>Acciones</span>
 
-                <div id="productList" class="product-grid"></div>
+                    </div>
+
+                    <div class="table-row">
+
+                        <span>Playera Negra</span>
+                        <span>555</span>
+                        <span class="green">
+                            En proceso
+                        </span>
+
+                        <button class="delete">
+                            Eliminar
+                        </button>
+
+                    </div>
+
+                </div>
 
             </section>
 
         </main>
 
     </div>
-
-    <script src="main.js"></script>
 
 </body>
 
