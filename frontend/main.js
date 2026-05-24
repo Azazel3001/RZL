@@ -1,63 +1,67 @@
-// LOGIN
-document.getElementById("loginForm")?.addEventListener("submit", async (e) => {
-  e.preventDefault();
+const modal = document.getElementById("modal");
+const addBtn = document.getElementById("addBtn");
+const table = document.getElementById("productTable");
 
-  const username = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+addBtn.onclick = () => {
+  modal.style.display = "flex";
+};
 
-  const res = await fetch("/api/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password })
-  });
-
-  if (res.ok) {
-    window.location.href = "/dashboard";
-  } else {
-    alert("Error login");
+window.onclick = (e) => {
+  if (e.target === modal) {
+    modal.style.display = "none";
   }
-});
+};
 
-// ================= CRUD =================
+let productos = [];
 
-async function loadProducts() {
-  const res = await fetch("/api/products");
-  const data = await res.json();
+function renderProductos() {
 
-  const container = document.getElementById("products");
-  if (!container) return;
+  table.innerHTML = "";
 
-  container.innerHTML = "";
+  productos.forEach((p, index) => {
 
-  data.forEach(p => {
-    container.innerHTML += `
-      <div class="card">
-        <h3>${p.name}</h3>
-        <p>${p.quantity}</p>
-        <p>${p.status}</p>
-        <button onclick="deleteProduct('${p._id}')">Eliminar</button>
-      </div>
-    `;
+    table.innerHTML += `
+            <tr>
+                <td>${p.nombre}</td>
+                <td>${p.cantidad}</td>
+                <td>${p.estado}</td>
+                <td>
+                    <button class="delete" onclick="eliminarProducto(${index})">
+                        Eliminar
+                    </button>
+                </td>
+            </tr>
+        `;
   });
 }
 
-async function addProduct() {
-  const name = document.getElementById("name").value;
-  const quantity = document.getElementById("quantity").value;
-  const status = document.getElementById("status").value;
+function agregarProducto() {
 
-  await fetch("/api/products", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, quantity, status })
+  const nombre = document.getElementById("nombre").value;
+  const cantidad = document.getElementById("cantidad").value;
+  const estado = document.getElementById("estado").value;
+
+  if (!nombre || !cantidad) {
+    return alert("Completa todos los campos");
+  }
+
+  productos.push({
+    nombre,
+    cantidad,
+    estado
   });
 
-  loadProducts();
+  renderProductos();
+
+  modal.style.display = "none";
+
+  document.getElementById("nombre").value = "";
+  document.getElementById("cantidad").value = "";
 }
 
-async function deleteProduct(id) {
-  await fetch("/api/products/" + id, { method: "DELETE" });
-  loadProducts();
-}
+function eliminarProducto(index) {
 
-loadProducts();
+  productos.splice(index, 1);
+
+  renderProductos();
+}
