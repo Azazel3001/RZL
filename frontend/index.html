@@ -3,24 +3,57 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LZR Services</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body class="login-body">
 
-  <div class="login-box">
-    <img src="logo.png" class="login-logo">
-    <h2>Iniciar sesión</h2>
+  <div class="login-container">
 
-    <form id="loginForm">
-      <input id="email" placeholder="Usuario" required>
-      <input id="password" type="password" placeholder="Contraseña" required>
-      <button>Entrar</button>
-    </form>
+    <div class="brand">
+      <h1>
+        <span class="l">L</span>
+        <span class="z">Z</span>
+        <span class="r">R</span>
+      </h1>
+
+      <p>Inventario & Producción</p>
+    </div>
+
+    <div class="login-box">
+
+      <h2>Iniciar sesión</h2>
+
+      <input type="email" id="email" placeholder="Correo">
+
+      <input type="password" id="password" placeholder="Contraseña">
+
+      <button onclick="login()">
+        Entrar
+      </button>
+
+      <div class="assistant-box">
+
+        <h3>Asistente / Soporte</h3>
+
+        <p>
+          📞 +52 000 000 0000
+        </p>
+
+        <a href="https://facebook.com/" target="_blank">
+          Facebook Oficial
+        </a>
+
+      </div>
+
+    </div>
+
   </div>
 
   <script src="main.js"></script>
+
 </body>
 
 </html>

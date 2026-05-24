@@ -12,15 +12,24 @@
 
     <div class="container">
 
+        <!-- SIDEBAR -->
         <aside class="sidebar">
 
-            <div class="logo-area">
-                <img src="logo.png" class="logo">
-                <h2>LZR Services</h2>
+            <div class="brand-sidebar">
+
+                <h1>
+                    <span class="l">L</span>
+                    <span class="z">Z</span>
+                    <span class="r">R</span>
+                </h1>
+
+                <p>Services</p>
+
             </div>
 
             <ul class="menu">
-                <li class="active">Producción</li>
+                <li class="active">Inicio</li>
+                <li>Producción</li>
                 <li>Inventario</li>
                 <li>Almacén</li>
                 <li>Clientes</li>
@@ -28,36 +37,42 @@
                 <li>Configuración</li>
             </ul>
 
+            <div class="support-box">
+
+                <h3>Asistente</h3>
+
+                <p>📞 +52 000 000 0000</p>
+
+                <a href="https://facebook.com/" target="_blank">
+                    Facebook
+                </a>
+
+            </div>
+
         </aside>
 
+        <!-- CONTENT -->
         <main class="content">
 
             <header class="topbar">
+
                 <div>
-                    <h1>Inventario & Seguimiento</h1>
-                    <p>Panel Administrativo</p>
+                    <h1>Panel Principal</h1>
+                    <p>Gestión de producción e inventario</p>
                 </div>
 
                 <div class="admin-box">
-                    <img src="logo.png">
-                    <div>
-                        <strong>Admin</strong>
-                        <small>Administrador</small>
-                    </div>
+                    <strong>Admin</strong>
                 </div>
+
             </header>
 
+            <!-- CARDS -->
             <section class="cards">
 
                 <div class="card done">
                     <h3>Diseño</h3>
                     <p>50 / 50 prendas</p>
-                    <span>Completado</span>
-                </div>
-
-                <div class="card done">
-                    <h3>Corte</h3>
-                    <p>45 / 45 prendas</p>
                     <span>Completado</span>
                 </div>
 
@@ -75,13 +90,14 @@
 
             </section>
 
+            <!-- CRUD -->
             <section class="crud-box">
 
-                <h2>Agregar Producto</h2>
+                <h2>Agregar producto</h2>
 
                 <form id="productForm">
 
-                    <input type="text" id="nombre" placeholder="Nombre">
+                    <input type="text" id="nombre" placeholder="Nombre producto">
 
                     <input type="number" id="cantidad" placeholder="Cantidad">
 
@@ -92,16 +108,19 @@
                     </select>
 
                     <button type="submit">
-                        Guardar Producto
+                        Guardar
                     </button>
 
                 </form>
 
             </section>
 
+            <!-- PRODUCTOS -->
             <section>
 
-                <h2 class="section-title">Productos</h2>
+                <h2 class="section-title">
+                    Productos
+                </h2>
 
                 <div id="productList" class="product-grid"></div>
 
