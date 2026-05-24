@@ -10,156 +10,104 @@
 
 <body>
 
-    <div class="app">
+    <div class="container">
 
-        <!-- SIDEBAR -->
         <aside class="sidebar">
 
             <div class="logo-area">
                 <img src="logo.png" class="logo">
-                <h2>LZR SERVICES</h2>
+                <h2>LZR Services</h2>
             </div>
 
-            <nav class="menu">
-                <a class="active">Producción</a>
-                <a>Inventario</a>
-                <a>Almacén</a>
-                <a>Clientes</a>
-                <a>Reportes</a>
-                <a>Calendario</a>
-                <a>Configuración</a>
-            </nav>
-
-            <button class="logout">
-                Cerrar sesión
-            </button>
+            <ul class="menu">
+                <li class="active">Producción</li>
+                <li>Inventario</li>
+                <li>Almacén</li>
+                <li>Clientes</li>
+                <li>Reportes</li>
+                <li>Configuración</li>
+            </ul>
 
         </aside>
 
-        <!-- MAIN -->
-        <main class="main">
+        <main class="content">
 
-            <!-- TOP -->
             <header class="topbar">
-
                 <div>
                     <h1>Inventario & Seguimiento</h1>
-                    <p>Prendas para taller</p>
+                    <p>Panel Administrativo</p>
                 </div>
 
-                <div class="user-box">
+                <div class="admin-box">
                     <img src="logo.png">
                     <div>
                         <strong>Admin</strong>
-                        <span>Administrador</span>
+                        <small>Administrador</small>
                     </div>
                 </div>
-
             </header>
 
-            <!-- CARDS -->
             <section class="cards">
 
-                <div class="card">
+                <div class="card done">
                     <h3>Diseño</h3>
-                    <p class="green">Completado</p>
-                    <span>50/50 prendas</span>
+                    <p>50 / 50 prendas</p>
+                    <span>Completado</span>
                 </div>
 
-                <div class="card">
+                <div class="card done">
                     <h3>Corte</h3>
-                    <p class="green">Completado</p>
-                    <span>45/45 prendas</span>
+                    <p>45 / 45 prendas</p>
+                    <span>Completado</span>
                 </div>
 
-                <div class="card">
+                <div class="card process">
                     <h3>Confección</h3>
-                    <p class="yellow">En proceso</p>
-                    <span>30/50 prendas</span>
+                    <p>30 / 50 prendas</p>
+                    <span>En proceso</span>
                 </div>
 
-                <div class="card">
+                <div class="card pending">
                     <h3>Acabados</h3>
-                    <p class="red">Pendiente</p>
-                    <span>0/50 prendas</span>
+                    <p>0 / 50 prendas</p>
+                    <span>Pendiente</span>
                 </div>
 
             </section>
 
-            <!-- GRID -->
-            <section class="content-grid">
+            <section class="crud-box">
 
-                <!-- TABLA -->
-                <div class="table-box">
+                <h2>Agregar Producto</h2>
 
-                    <div class="table-header">
-                        <h2>Producción</h2>
+                <form id="productForm">
 
-                        <button id="addBtn">
-                            + Agregar
-                        </button>
-                    </div>
+                    <input type="text" id="nombre" placeholder="Nombre">
 
-                    <table>
+                    <input type="number" id="cantidad" placeholder="Cantidad">
 
-                        <thead>
-                            <tr>
-                                <th>Producto</th>
-                                <th>Cantidad</th>
-                                <th>Estado</th>
-                                <th>Acción</th>
-                            </tr>
-                        </thead>
+                    <select id="estado">
+                        <option>Producción</option>
+                        <option>Confección</option>
+                        <option>Entrega</option>
+                    </select>
 
-                        <tbody id="productTable">
-                        </tbody>
+                    <button type="submit">
+                        Guardar Producto
+                    </button>
 
-                    </table>
+                </form>
 
-                </div>
+            </section>
 
-                <!-- RESUMEN -->
-                <div class="summary">
+            <section>
 
-                    <h2>Resumen</h2>
+                <h2 class="section-title">Productos</h2>
 
-                    <div class="circle">
-                        60%
-                    </div>
-
-                    <p>Producción completada</p>
-
-                </div>
+                <div id="productList" class="product-grid"></div>
 
             </section>
 
         </main>
-
-    </div>
-
-    <!-- MODAL -->
-    <div class="modal" id="modal">
-
-        <div class="modal-content">
-
-            <h2>Agregar producto</h2>
-
-            <input type="text" id="nombre" placeholder="Nombre">
-
-            <input type="number" id="cantidad" placeholder="Cantidad">
-
-            <select id="estado">
-                <option>Diseño</option>
-                <option>Corte</option>
-                <option>Confección</option>
-                <option>Acabados</option>
-            </select>
-
-            <button onclick="agregarProducto()">
-                Guardar
-            </button>
-
-        </div>
 
     </div>
 

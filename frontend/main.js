@@ -1,49 +1,41 @@
-const modal = document.getElementById("modal");
-const addBtn = document.getElementById("addBtn");
-const table = document.getElementById("productTable");
+const form = document.getElementById("productForm");
+const productList = document.getElementById("productList");
 
-addBtn.onclick = () => {
-  modal.style.display = "flex";
-};
-
-window.onclick = (e) => {
-  if (e.target === modal) {
-    modal.style.display = "none";
-  }
-};
-
-let productos = [];
+let productos = JSON.parse(localStorage.getItem("productos")) || [];
 
 function renderProductos() {
 
-  table.innerHTML = "";
+  productList.innerHTML = "";
 
-  productos.forEach((p, index) => {
+  productos.forEach((producto, index) => {
 
-    table.innerHTML += `
-            <tr>
-                <td>${p.nombre}</td>
-                <td>${p.cantidad}</td>
-                <td>${p.estado}</td>
-                <td>
-                    <button class="delete" onclick="eliminarProducto(${index})">
-                        Eliminar
-                    </button>
-                </td>
-            </tr>
-        `;
+    productList.innerHTML += `
+      <div class="product">
+
+        <h3>${producto.nombre}</h3>
+
+        <p><strong>Cantidad:</strong> ${producto.cantidad}</p>
+
+        <p><strong>Estado:</strong> ${producto.estado}</p>
+
+        <button class="delete" onclick="eliminarProducto(${index})">
+          Eliminar
+        </button>
+
+      </div>
+    `;
+
   });
+
 }
 
-function agregarProducto() {
+form.addEventListener("submit", (e) => {
+
+  e.preventDefault();
 
   const nombre = document.getElementById("nombre").value;
   const cantidad = document.getElementById("cantidad").value;
   const estado = document.getElementById("estado").value;
-
-  if (!nombre || !cantidad) {
-    return alert("Completa todos los campos");
-  }
 
   productos.push({
     nombre,
@@ -51,17 +43,22 @@ function agregarProducto() {
     estado
   });
 
+  localStorage.setItem("productos", JSON.stringify(productos));
+
   renderProductos();
 
-  modal.style.display = "none";
+  form.reset();
 
-  document.getElementById("nombre").value = "";
-  document.getElementById("cantidad").value = "";
-}
+});
 
 function eliminarProducto(index) {
 
   productos.splice(index, 1);
 
+  localStorage.setItem("productos", JSON.stringify(productos));
+
   renderProductos();
+
 }
+
+renderProductos();
