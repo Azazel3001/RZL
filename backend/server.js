@@ -7,47 +7,61 @@ const path = require("path");
 
 const app = express();
 
-/* MIDDLEWARE */
+/* ================= MIDDLEWARE ================= */
 
 app.use(cors());
 
 app.use(express.json());
 
-/* MONGO */
+/* ================= MONGO ================= */
 
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("Mongo conectado"))
+  .then(() => {
+
+    console.log("Mongo conectado");
+
+  })
   .catch(err => console.log(err));
 
-/* STATIC */
+/* ================= STATIC ================= */
 
-app.use(express.static(
-  path.resolve(__dirname, "../frontend")
-));
+const frontendPath =
+  path.join(__dirname, "../frontend");
 
-/* ROUTES */
+app.use(express.static(frontendPath));
 
-app.use("/api/users",
-  require("./routes/users"));
+/* UPLOADS */
 
-app.use("/api/products",
-  require("./routes/products"));
-
-app.use("/uploads",
+app.use(
+  "/uploads",
   express.static(
     path.join(__dirname, "uploads")
-  ));
+  )
+);
 
-app.use("/api/uploads",
-  require("./routes/uploads"));
+/* ================= ROUTES ================= */
 
-/* FRONTEND */
+app.use(
+  "/api/users",
+  require("./routes/users")
+);
+
+app.use(
+  "/api/products",
+  require("./routes/products")
+);
+
+app.use(
+  "/api/uploads",
+  require("./routes/uploads")
+);
+
+/* ================= PAGES ================= */
 
 app.get("/", (req, res) => {
 
   res.sendFile(
-    path.resolve(__dirname,
-      "../frontend/index.html")
+    path.join(frontendPath, "index.html")
   );
 
 });
@@ -55,20 +69,30 @@ app.get("/", (req, res) => {
 app.get("/dashboard", (req, res) => {
 
   res.sendFile(
-    path.resolve(__dirname,
-      "../frontend/dashboard.html")
+    path.join(frontendPath, "dashboard.html")
   );
 
 });
 
-/* SERVER */
+/* ================= 404 ================= */
 
-const PORT = process.env.PORT || 3000;
+app.use((req, res) => {
+
+  res.status(404).json({
+    msg: "Ruta no encontrada"
+  });
+
+});
+
+/* ================= SERVER ================= */
+
+const PORT =
+  process.env.PORT || 3000;
 
 app.listen(PORT, () => {
 
-  console.log("Servidor puerto " + PORT);
+  console.log(
+    "Servidor puerto " + PORT
+  );
 
 });
-app.use("/api/logs",
-  require("./routes/logs"));
