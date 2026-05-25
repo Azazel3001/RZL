@@ -33,6 +33,14 @@ app.use("/api/users",
 app.use("/api/products",
   require("./routes/products"));
 
+app.use("/uploads",
+  express.static(
+    path.join(__dirname, "uploads")
+  ));
+
+app.use("/api/uploads",
+  require("./routes/uploads"));
+
 /* FRONTEND */
 
 app.get("/", (req, res) => {
@@ -62,3 +70,5 @@ app.listen(PORT, () => {
   console.log("Servidor puerto " + PORT);
 
 });
+app.use("/api/logs",
+  require("./routes/logs"));
