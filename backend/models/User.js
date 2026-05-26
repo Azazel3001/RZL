@@ -1,62 +1,27 @@
-async function login() {
+const mongoose = require("mongoose");
 
-    const username =
-        document.getElementById("username").value;
+const UserSchema =
+    new mongoose.Schema({
 
-    const password =
-        document.getElementById("password").value;
+        username: {
+            type: String,
+            required: true
+        },
 
-    try {
+        password: {
+            type: String,
+            required: true
+        },
 
-        const response = await fetch(
-            "/api/users/login",
-            {
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify({
-
-                    username: username,
-                    password: password
-
-                })
-
-            }
-        );
-
-        const data =
-            await response.json();
-
-        console.log(data);
-
-        if (response.ok) {
-
-            localStorage.setItem(
-                "token",
-                data.token
-            );
-
-            localStorage.setItem(
-                "user",
-                JSON.stringify(data.user)
-            );
-
-            window.location.href =
-                "/dashboard";
-
-        } else {
-
-            alert(data.msg);
-
+        role: {
+            type: String,
+            default: "user"
         }
 
-    } catch (err) {
+    });
 
-        console.log(err);
-
-    }
-
-}
+module.exports =
+    mongoose.model(
+        "User",
+        UserSchema
+    );
