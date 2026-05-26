@@ -1,74 +1,45 @@
-const express = require("express");
+const mongoose = require("mongoose");
 
-const router = express.Router();
+const ProductSchema =
+    new mongoose.Schema({
 
-const Product = require("../models/Product");
-const Log = require("../models/Log");
+        nombre: String,
 
-const auth = require("../middleware/auth");
+        descripcion: String,
 
-/* GET */
+        foto: String,
 
-router.get("/", auth, async (req, res) => {
+        cantidad: Number,
 
-    const products = await Product.find();
+        etapa: String,
 
-    res.json(products);
+        maquilera: String,
 
-});
+        progreso: Number,
 
-/* CREATE */
+        historial: [
 
-router.post("/", auth, async (req, res) => {
+            {
 
-    const product = new Product({
+                etapa: String,
 
-        ...req.body,
+                usuario: String,
 
-        creadoPor: req.user.username
+                fecha: {
+                    type: Date,
+                    default: Date.now
+                },
 
-    });
+                notas: String
 
-    await product.save();
+            }
 
-    await Log.create({
-
-        usuario: req.user.username,
-
-        accion: `Agregó producto ${product.nombre}`
-
-    });
-
-    res.json(product);
-
-});
-
-/* DELETE */
-
-router.delete("/:id", auth, async (req, res) => {
-
-    if (req.user.role !== "admin") {
-
-        return res.status(403).json({
-            msg: "No autorizado"
-        });
-
-    }
-
-    await Product.findByIdAndDelete(req.params.id);
-
-    await Log.create({
-
-        usuario: req.user.username,
-
-        accion: "Eliminó producto"
+        ]
 
     });
 
-    res.json({
-        msg: "Producto eliminado"
-    });
-
-});
-
-module.exports = router;
+module.exports =
+    mongoose.model(
+        "Product",
+        ProductSchema
+    );

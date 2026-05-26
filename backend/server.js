@@ -75,6 +75,50 @@ app.get("/dashboard", (req, res) => {
     )
   );
 
+  app.get("/inventario", (req, res) => {
+
+    res.sendFile(
+      path.join(
+        __dirname,
+        "../frontend/pages/inventario.html"
+      )
+    );
+
+  });
+
+  app.get("/produccion", (req, res) => {
+
+    res.sendFile(
+      path.join(
+        __dirname,
+        "../frontend/pages/produccion.html"
+      )
+    );
+
+  });
+
+  app.get("/confeccion", (req, res) => {
+
+    res.sendFile(
+      path.join(
+        __dirname,
+        "../frontend/pages/confeccion.html"
+      )
+    );
+
+  });
+
+  app.get("/acabados", (req, res) => {
+
+    res.sendFile(
+      path.join(
+        __dirname,
+        "../frontend/pages/acabados.html"
+      )
+    );
+
+  });
+
 });
 
 /* ================= 404 ================= */
