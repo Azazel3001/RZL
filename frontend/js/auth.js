@@ -1,7 +1,8 @@
-const token = localStorage.getItem("token");
+const token =
+    localStorage.getItem("token");
 
 if (!token) {
 
-    window.location.href = "/";
+    console.log("Sin token");
 
 }
