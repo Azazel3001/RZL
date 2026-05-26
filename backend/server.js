@@ -97,6 +97,17 @@ app.get("/dashboard", (req, res) => {
 
   });
 
+  app.get("/corte", (req, res) => {
+
+    res.sendFile(
+      path.join(
+        __dirname,
+        "../frontend/pages/corte.html"
+      )
+    );
+
+  });
+
   app.get("/confeccion", (req, res) => {
 
     res.sendFile(
@@ -114,6 +125,28 @@ app.get("/dashboard", (req, res) => {
       path.join(
         __dirname,
         "../frontend/pages/acabados.html"
+      )
+    );
+
+  });
+
+  app.get("/calidad", (req, res) => {
+
+    res.sendFile(
+      path.join(
+        __dirname,
+        "../frontend/pages/calidad.html"
+      )
+    );
+
+  });
+
+  app.get("/reportes", (req, res) => {
+
+    res.sendFile(
+      path.join(
+        __dirname,
+        "../frontend/pages/reportes.html"
       )
     );
 

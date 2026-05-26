@@ -1,53 +1,54 @@
-async function login() {
+async function cargarProductos() {
 
-    const username =
-        document.getElementById("username").value;
-
-    const password =
-        document.getElementById("password").value;
-
-    const response =
-        await fetch(
-            "/api/users/login",
-            {
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify({
-
-                    username,
-                    password
-
-                })
-
-            }
-        );
+    const res =
+        await fetch("/api/products");
 
     const data =
-        await response.json();
+        await res.json();
 
-    if (response.ok) {
-
-        localStorage.setItem(
-            "token",
-            data.token
+    const contenedor =
+        document.getElementById(
+            "productos"
         );
 
-        localStorage.setItem(
-            "user",
-            JSON.stringify(data.user)
-        );
+    contenedor.innerHTML = "";
 
-        window.location.href =
-            "/dashboard";
+    data.forEach(product => {
 
-    } else {
+        contenedor.innerHTML += `
 
-        alert(data.msg);
+        <div class="product-item">
 
-    }
+            <img
+            src="${product.foto}"
+            width="120">
+
+            <div>
+
+                <h2>${product.nombre}</h2>
+
+                <p>
+                ${product.descripcion}
+                </p>
+
+                <p>
+                Cantidad:
+                ${product.cantidad}
+                </p>
+
+                <p>
+                Etapa:
+                ${product.etapa}
+                </p>
+
+            </div>
+
+        </div>
+
+        `;
+
+    });
 
 }
+
+cargarProductos();
