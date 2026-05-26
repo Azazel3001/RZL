@@ -174,3 +174,28 @@ function logout() {
   window.location.href = "/";
 
 }
+function showSection(section) {
+
+  const sections = [
+
+    "inicio",
+    "inventario",
+    "produccion",
+    "reportes",
+    "config"
+
+  ];
+
+  sections.forEach(sec => {
+
+    document.getElementById(
+      sec + "Section"
+    ).style.display = "none";
+
+  });
+
+  document.getElementById(
+    section + "Section"
+  ).style.display = "block";
+
+}

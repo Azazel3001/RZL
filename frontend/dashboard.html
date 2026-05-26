@@ -38,7 +38,7 @@
 
             <nav>
 
-                <a href="#" class="active">
+                <a href="#" onclick="showSection('inicio')" class="active">
                     🏠 Inicio
                 </a>
 
@@ -56,6 +56,10 @@
 
                 <a href="#" onclick="showSection('config')">
                     ⚙ Configuración
+                </a>
+
+                <a href="#" onclick="logout()">
+                    🚪 Salir
                 </a>
 
             </nav>
@@ -170,144 +174,147 @@
             </header>
 
             <!-- CARDS -->
+            <section id="inicioSection">
 
-            <section class="cards">
+                <!-- TODO TU DASHBOARD -->
 
-                <div class="card success">
+                <section class="cards">
 
-                    <h3>Diseño</h3>
+                    <div class="card success">
 
-                    <p>Completado</p>
+                        <h3>Diseño</h3>
 
-                    <span>50 / 50</span>
+                        <p>Completado</p>
 
-                </div>
+                        <span>50 / 50</span>
 
-                <div class="card success">
+                    </div>
 
-                    <h3>Corte</h3>
+                    <div class="card success">
 
-                    <p>Completado</p>
+                        <h3>Corte</h3>
 
-                    <span>45 / 45</span>
+                        <p>Completado</p>
 
-                </div>
+                        <span>45 / 45</span>
 
-                <div class="card warning">
+                    </div>
 
-                    <h3>Confección</h3>
+                    <div class="card warning">
 
-                    <p>En proceso</p>
+                        <h3>Confección</h3>
 
-                    <span>30 / 50</span>
+                        <p>En proceso</p>
 
-                </div>
+                        <span>30 / 50</span>
 
-                <div class="card danger">
+                    </div>
 
-                    <h3>Acabados</h3>
+                    <div class="card danger">
 
-                    <p>Pendiente</p>
+                        <h3>Acabados</h3>
 
-                    <span>0 / 50</span>
+                        <p>Pendiente</p>
 
-                </div>
+                        <span>0 / 50</span>
 
-            </section>
+                    </div>
 
-            <!-- GRID -->
+                </section>
 
-            <section class="content-grid">
+                <!-- GRID -->
 
-                <div class="panel">
+                <section class="content-grid">
 
-                    <h3>Resumen General</h3>
+                    <div class="panel">
 
-                    <div class="stats">
+                        <h3>Resumen General</h3>
 
-                        <div class="stat">
+                        <div class="stats">
 
-                            <h1>50</h1>
+                            <div class="stat">
 
-                            <p>Prendas</p>
+                                <h1>50</h1>
 
-                        </div>
+                                <p>Prendas</p>
 
-                        <div class="stat">
+                            </div>
 
-                            <h1>60%</h1>
+                            <div class="stat">
 
-                            <p>Progreso</p>
+                                <h1>60%</h1>
 
-                        </div>
+                                <p>Progreso</p>
 
-                        <div class="stat">
+                            </div>
 
-                            <h1>30</h1>
+                            <div class="stat">
 
-                            <p>Procesadas</p>
+                                <h1>30</h1>
+
+                                <p>Procesadas</p>
+
+                            </div>
 
                         </div>
 
                     </div>
 
-                </div>
+                    <div class="panel">
 
-                <div class="panel">
+                        <h3>Producto</h3>
 
-                    <h3>Producto</h3>
+                        <div class="product">
 
-                    <div class="product">
+                            <img src="logo.png">
 
-                        <img src="logo.png">
+                            <div>
 
-                        <div>
+                                <h2>Playera Oversize</h2>
 
-                            <h2>Playera Oversize</h2>
+                                <p>Color negro</p>
 
-                            <p>Color negro</p>
+                                <p>Talla M</p>
 
-                            <p>Talla M</p>
+                                <p>50 piezas</p>
 
-                            <p>50 piezas</p>
+                            </div>
 
                         </div>
 
                     </div>
 
-                </div>
+                </section>
 
-            </section>
+                <!-- CRUD -->
 
-            <!-- CRUD -->
+                <section class="crud">
 
-            <section class="crud">
+                    <h2>
+                        Administrar Productos
+                    </h2>
 
-                <h2>
-                    Administrar Productos
-                </h2>
+                    <form id="productForm">
 
-                <form id="productForm">
+                        <input type="text" id="nombre" placeholder="Nombre">
 
-                    <input type="text" id="nombre" placeholder="Nombre">
+                        <input type="number" id="cantidad" placeholder="Cantidad">
 
-                    <input type="number" id="cantidad" placeholder="Cantidad">
+                        <input type="text" id="estado" placeholder="Estado">
 
-                    <input type="text" id="estado" placeholder="Estado">
+                        <input type="file" id="foto">
 
-                    <input type="file" id="foto">
+                        <button type="submit">
+                            Agregar
+                        </button>
 
-                    <button type="submit">
-                        Agregar
-                    </button>
+                    </form>
 
-                </form>
+                    <div id="productos">
 
-                <div id="productos">
+                    </div>
 
-                </div>
-
-            </section>
+                </section>
 
         </main>
 
@@ -318,3 +325,53 @@
 </body>
 
 </html>
+
+</section>
+
+<section id="inventarioSection" style="display:none;">
+
+    <div class="panel">
+
+        <h2>Inventario</h2>
+
+        <div id="productos"></div>
+
+    </div>
+
+</section>
+
+<section id="produccionSection" style="display:none;">
+
+    <div class="panel">
+
+        <h2>Producción</h2>
+
+        <p>Seguimiento de maquila</p>
+
+    </div>
+
+</section>
+
+<section id="reportesSection" style="display:none;">
+
+    <div class="panel">
+
+        <h2>Reportes</h2>
+
+        <p>Reportes y estadísticas</p>
+
+    </div>
+
+</section>
+
+<section id="configSection" style="display:none;">
+
+    <div class="panel">
+
+        <h2>Configuración</h2>
+
+        <p>Usuarios y permisos</p>
+
+    </div>
+
+</section>
