@@ -1,125 +1,3 @@
-/* ================= LOGIN ================= */
-
-async function login() {
-
-  const username =
-    document.getElementById("email").value;
-
-  const password =
-    document.getElementById("password").value;
-
-  try {
-
-    const response = await fetch(
-      "/api/users/login",
-      {
-        method: "POST",
-
-        headers: {
-          "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify({
-          username,
-          password
-        })
-      }
-    );
-
-    const data =
-      await response.json();
-
-    console.log(data);
-
-    if (response.ok) {
-
-      localStorage.setItem(
-        "token",
-        data.token
-      );
-
-      localStorage.setItem(
-        "user",
-        JSON.stringify(data.user)
-      );
-
-      window.location.href =
-        "/dashboard";
-
-    } else {
-
-      alert(
-        data.msg || "Login incorrecto"
-      );
-
-    }
-
-  } catch (err) {
-
-    console.log(err);
-
-    alert("Error servidor");
-
-  }
-
-}
-
-/* ================= LOGOUT ================= */
-
-function logout() {
-
-  localStorage.clear();
-
-  window.location.href = "/";
-
-}
-
-/* ================= SECTIONS ================= */
-
-function showSection(section) {
-
-  const sections = [
-
-    "inicio",
-    "inventario",
-    "produccion",
-    "reportes",
-    "config"
-
-  ];
-
-  sections.forEach(sec => {
-
-    const element =
-      document.getElementById(
-        sec + "Section"
-      );
-
-    if (element) {
-
-      element.style.display =
-        "none";
-
-    }
-
-  });
-
-  const currentSection =
-    document.getElementById(
-      section + "Section"
-    );
-
-  if (currentSection) {
-
-    currentSection.style.display =
-      "block";
-
-  }
-
-}
-
-/* ================= CRUD PRODUCTS ================= */
-
 const form =
   document.getElementById(
     "productForm"
@@ -130,13 +8,87 @@ const productosDiv =
     "productos"
   );
 
-/* SOLO dashboard */
+/* ================= GET PRODUCTS ================= */
 
-if (form && productosDiv) {
+async function cargarProductos() {
 
-  cargarProductos();
+  const res =
+    await fetch("/api/products");
 
-  /* AGREGAR */
+  const productos =
+    await res.json();
+
+  productosDiv.innerHTML = "";
+
+  productos.forEach(producto => {
+
+    productosDiv.innerHTML += `
+
+        <div class="product-item">
+
+            <div>
+
+                <h2>${producto.nombre}</h2>
+
+                <p>
+                Cantidad:
+                ${producto.cantidad}
+                </p>
+
+                <p>
+                Color:
+                ${producto.color}
+                </p>
+
+                <p>
+                Talla:
+                ${producto.talla}
+                </p>
+
+                <p>
+                Lote:
+                ${producto.lote}
+                </p>
+
+                <p>
+                Proceso:
+                ${producto.proceso}
+                </p>
+
+                <p>
+                Responsable:
+                ${producto.responsable || "Sin asignar"}
+                </p>
+
+                <p>
+                Ubicación:
+                ${producto.ubicacionActual || "Sin ubicación"}
+                </p>
+
+            </div>
+
+            <div>
+
+                <button
+                onclick="eliminarProducto('${producto._id}')">
+
+                    Eliminar
+
+                </button>
+
+            </div>
+
+        </div>
+
+        `;
+
+  });
+
+}
+
+/* ================= CREATE ================= */
+
+if (form) {
 
   form.addEventListener(
     "submit",
@@ -144,154 +96,90 @@ if (form && productosDiv) {
 
       e.preventDefault();
 
-      const nombre =
-        document.getElementById(
-          "nombre"
-        ).value;
+      const nuevoProducto = {
 
-      const cantidad =
-        document.getElementById(
-          "cantidad"
-        ).value;
+        nombre:
+          document.getElementById("nombre").value,
 
-      const estado =
-        document.getElementById(
-          "estado"
-        ).value;
+        cantidad:
+          document.getElementById("cantidad").value,
 
-      try {
+        color:
+          document.getElementById("color").value,
 
-        const response =
-          await fetch(
-            "/api/products",
-            {
+        talla:
+          document.getElementById("talla").value,
 
-              method: "POST",
+        lote:
+          document.getElementById("lote").value,
 
-              headers: {
-                "Content-Type":
-                  "application/json"
-              },
+        proceso:
+          document.getElementById("proceso").value,
 
-              body: JSON.stringify({
+        progreso: 0,
 
-                nombre,
-                cantidad,
-                estado
+        estado: "En proceso",
 
-              })
+        ubicacionActual:
+          document.getElementById("proceso").value,
 
-            }
-          );
+        historial: [
 
-        if (response.ok) {
+          {
 
-          form.reset();
+            proceso:
+              document.getElementById("proceso").value,
 
-          cargarProductos();
+            estado: "Iniciado",
 
-        }
+            usuario: "Admin"
 
-      } catch (err) {
+          }
 
-        console.log(err);
+        ]
 
-      }
+      };
 
-    }
-  );
+      await fetch("/api/products", {
 
-}
+        method: "POST",
 
-/* ================= CARGAR PRODUCTOS ================= */
+        headers: {
+          "Content-Type": "application/json"
+        },
 
-async function cargarProductos() {
+        body: JSON.stringify(
+          nuevoProducto
+        )
 
-  if (!productosDiv) return;
+      });
 
-  try {
+      form.reset();
 
-    const response =
-      await fetch(
-        "/api/products"
-      );
-
-    const productos =
-      await response.json();
-
-    productosDiv.innerHTML = "";
-
-    productos.forEach(producto => {
-
-      productosDiv.innerHTML += `
-
-      <div class="product-item">
-
-        <div>
-
-          <h3>
-            ${producto.nombre}
-          </h3>
-
-          <p>
-            Cantidad:
-            ${producto.cantidad}
-          </p>
-
-          <p>
-            Estado:
-            ${producto.estado}
-          </p>
-
-        </div>
-
-        <button
-          class="delete-btn"
-          onclick="eliminarProducto(
-            '${producto._id}'
-          )"
-        >
-
-          Eliminar
-
-        </button>
-
-      </div>
-
-      `;
+      cargarProductos();
 
     });
 
-  } catch (err) {
-
-    console.log(err);
-
-  }
-
 }
 
-/* ================= ELIMINAR ================= */
+/* ================= DELETE ================= */
 
 async function eliminarProducto(id) {
 
-  try {
+  await fetch(
 
-    await fetch(
+    "/api/products/" + id,
 
-      "/api/products/" + id,
+    {
 
-      {
-        method: "DELETE"
-      }
+      method: "DELETE"
 
-    );
+    }
 
-    cargarProductos();
+  );
 
-  } catch (err) {
-
-    console.log(err);
-
-  }
+  cargarProductos();
 
 }
+
+cargarProductos();

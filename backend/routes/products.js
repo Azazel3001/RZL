@@ -1,42 +1,52 @@
 const mongoose = require("mongoose");
 
-const ProductSchema =
-    new mongoose.Schema({
+const ProductSchema = new mongoose.Schema({
 
-        nombre: String,
+    nombre: String,
 
-        descripcion: String,
+    cantidad: Number,
 
-        foto: String,
+    color: String,
 
-        cantidad: Number,
+    talla: String,
 
-        etapa: String,
+    lote: String,
 
-        maquilera: String,
+    foto: String,
 
-        progreso: Number,
+    proceso: String,
 
-        historial: [
+    progreso: Number,
 
-            {
+    responsable: String,
 
-                etapa: String,
+    ubicacionActual: String,
 
-                usuario: String,
+    estado: String,
 
-                fecha: {
-                    type: Date,
-                    default: Date.now
-                },
+    historial: [
 
-                notas: String
+        {
+
+            proceso: String,
+
+            estado: String,
+
+            usuario: String,
+
+            fecha: {
+
+                type: Date,
+
+                default: Date.now
 
             }
 
-        ]
+        }
 
-    });
+    ]
+
+});
 
 module.exports =
     mongoose.model(
