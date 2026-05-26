@@ -20,71 +20,113 @@ async function cargarProductos() {
 
   productosDiv.innerHTML = "";
 
+  /* ================= COUNTS ================= */
+
+  let corte = 0;
+
+  let confeccion = 0;
+
+  let acabados = 0;
+
   productos.forEach(producto => {
+
+    /* CONTADORES */
+
+    if (producto.proceso === "Corte") {
+
+      corte++;
+
+    }
+
+    if (producto.proceso === "Confección") {
+
+      confeccion++;
+
+    }
+
+    if (producto.proceso === "Acabados") {
+
+      acabados++;
+
+    }
 
     productosDiv.innerHTML += `
 
-        <div class="product-item">
+  <div class="product-item">
 
-            <div>
+      <div>
 
-                <h2>${producto.nombre}</h2>
+          <h2>${producto.nombre}</h2>
 
-                <p>
-                Cantidad:
-                ${producto.cantidad}
-                </p>
+          <p>
+          Cantidad:
+          ${producto.cantidad}
+          </p>
 
-                <p>
-                Color:
-                ${producto.color}
-                </p>
+          <p>
+          Color:
+          ${producto.color}
+          </p>
 
-                <p>
-                Talla:
-                ${producto.talla}
-                </p>
+          <p>
+          Talla:
+          ${producto.talla}
+          </p>
 
-                <p>
-                Lote:
-                ${producto.lote}
-                </p>
+          <p>
+          Lote:
+          ${producto.lote}
+          </p>
 
-                <p>
-                Proceso:
-                ${producto.proceso}
-                </p>
+          <p>
+          Proceso:
+          ${producto.proceso}
+          </p>
 
-                <p>
-                Responsable:
-                ${producto.responsable || "Sin asignar"}
-                </p>
+          <p>
+          Responsable:
+          ${producto.responsable || "Sin asignar"}
+          </p>
 
-                <p>
-                Ubicación:
-                ${producto.ubicacionActual || "Sin ubicación"}
-                </p>
+          <p>
+          Ubicación:
+          ${producto.ubicacionActual || "Sin ubicación"}
+          </p>
 
-            </div>
+      </div>
 
-            <div>
+      <div>
 
-                <button
-                onclick="eliminarProducto('${producto._id}')">
+          <button
+          onclick="eliminarProducto('${producto._id}')">
 
-                    Eliminar
+              Eliminar
 
-                </button>
+          </button>
 
-            </div>
+      </div>
 
-        </div>
+  </div>
 
-        `;
+  `;
 
   });
 
 }
+
+/* ACTUALIZAR TARJETAS */
+
+document.getElementById(
+  "corteCount"
+).innerText = corte;
+
+document.getElementById(
+  "confeccionCount"
+).innerText = confeccion;
+
+document.getElementById(
+  "acabadosCount"
+).innerText = acabados;
 
 /* ================= CREATE ================= */
 
