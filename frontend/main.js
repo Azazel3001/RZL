@@ -139,3 +139,38 @@ if (form && productosDiv) {
   };
 
 }
+function showSection(section) {
+
+  document.getElementById(
+    "inicioSection"
+  ).style.display = "none";
+
+  document.getElementById(
+    "inventarioSection"
+  ).style.display = "none";
+
+  document.getElementById(
+    "produccionSection"
+  ).style.display = "none";
+
+  document.getElementById(
+    "reportesSection"
+  ).style.display = "none";
+
+  document.getElementById(
+    "configSection"
+  ).style.display = "none";
+
+  document.getElementById(
+    section + "Section"
+  ).style.display = "block";
+
+}
+
+function logout() {
+
+  localStorage.clear();
+
+  window.location.href = "/";
+
+}

@@ -42,31 +42,19 @@
                     🏠 Inicio
                 </a>
 
-                <a href="#">
+                <a href="#" onclick="showSection('inventario')">
                     📦 Inventario
                 </a>
 
-                <a href="#">
+                <a href="#" onclick="showSection('produccion')">
                     🏭 Producción
                 </a>
 
-                <a href="#">
-                    🧵 Corte
-                </a>
-
-                <a href="#">
-                    🪡 Confección
-                </a>
-
-                <a href="#">
-                    🚚 Entregas
-                </a>
-
-                <a href="#">
+                <a href="#" onclick="showSection('reportes')">
                     📊 Reportes
                 </a>
 
-                <a href="#">
+                <a href="#" onclick="showSection('config')">
                     ⚙ Configuración
                 </a>
 
@@ -81,6 +69,12 @@
                 <p>📘 Facebook Azazel RL</p>
 
                 <p>💬 WhatsApp +52 4452197165</p>
+
+                <button onclick="logout()" class="logout-btn">
+
+                    Cerrar sesión
+
+                </button>
 
             </div>
 
@@ -117,6 +111,57 @@
                         <strong>Admin</strong>
 
                         <p>Administrador</p>
+
+                        <section id="inicioSection">
+
+                            <!-- TODO TU DASHBOARD ACTUAL -->
+
+                        </section>
+
+                        <section id="inventarioSection" style="display:none;">
+
+                            <div class="panel">
+
+                                <h2>Inventario</h2>
+
+                                <p>
+                                    Aquí aparecerán productos,
+                                    stock y movimientos.
+                                </p>
+
+                            </div>
+
+                        </section>
+
+                        <section id="produccionSection" style="display:none;">
+
+                            <div class="panel">
+
+                                <h2>Producción</h2>
+
+                            </div>
+
+                        </section>
+
+                        <section id="reportesSection" style="display:none;">
+
+                            <div class="panel">
+
+                                <h2>Reportes</h2>
+
+                            </div>
+
+                        </section>
+
+                        <section id="configSection" style="display:none;">
+
+                            <div class="panel">
+
+                                <h2>Configuración</h2>
+
+                            </div>
+
+                        </section>
 
                     </div>
 
