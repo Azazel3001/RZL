@@ -58,6 +58,8 @@ app.use(
 
 /* ================= PAGES ================= */
 
+/* ================= PAGES ================= */
+
 app.get("/", (req, res) => {
 
   res.sendFile(
@@ -66,94 +68,116 @@ app.get("/", (req, res) => {
 
 });
 
+/* DASHBOARD */
+
 app.get("/dashboard", (req, res) => {
 
   res.sendFile(
     path.join(
-      __dirname,
-      "../frontend/dashboard.html"
+      frontendPath,
+      "dashboard.html"
     )
   );
 
-  app.get("/inventario", (req, res) => {
+});
 
-    res.sendFile(
-      path.join(
-        __dirname,
-        "../frontend/pages/inventario.html"
-      )
-    );
+/* INVENTARIO */
 
-  });
+app.get("/inventario", (req, res) => {
 
-  app.get("/produccion", (req, res) => {
-
-    res.sendFile(
-      path.join(
-        __dirname,
-        "../frontend/pages/produccion.html"
-      )
-    );
-
-  });
-
-  app.get("/corte", (req, res) => {
-
-    res.sendFile(
-      path.join(
-        __dirname,
-        "../frontend/pages/corte.html"
-      )
-    );
-
-  });
-
-  app.get("/confeccion", (req, res) => {
-
-    res.sendFile(
-      path.join(
-        __dirname,
-        "../frontend/pages/confeccion.html"
-      )
-    );
-
-  });
-
-  app.get("/acabados", (req, res) => {
-
-    res.sendFile(
-      path.join(
-        __dirname,
-        "../frontend/pages/acabados.html"
-      )
-    );
-
-  });
-
-  app.get("/calidad", (req, res) => {
-
-    res.sendFile(
-      path.join(
-        __dirname,
-        "../frontend/pages/calidad.html"
-      )
-    );
-
-  });
-
-  app.get("/reportes", (req, res) => {
-
-    res.sendFile(
-      path.join(
-        __dirname,
-        "../frontend/pages/reportes.html"
-      )
-    );
-
-  });
+  res.sendFile(
+    path.join(
+      frontendPath,
+      "pages",
+      "inventario.html"
+    )
+  );
 
 });
 
+/* PRODUCCION */
+
+app.get("/produccion", (req, res) => {
+
+  res.sendFile(
+    path.join(
+      frontendPath,
+      "pages",
+      "produccion.html"
+    )
+  );
+
+});
+
+/* CORTE */
+
+app.get("/corte", (req, res) => {
+
+  res.sendFile(
+    path.join(
+      frontendPath,
+      "pages",
+      "corte.html"
+    )
+  );
+
+});
+
+/* CONFECCION */
+
+app.get("/confeccion", (req, res) => {
+
+  res.sendFile(
+    path.join(
+      frontendPath,
+      "pages",
+      "confeccion.html"
+    )
+  );
+
+});
+
+/* ACABADOS */
+
+app.get("/acabados", (req, res) => {
+
+  res.sendFile(
+    path.join(
+      frontendPath,
+      "pages",
+      "acabados.html"
+    )
+  );
+
+});
+
+/* CALIDAD */
+
+app.get("/calidad", (req, res) => {
+
+  res.sendFile(
+    path.join(
+      frontendPath,
+      "pages",
+      "calidad.html"
+    )
+  );
+
+});
+
+/* REPORTES */
+
+app.get("/reportes", (req, res) => {
+
+  res.sendFile(
+    path.join(
+      frontendPath,
+      "pages",
+      "reportes.html"
+    )
+  );
+
+});
 /* ================= 404 ================= */
 
 app.use((req, res) => {
