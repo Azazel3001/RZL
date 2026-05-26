@@ -69,7 +69,10 @@ app.get("/", (req, res) => {
 app.get("/dashboard", (req, res) => {
 
   res.sendFile(
-    path.join(frontendPath, "dashboard.html")
+    path.join(
+      __dirname,
+      "../frontend/dashboard.html"
+    )
   );
 
 });

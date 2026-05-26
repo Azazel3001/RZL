@@ -1,48 +1,57 @@
-/* ================= LOGIN ================= */
-
 async function login() {
 
-  const email = document.getElementById("email")?.value;
-  const password = document.getElementById("password")?.value;
+  const username =
+    document.getElementById("email").value;
 
-  if (!email || !password) {
-
-    alert("Completa los campos");
-
-    return;
-
-  }
+  const password =
+    document.getElementById("password").value;
 
   try {
 
-    const response = await fetch("/api/users/login", {
+    const response = await fetch(
+      "/api/users/login",
+      {
+        method: "POST",
 
-      method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
 
-      headers: {
-        "Content-Type": "application/json"
-      },
+        body: JSON.stringify({
+          username,
+          password
+        })
+      }
+    );
 
-      body: JSON.stringify({
-        username: email,
-        password: password
-      })
+    const data = await response.json();
 
-    });
+    console.log(data);
 
-    if (!response.ok) {
+    if (response.ok) {
 
-      alert("Usuario o contraseña incorrectos");
+      localStorage.setItem(
+        "token",
+        data.token
+      );
 
-      return;
+      localStorage.setItem(
+        "user",
+        JSON.stringify(data.user)
+      );
+
+      // 🔥 REDIRECT CORRECTO
+      window.location.replace("/dashboard");
+
+    } else {
+
+      alert(data.msg);
 
     }
 
-    window.location.href = "/dashboard";
+  } catch (err) {
 
-  } catch (error) {
-
-    console.log(error);
+    console.log(err);
 
     alert("Error servidor");
 

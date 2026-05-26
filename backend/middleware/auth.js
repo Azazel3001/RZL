@@ -16,7 +16,7 @@ module.exports = (req, res, next) => {
 
         const verified = jwt.verify(
             token,
-            process.env.JWT_SECRET
+            "lzr_secret"
         );
 
         req.user = verified;
