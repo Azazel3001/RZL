@@ -13,22 +13,36 @@ app.use(cors());
 
 app.use(express.json());
 
+app.use(express.urlencoded({
+  extended: true
+}));
+
 /* ================= MONGO ================= */
 
 mongoose.connect(process.env.MONGO_URI)
+
   .then(() => {
 
     console.log("Mongo conectado");
 
   })
-  .catch(err => console.log(err));
 
-/* ================= STATIC ================= */
+  .catch(err => {
+
+    console.log(err);
+
+  });
+
+/* ================= FRONTEND ================= */
 
 const frontendPath =
   path.join(__dirname, "../frontend");
 
-app.use(express.static(frontendPath));
+/* STATIC FILES */
+
+app.use(
+  express.static(frontendPath)
+);
 
 /* UPLOADS */
 
@@ -39,7 +53,7 @@ app.use(
   )
 );
 
-/* ================= ROUTES ================= */
+/* ================= API ROUTES ================= */
 
 app.use(
   "/api/users",
@@ -58,12 +72,15 @@ app.use(
 
 /* ================= PAGES ================= */
 
-/* ================= PAGES ================= */
+/* LOGIN */
 
 app.get("/", (req, res) => {
 
   res.sendFile(
-    path.join(frontendPath, "index.html")
+    path.join(
+      frontendPath,
+      "index.html"
+    )
   );
 
 });
@@ -178,12 +195,30 @@ app.get("/reportes", (req, res) => {
   );
 
 });
+
 /* ================= 404 ================= */
 
 app.use((req, res) => {
 
-  res.status(404).json({
-    msg: "Ruta no encontrada"
+  res.status(404).sendFile(
+    path.join(
+      frontendPath,
+      "index.html"
+    )
+  );
+
+});
+
+/* ================= ERROR ================= */
+
+app.use((err, req, res, next) => {
+
+  console.log(err);
+
+  res.status(500).json({
+
+    msg: "Error servidor"
+
   });
 
 });

@@ -4,13 +4,15 @@
 <head>
 
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="js/auth.js"></script>
+
     <title>LZR Dashboard</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
+
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
@@ -29,72 +31,86 @@
             <div class="logo">
 
                 <h1>
-                    <span class="red">L</span><span class="white">Z</span><span class="red">R</span>
+
+                    <span class="red">L</span>
+                    <span class="white">Z</span>
+                    <span class="red">R</span>
+
                 </h1>
 
                 <p>SERVICES</p>
 
             </div>
 
+            <!-- MENU -->
+
             <nav>
 
-                <nav>
+                <a href="/dashboard" class="active">
+                    🏠 Inicio
+                </a>
 
-                    <a href="/dashboard" class="active">
-                        🏠 Inicio
-                    </a>
+                <a href="/inventario">
+                    📦 Inventario
+                </a>
 
-                    <a href="/inventario">
-                        📦 Inventario
-                    </a>
+                <a href="/produccion">
+                    🏭 Producción
+                </a>
 
-                    <a href="/produccion">
-                        🏭 Producción
-                    </a>
+                <a href="/corte">
+                    ✂ Corte
+                </a>
 
-                    <a href="/corte">
-                        ✂ Corte
-                    </a>
+                <a href="/confeccion">
+                    🪡 Confección
+                </a>
 
-                    <a href="/confeccion">
-                        🪡 Confección
-                    </a>
+                <a href="/acabados">
+                    🎨 Acabados
+                </a>
 
-                    <a href="/acabados">
-                        🎨 Acabados
-                    </a>
+                <a href="/calidad">
+                    ✅ Calidad
+                </a>
 
-                    <a href="/calidad">
-                        ✅ Calidad
-                    </a>
+                <a href="/reportes">
+                    📊 Reportes
+                </a>
 
-                    <a href="/reportes">
-                        📊 Reportes
-                    </a>
+                <a href="#" onclick="logout()">
 
-                    <a href="#" onclick="logout()">
-                        🚪 Salir
-                    </a>
+                    🚪 Salir
 
-                </nav>
+                </a>
 
-                <div class="support">
+            </nav>
 
-                    <h3>Asistencia</h3>
+            <!-- SUPPORT -->
 
-                    <p>📞 +52 4452197165</p>
+            <div class="support">
 
-                    <p>📘 Facebook Azazel RL</p>
+                <h3>Asistencia</h3>
 
-                    <p>💬 WhatsApp +52 4452197165</p>
+                <p>
+                    📞 +52 4452197165
+                </p>
 
-                    <button onclick="logout()" class="logout-btn">
+                <p>
+                    📘 Facebook Azazel RL
+                </p>
 
-                        Cerrar sesión
+                <p>
+                    💬 WhatsApp +52 4452197165
+                </p>
 
-                    </button>
+                <button onclick="logout()" class="logout-btn">
 
-                </div>
+                    Cerrar sesión
+
+                </button>
+
+            </div>
 
         </aside>
 
@@ -109,7 +125,10 @@
                 <div>
 
                     <h2>
-                        Inventario & Seguimiento
+
+                        Inventario &
+                        Seguimiento
+
                     </h2>
 
                     <span>
@@ -126,60 +145,13 @@
 
                     <div>
 
-                        <strong>Admin</strong>
+                        <strong>
+                            Admin
+                        </strong>
 
-                        <p>Administrador</p>
-
-                        <section id="inicioSection">
-
-                            <!-- TODO TU DASHBOARD ACTUAL -->
-
-                        </section>
-
-                        <section id="inventarioSection" style="display:none;">
-
-                            <div class="panel">
-
-                                <h2>Inventario</h2>
-
-                                <p>
-                                    Aquí aparecerán productos,
-                                    stock y movimientos.
-                                </p>
-
-                            </div>
-
-                        </section>
-
-                        <section id="produccionSection" style="display:none;">
-
-                            <div class="panel">
-
-                                <h2>Producción</h2>
-
-                            </div>
-
-                        </section>
-
-                        <section id="reportesSection" style="display:none;">
-
-                            <div class="panel">
-
-                                <h2>Reportes</h2>
-
-                            </div>
-
-                        </section>
-
-                        <section id="configSection" style="display:none;">
-
-                            <div class="panel">
-
-                                <h2>Configuración</h2>
-
-                            </div>
-
-                        </section>
+                        <p>
+                            Administrador
+                        </p>
 
                     </div>
 
@@ -188,225 +160,191 @@
             </header>
 
             <!-- CARDS -->
-            <section id="inicioSection">
 
-                <!-- TODO TU DASHBOARD -->
+            <section class="cards">
 
-                <section class="cards">
+                <div class="card success">
 
-                    <div class="card success">
+                    <div class="process-card">
 
-                        <div class="process-card">
+                        <img src="/logo.png">
 
-                            <img src="uploads/playera.jpg">
+                        <div>
 
-                            <div>
+                            <h2>
+                                Playera Oversize
+                            </h2>
 
-                                <h2>Playera Oversize</h2>
+                            <span class="status">
 
-                                <span class="status">
-                                    En confección
-                                </span>
+                                En confección
 
-                                <div class="progress">
+                            </span>
 
-                                    <div style="width:60%"></div>
+                            <div class="progress">
 
+                                <div style="width:60%">
                                 </div>
 
-                                <p>
-                                    Último movimiento:
-                                    Recibido por Ana Lopez
-                                </p>
-
                             </div>
+
+                            <p>
+
+                                Último movimiento:
+                                Ana Lopez
+
+                            </p>
 
                         </div>
 
                     </div>
 
-                    <div class="card success">
+                </div>
 
-                        <h3>Corte</h3>
+                <div class="card success">
 
-                        <p>Completado</p>
+                    <h3>Corte</h3>
 
-                        <span>45 / 45</span>
+                    <p>Completado</p>
 
-                    </div>
+                    <span>45 / 45</span>
 
-                    <div class="card warning">
+                </div>
 
-                        <h3>Confección</h3>
+                <div class="card warning">
 
-                        <p>En proceso</p>
+                    <h3>Confección</h3>
 
-                        <span>30 / 50</span>
+                    <p>En proceso</p>
 
-                    </div>
+                    <span>30 / 50</span>
 
-                    <div class="card danger">
+                </div>
 
-                        <h3>Acabados</h3>
+                <div class="card danger">
 
-                        <p>Pendiente</p>
+                    <h3>Acabados</h3>
 
-                        <span>0 / 50</span>
+                    <p>Pendiente</p>
 
-                    </div>
+                    <span>0 / 50</span>
 
-                </section>
+                </div>
 
-                <!-- GRID -->
+            </section>
 
-                <section class="content-grid">
+            <!-- GRID -->
 
-                    <div class="panel">
+            <section class="content-grid">
 
-                        <h3>Resumen General</h3>
+                <div class="panel">
 
-                        <div class="stats">
+                    <h3>
+                        Resumen General
+                    </h3>
 
-                            <div class="stat">
+                    <div class="stats">
 
-                                <h1>50</h1>
+                        <div class="stat">
 
-                                <p>Prendas</p>
+                            <h1>50</h1>
 
-                            </div>
+                            <p>Prendas</p>
 
-                            <div class="stat">
+                        </div>
 
-                                <h1>60%</h1>
+                        <div class="stat">
 
-                                <p>Progreso</p>
+                            <h1>60%</h1>
 
-                            </div>
+                            <p>Progreso</p>
 
-                            <div class="stat">
+                        </div>
 
-                                <h1>30</h1>
+                        <div class="stat">
 
-                                <p>Procesadas</p>
+                            <h1>30</h1>
 
-                            </div>
+                            <p>Procesadas</p>
 
                         </div>
 
                     </div>
 
-                    <div class="panel">
+                </div>
 
-                        <h3>Producto</h3>
+                <div class="panel">
 
-                        <div class="product">
+                    <h3>Producto</h3>
 
-                            <img src="logo.png">
+                    <div class="product">
 
-                            <div>
+                        <img src="/logo.png">
 
-                                <h2>Playera Oversize</h2>
+                        <div>
 
-                                <p>Color negro</p>
+                            <h2>
+                                Playera Oversize
+                            </h2>
 
-                                <p>Talla M</p>
+                            <p>
+                                Color negro
+                            </p>
 
-                                <p>50 piezas</p>
+                            <p>
+                                Talla M
+                            </p>
 
-                            </div>
+                            <p>
+                                50 piezas
+                            </p>
 
                         </div>
 
                     </div>
 
-                </section>
+                </div>
 
-                <!-- CRUD -->
+            </section>
 
-                <section class="crud">
+            <!-- CRUD -->
 
-                    <h2>
-                        Administrar Productos
-                    </h2>
+            <section class="crud">
 
-                    <form id="productForm">
+                <h2>
+                    Administrar Productos
+                </h2>
 
-                        <input type="text" id="nombre" placeholder="Nombre">
+                <form id="productForm">
 
-                        <input type="number" id="cantidad" placeholder="Cantidad">
+                    <input type="text" id="nombre" placeholder="Nombre">
 
-                        <input type="text" id="estado" placeholder="Estado">
+                    <input type="number" id="cantidad" placeholder="Cantidad">
 
-                        <input type="file" id="foto">
+                    <input type="text" id="estado" placeholder="Estado">
 
-                        <button type="submit">
-                            Agregar
-                        </button>
+                    <button type="submit">
 
-                    </form>
+                        Agregar
 
-                    <div id="productos">
+                    </button>
 
-                    </div>
+                </form>
 
-                </section>
+                <div id="productos">
+
+                </div>
+
+            </section>
 
         </main>
 
     </div>
 
-    <script src="main.js"></script>
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/main.js"></script>
 
 </body>
 
 </html>
-
-</section>
-
-<section id="inventarioSection" style="display:none;">
-
-    <div class="panel">
-
-        <h2>Inventario</h2>
-
-        <div id="productos"></div>
-
-    </div>
-
-</section>
-
-<section id="produccionSection" style="display:none;">
-
-    <div class="panel">
-
-        <h2>Producción</h2>
-
-        <p>Seguimiento de maquila</p>
-
-    </div>
-
-</section>
-
-<section id="reportesSection" style="display:none;">
-
-    <div class="panel">
-
-        <h2>Reportes</h2>
-
-        <p>Reportes y estadísticas</p>
-
-    </div>
-
-</section>
-
-<section id="configSection" style="display:none;">
-
-    <div class="panel">
-
-        <h2>Configuración</h2>
-
-        <p>Usuarios y permisos</p>
-
-    </div>
-
-</section>

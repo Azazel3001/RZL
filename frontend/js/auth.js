@@ -1,8 +1,38 @@
 const token =
     localStorage.getItem("token");
 
-if (!token) {
+console.log(
+    "TOKEN:",
+    token
+);
 
-    console.log("Sin token");
+/* RUTAS PRIVADAS */
+
+const privateRoutes = [
+
+    "/dashboard",
+    "/inventario",
+    "/produccion",
+    "/corte",
+    "/confeccion",
+    "/acabados",
+    "/calidad",
+    "/reportes"
+
+];
+
+/* VERIFICAR */
+
+const currentPath =
+    window.location.pathname;
+
+const isPrivate =
+    privateRoutes.includes(
+        currentPath
+    );
+
+if (isPrivate && !token) {
+
+    window.location.href = "/";
 
 }
