@@ -777,25 +777,39 @@ body {
 
 @media(max-width:600px) {
 
+    /* FIX CAPAS */
+
+    .dashboard {
+        position: relative;
+        z-index: 1;
+    }
+
+    .sidebar {
+        position: relative;
+        z-index: 2;
+    }
+
     .main {
-        padding: 15px;
+        position: relative;
+        z-index: 3;
     }
 
+    /* FIX BOTONES */
+
+    button,
+    a,
+    input {
+        position: relative;
+        z-index: 5;
+    }
+
+    /* EVITAR BLOQUEOS */
+
+    .cards,
+    .panel,
+    .crud,
     .topbar {
-
-        flex-direction: column;
-
-        gap: 20px;
-
-        align-items: flex-start;
+        position: relative;
+        z-index: 2;
     }
-
-    .cards {
-        grid-template-columns: 1fr;
-    }
-
-    .logo-animated {
-        font-size: 90px;
-    }
-
 }
