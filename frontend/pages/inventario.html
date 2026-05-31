@@ -5,19 +5,104 @@
 
     <meta charset="UTF-8">
 
-    <title>Inventario</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Inventario - LZR</title>
 
     <link rel="stylesheet" href="/style.css">
+
+    <script defer src="/js/auth.js"></script>
+    <script defer src="/js/inventario.js"></script>
 
 </head>
 
 <body>
 
-    <h1>Inventario</h1>
+    <div class="dashboard">
 
-    <div id="productos"></div>
+        <aside class="sidebar">
 
-    <script src="/js/inventario.js"></script>
+            <div class="logo">
+
+                <h1>
+
+                    <span class="red">L</span>
+                    <span class="white">Z</span>
+                    <span class="red">R</span>
+
+                </h1>
+
+                <p>SERVICES</p>
+
+            </div>
+
+            <nav>
+
+                <a href="/dashboard">
+                    🏠 Inicio
+                </a>
+
+                <a href="/inventario" class="active">
+                    📦 Inventario
+                </a>
+
+                <a href="/produccion">
+                    🏭 Producción
+                </a>
+
+                <a href="/corte">
+                    ✂ Corte
+                </a>
+
+                <a href="/confeccion">
+                    🪡 Confección
+                </a>
+
+                <a href="/acabados">
+                    🎨 Acabados
+                </a>
+
+                <a href="/calidad">
+                    ✅ Calidad
+                </a>
+
+                <a href="/reportes">
+                    📊 Reportes
+                </a>
+
+                <a href="/" onclick="localStorage.clear()">
+                    🚪 Salir
+                </a>
+
+            </nav>
+
+        </aside>
+
+        <main class="main">
+
+            <header class="topbar">
+
+                <h2>
+                    Inventario General
+                </h2>
+
+            </header>
+
+            <section class="crud">
+
+                <h2>
+                    Productos Registrados
+                </h2>
+
+                <div id="productos">
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
 
 </body>
 
