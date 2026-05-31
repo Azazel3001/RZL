@@ -1,27 +1,63 @@
-async function cargarProductos() {
+const btn = document.getElementById("loginBtn");
 
-    const res = await fetch("/api/products");
-    const data = await res.json();
+if (btn) {
 
-    const contenedor = document.getElementById("productos");
+    btn.addEventListener("click", async () => {
 
-    if (!contenedor) return;
+        const username =
+            document.getElementById("username").value;
 
-    contenedor.innerHTML = "";
+        const password =
+            document.getElementById("password").value;
 
-    data.forEach(product => {
+        try {
 
-        contenedor.innerHTML += `
-            <div class="product-item">
+            const res = await fetch(
+                "/api/users/login",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        username,
+                        password
+                    })
+                }
+            );
 
-                <h2>${product.nombre}</h2>
-                <p>Cantidad: ${product.cantidad}</p>
-                <p>Proceso: ${product.proceso}</p>
-                <p>Estado: ${product.estado}</p>
+            const data = await res.json();
 
-            </div>
-        `;
+            if (data.token) {
+
+                localStorage.setItem(
+                    "token",
+                    data.token
+                );
+
+                window.location.href =
+                    "/dashboard";
+
+            } else {
+
+                document.getElementById(
+                    "errorMsg"
+                ).innerText =
+                    data.msg || "Credenciales incorrectas";
+
+            }
+
+        } catch (error) {
+
+            console.error(error);
+
+            document.getElementById(
+                "errorMsg"
+            ).innerText =
+                "Error de conexión";
+
+        }
+
     });
-}
 
-cargarProductos();
+}
