@@ -6,7 +6,70 @@ const jwt = require("jsonwebtoken");
 
 const User = require("../models/User");
 
-/* LOGIN */
+/* ================= CREAR USUARIO ================= */
+
+router.post("/register", async (req, res) => {
+
+    try {
+
+        const {
+            username,
+            password,
+            role
+        } = req.body;
+
+        const existe =
+            await User.findOne({
+                username
+            });
+
+        if (existe) {
+
+            return res.status(400).json({
+                msg: "El usuario ya existe"
+            });
+
+        }
+
+        const salt =
+            await bcrypt.genSalt(10);
+
+        const hash =
+            await bcrypt.hash(
+                password,
+                salt
+            );
+
+        const nuevoUsuario =
+            new User({
+
+                username,
+
+                password: hash,
+
+                role: role || "user"
+
+            });
+
+        await nuevoUsuario.save();
+
+        res.json({
+            msg: "Usuario creado"
+        });
+
+    } catch (err) {
+
+        console.log(err);
+
+        res.status(500).json({
+            msg: "Error servidor"
+        });
+
+    }
+
+});
+
+/* ================= LOGIN ================= */
 
 router.post("/login", async (req, res) => {
 
@@ -18,14 +81,14 @@ router.post("/login", async (req, res) => {
         } = req.body;
 
         const user =
-            await User.findOne({ username });
+            await User.findOne({
+                username
+            });
 
         if (!user) {
 
             return res.status(401).json({
-
                 msg: "Usuario no encontrado"
-
             });
 
         }
@@ -39,9 +102,7 @@ router.post("/login", async (req, res) => {
         if (!valid) {
 
             return res.status(401).json({
-
                 msg: "Contraseña incorrecta"
-
             });
 
         }
@@ -67,9 +128,11 @@ router.post("/login", async (req, res) => {
             token,
 
             user: {
+
                 id: user._id,
                 username: user.username,
                 role: user.role
+
             }
 
         });
@@ -79,9 +142,29 @@ router.post("/login", async (req, res) => {
         console.log(err);
 
         res.status(500).json({
-
             msg: "Error servidor"
+        });
 
+    }
+
+});
+
+/* ================= LISTAR USUARIOS ================= */
+
+router.get("/", async (req, res) => {
+
+    try {
+
+        const usuarios =
+            await User.find()
+                .select("-password");
+
+        res.json(usuarios);
+
+    } catch (err) {
+
+        res.status(500).json({
+            msg: "Error servidor"
         });
 
     }

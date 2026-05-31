@@ -9,9 +9,8 @@ router.get("/", async (req, res) => {
 
     try {
 
-        const productos =
-            await Product.find()
-                .sort({ fechaInicio: -1 });
+        const productos = await Product.find()
+            .sort({ fechaInicio: -1 });
 
         res.json(productos);
 
@@ -33,6 +32,14 @@ router.get("/:id", async (req, res) => {
 
         const producto =
             await Product.findById(req.params.id);
+
+        if (!producto) {
+
+            return res.status(404).json({
+                msg: "Producto no encontrado"
+            });
+
+        }
 
         res.json(producto);
 
@@ -77,14 +84,18 @@ router.put("/:id", async (req, res) => {
 
         const producto =
             await Product.findByIdAndUpdate(
-
                 req.params.id,
-
                 req.body,
-
                 { new: true }
-
             );
+
+        if (!producto) {
+
+            return res.status(404).json({
+                msg: "Producto no encontrado"
+            });
+
+        }
 
         res.json(producto);
 
@@ -104,17 +115,10 @@ router.put("/:id/proceso", async (req, res) => {
 
     try {
 
-        const {
-
-            proceso,
-            usuario
-
-        } = req.body;
+        const { proceso, usuario } = req.body;
 
         const producto =
-            await Product.findById(
-                req.params.id
-            );
+            await Product.findById(req.params.id);
 
         if (!producto) {
 
@@ -127,25 +131,32 @@ router.put("/:id/proceso", async (req, res) => {
         producto.proceso = proceso;
         producto.ubicacionActual = proceso;
 
-        if (proceso === "Corte")
-            producto.progreso = 25;
+        switch (proceso) {
 
-        if (proceso === "Confeccion")
-            producto.progreso = 50;
+            case "Corte":
+                producto.progreso = 25;
+                break;
 
-        if (proceso === "Acabados")
-            producto.progreso = 75;
+            case "Confeccion":
+                producto.progreso = 50;
+                break;
 
-        if (proceso === "Calidad")
-            producto.progreso = 100;
+            case "Acabados":
+                producto.progreso = 75;
+                break;
+
+            case "Calidad":
+                producto.progreso = 100;
+                producto.estado = "Finalizado";
+                break;
+
+        }
 
         producto.historial.push({
 
             proceso,
-
             estado: "Movido",
-
-            usuario
+            usuario: usuario || "Sistema"
 
         });
 
@@ -169,23 +180,26 @@ router.put("/:id/checklist", async (req, res) => {
 
     try {
 
-        const {
-
-            area,
-            campo,
-            valor
-
-        } = req.body;
+        const { area, campo, valor } = req.body;
 
         const producto =
-            await Product.findById(
-                req.params.id
-            );
+            await Product.findById(req.params.id);
 
         if (!producto) {
 
             return res.status(404).json({
                 msg: "Producto no encontrado"
+            });
+
+        }
+
+        if (
+            !producto[area] ||
+            producto[area][campo] === undefined
+        ) {
+
+            return res.status(400).json({
+                msg: "Campo inválido"
             });
 
         }
@@ -212,9 +226,18 @@ router.delete("/:id", async (req, res) => {
 
     try {
 
-        await Product.findByIdAndDelete(
-            req.params.id
-        );
+        const producto =
+            await Product.findByIdAndDelete(
+                req.params.id
+            );
+
+        if (!producto) {
+
+            return res.status(404).json({
+                msg: "Producto no encontrado"
+            });
+
+        }
 
         res.json({
             msg: "Producto eliminado"
@@ -260,13 +283,11 @@ router.get("/stats/resumen", async (req, res) => {
             });
 
         res.json({
-
             total,
             corte,
             confeccion,
             acabados,
             calidad
-
         });
 
     } catch (error) {

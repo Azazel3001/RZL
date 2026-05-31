@@ -5,10 +5,13 @@ if (btn) {
     btn.addEventListener("click", async () => {
 
         const username =
-            document.getElementById("username").value;
+            document.getElementById("username")?.value;
 
         const password =
-            document.getElementById("password").value;
+            document.getElementById("password")?.value;
+
+        const errorMsg =
+            document.getElementById("errorMsg");
 
         try {
 
@@ -40,10 +43,13 @@ if (btn) {
 
             } else {
 
-                document.getElementById(
-                    "errorMsg"
-                ).innerText =
-                    data.msg || "Credenciales incorrectas";
+                if (errorMsg) {
+
+                    errorMsg.innerText =
+                        data.msg ||
+                        "Credenciales incorrectas";
+
+                }
 
             }
 
@@ -51,10 +57,12 @@ if (btn) {
 
             console.error(error);
 
-            document.getElementById(
-                "errorMsg"
-            ).innerText =
-                "Error de conexión";
+            if (errorMsg) {
+
+                errorMsg.innerText =
+                    "Error de conexión";
+
+            }
 
         }
 
