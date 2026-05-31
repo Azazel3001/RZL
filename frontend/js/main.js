@@ -3,77 +3,132 @@ const productosDiv = document.getElementById("productos");
 
 async function cargarProductos() {
 
-  const res = await fetch("/api/products");
-  const productos = await res.json();
+  try {
 
-  // 🔥 PROTECCIÓN IMPORTANTE
-  if (!productosDiv) return;
+    const res = await fetch("/api/products");
+    const productos = await res.json();
 
-  productosDiv.innerHTML = "";
+    // 🔴 protección contra páginas sin contenedor
+    if (!productosDiv) return;
 
-  let corte = 0;
-  let confeccion = 0;
-  let acabados = 0;
+    productosDiv.innerHTML = "";
 
-  productos.forEach(producto => {
+    let corte = 0;
+    let confeccion = 0;
+    let acabados = 0;
+    let calidad = 0;
 
-    if (producto.proceso === "Corte") corte++;
-    if (producto.proceso === "Confección") confeccion++;
-    if (producto.proceso === "Acabados") acabados++;
+    let totalProducciones = productos.length;
+    let totalPiezas = 0;
 
-    productosDiv.innerHTML += `
+    productos.forEach(producto => {
+
+      totalPiezas += Number(producto.cantidad || 0);
+
+      // 🔥 normalización de texto (evita errores "Confeccion" vs "Confección")
+      const proceso = (producto.proceso || "").toLowerCase();
+
+      if (proceso.includes("corte")) corte++;
+      else if (proceso.includes("confe")) confeccion++;
+      else if (proceso.includes("acab")) acabados++;
+      else if (proceso.includes("calidad")) calidad++;
+
+      productosDiv.innerHTML += `
+
         <div class="product-item">
-            <div>
-                <h2>${producto.nombre}</h2>
-                <p>Cantidad: ${producto.cantidad}</p>
-                <p>Color: ${producto.color}</p>
-                <p>Talla: ${producto.talla}</p>
-                <p>Lote: ${producto.lote}</p>
-                <p>Proceso: ${producto.proceso}</p>
-            </div>
 
-            <div>
-                <button onclick="eliminarProducto('${producto._id}')">
-                    Eliminar
-                </button>
-            </div>
-        </div>`;
-  });
+            <h2>${producto.nombre || "-"}</h2>
 
-  // 🔥 PROTECCIÓN DE TARJETAS
-  const corteEl = document.getElementById("corteCount");
-  const confEl = document.getElementById("confeccionCount");
-  const acabEl = document.getElementById("acabadosCount");
+            <p><strong>Cantidad:</strong> ${producto.cantidad || 0}</p>
+            <p><strong>Color:</strong> ${producto.color || "-"}</p>
+            <p><strong>Talla:</strong> ${producto.talla || "-"}</p>
+            <p><strong>Lote:</strong> ${producto.lote || "-"}</p>
 
-  if (corteEl) corteEl.innerText = corte;
-  if (confEl) confEl.innerText = confeccion;
-  if (acabEl) acabEl.innerText = acabados;
+            <p><strong>Proceso:</strong> ${producto.proceso || "-"}</p>
+            <p><strong>Estado:</strong> ${producto.estado || "-"}</p>
+
+            <p><strong>Responsable:</strong> ${producto.responsable || "Sin asignar"}</p>
+            <p><strong>Ubicación:</strong> ${producto.ubicacionActual || "-"}</p>
+
+            <p><strong>Progreso:</strong> ${producto.progreso || 0}%</p>
+
+            <progress value="${producto.progreso || 0}" max="100"></progress>
+
+            <h4>Historial</h4>
+
+            <ul>
+              ${(producto.historial || []).map(item => `
+                <li>
+                  ${item.proceso || "-"} -
+                  ${item.estado || "-"} -
+                  ${item.usuario || "-"}
+                </li>
+              `).join("")}
+            </ul>
+
+            <button onclick="eliminarProducto('${producto._id}')">
+              Eliminar
+            </button>
+
+        </div>
+
+      `;
+    });
+
+    // 🔥 actualizar tarjetas (con protección)
+    const setText = (id, value) => {
+      const el = document.getElementById(id);
+      if (el) el.innerText = value;
+    };
+
+    setText("corteCount", corte);
+    setText("confeccionCount", confeccion);
+    setText("acabadosCount", acabados);
+    setText("calidadCount", calidad);
+
+    setText("totalProducciones", totalProducciones);
+    setText("totalPiezas", totalPiezas);
+
+  } catch (error) {
+    console.error("Error cargando productos:", error);
+  }
 }
 
+/* ================= CREATE ================= */
+
 if (form) {
+
   form.addEventListener("submit", async (e) => {
+
     e.preventDefault();
 
     const nuevoProducto = {
+
       nombre: document.getElementById("nombre").value,
       cantidad: document.getElementById("cantidad").value,
       color: document.getElementById("color").value,
       talla: document.getElementById("talla").value,
       lote: document.getElementById("lote").value,
       proceso: document.getElementById("proceso").value,
+
       progreso: 0,
-      estado: "En proceso",
+      estado: "Pendiente",
       ubicacionActual: document.getElementById("proceso").value,
-      historial: [{
-        proceso: document.getElementById("proceso").value,
-        estado: "Iniciado",
-        usuario: "Admin"
-      }]
+
+      historial: [
+        {
+          proceso: document.getElementById("proceso").value,
+          estado: "Creado",
+          usuario: "Admin"
+        }
+      ]
     };
 
     await fetch("/api/products", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify(nuevoProducto)
     });
 
@@ -82,7 +137,10 @@ if (form) {
   });
 }
 
+/* ================= DELETE ================= */
+
 async function eliminarProducto(id) {
+
   await fetch("/api/products/" + id, {
     method: "DELETE"
   });
@@ -90,4 +148,5 @@ async function eliminarProducto(id) {
   cargarProductos();
 }
 
+/* INIT */
 cargarProductos();
