@@ -2,11 +2,10 @@ const mongoose = require("mongoose");
 
 const ProductSchema = new mongoose.Schema({
 
-    // DATOS GENERALES
-
     folio: {
         type: String,
-        unique: true
+        unique: true,
+        sparse: true
     },
 
     nombre: {
@@ -21,7 +20,7 @@ const ProductSchema = new mongoose.Schema({
 
     cantidad: {
         type: Number,
-        required: true
+        default: 0
     },
 
     color: {
@@ -44,16 +43,9 @@ const ProductSchema = new mongoose.Schema({
         default: ""
     },
 
-    // PRODUCCIÓN
-
     proceso: {
         type: String,
         default: "Corte"
-    },
-
-    estado: {
-        type: String,
-        default: "Pendiente"
     },
 
     progreso: {
@@ -71,106 +63,30 @@ const ProductSchema = new mongoose.Schema({
         default: "Corte"
     },
 
-    // CHECKLIST CORTE
-
-    corte: {
-
-        telaRecibida: {
-            type: Boolean,
-            default: false
-        },
-
-        telaRevisada: {
-            type: Boolean,
-            default: false
-        },
-
-        moldeCargado: {
-            type: Boolean,
-            default: false
-        },
-
-        corteRealizado: {
-            type: Boolean,
-            default: false
-        }
-
+    estado: {
+        type: String,
+        default: "Pendiente"
     },
 
-    // CHECKLIST CONFECCIÓN
-
-    confeccion: {
-
-        recibido: {
-            type: Boolean,
-            default: false
-        },
-
-        frontal: {
-            type: Boolean,
-            default: false
-        },
-
-        trasera: {
-            type: Boolean,
-            default: false
-        },
-
-        mangas: {
-            type: Boolean,
-            default: false
-        },
-
-        etiquetas: {
-            type: Boolean,
-            default: false
-        }
-
+    maquilera: {
+        type: String,
+        default: ""
     },
 
-    // CHECKLIST ACABADOS
-
-    acabados: {
-
-        limpieza: {
-            type: Boolean,
-            default: false
-        },
-
-        planchado: {
-            type: Boolean,
-            default: false
-        },
-
-        empaque: {
-            type: Boolean,
-            default: false
-        }
-
+    piezasEnviadas: {
+        type: Number,
+        default: 0
     },
 
-    // CHECKLIST CALIDAD
-
-    calidad: {
-
-        revision: {
-            type: Boolean,
-            default: false
-        },
-
-        conteo: {
-            type: Boolean,
-            default: false
-        },
-
-        aprobado: {
-            type: Boolean,
-            default: false
-        }
-
+    piezasRecibidas: {
+        type: Number,
+        default: 0
     },
 
-    // HISTORIAL
+    faltantes: {
+        type: Number,
+        default: 0
+    },
 
     historial: [
 
@@ -194,7 +110,8 @@ const ProductSchema = new mongoose.Schema({
     ],
 
     creadoPor: {
-        type: String
+        type: String,
+        default: ""
     },
 
     fechaInicio: {
@@ -202,14 +119,14 @@ const ProductSchema = new mongoose.Schema({
         default: Date.now
     },
 
-    fechaEntrega: {
-        type: Date
-    }
+    fechaEntrega: Date
 
-});
+},
+    {
+        timestamps: true
+    });
 
-module.exports =
-    mongoose.model(
-        "Product",
-        ProductSchema
-    );
+module.exports = mongoose.model(
+    "Product",
+    ProductSchema
+);

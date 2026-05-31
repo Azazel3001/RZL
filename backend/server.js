@@ -66,6 +66,11 @@ app.use(
 );
 
 app.use(
+  "/api/maquileras",
+  require("./routes/maquileras")
+);
+
+app.use(
   "/api/uploads",
   require("./routes/uploads")
 );
@@ -181,6 +186,22 @@ app.get("/calidad", (req, res) => {
   );
 
 });
+
+
+app.get("/maquileras", (req, res) => {
+
+  res.sendFile(
+
+    path.join(
+      frontendPath,
+      "pages",
+      "maquileras.html"
+    )
+
+  );
+
+});
+
 
 /* REPORTES */
 

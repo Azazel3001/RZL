@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Usuarios - LZR</title>
+
+    <link rel="stylesheet" href="/style.css">
+
+</head>
+
+<body>
+
+    <div class="main">
+
+        <h1>Administración de Usuarios</h1>
+
+        <form id="userForm">
+
+            <input type="text" id="nombre" placeholder="Nombre completo" required>
+
+            <input type="text" id="username" placeholder="Usuario" required>
+
+            <input type="password" id="password" placeholder="Contraseña" required>
+
+            <select id="role">
+
+                <option value="admin">
+                    Admin
+                </option>
+
+                <option value="corte">
+                    Corte
+                </option>
+
+                <option value="confeccion">
+                    Confección
+                </option>
+
+                <option value="acabados">
+                    Acabados
+                </option>
+
+                <option value="calidad">
+                    Calidad
+                </option>
+
+                <option value="maquilera">
+                    Maquilera
+                </option>
+
+                <option value="supervisor">
+                    Supervisor
+                </option>
+
+            </select>
+
+            <button type="submit">
+
+                Crear Usuario
+
+            </button>
+
+        </form>
+
+        <hr>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Nombre</th>
+                    <th>Usuario</th>
+                    <th>Rol</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="usuariosTable">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <script src="/js/users.js"></script>
+
+</body>
+
+</html>
