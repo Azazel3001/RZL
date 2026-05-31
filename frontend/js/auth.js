@@ -1,38 +1,107 @@
-const token =
-    localStorage.getItem("token");
+async function cargarProductos() {
 
-console.log(
-    "TOKEN:",
-    token
-);
+    try {
 
-/* RUTAS PRIVADAS */
+        const res = await fetch("/api/products");
 
-const privateRoutes = [
+        const productos = await res.json();
 
-    "/dashboard",
-    "/inventario",
-    "/produccion",
-    "/corte",
-    "/confeccion",
-    "/acabados",
-    "/calidad",
-    "/reportes"
+        const contenedor =
+            document.getElementById("productos");
 
-];
+        contenedor.innerHTML = "";
 
-/* VERIFICAR */
+        productos.forEach(producto => {
 
-const currentPath =
-    window.location.pathname;
+            contenedor.innerHTML += `
 
-const isPrivate =
-    privateRoutes.includes(
-        currentPath
-    );
+            <div class="product-item">
 
-if (isPrivate && !token) {
+                <div class="product-header">
 
-    window.location.href = "/";
+                    <h2>${producto.nombre}</h2>
+
+                    <span class="estado">
+                        ${producto.estado}
+                    </span>
+
+                </div>
+
+                <p>
+                    📦 Cantidad:
+                    ${producto.cantidad}
+                </p>
+
+                <p>
+                    🎨 Color:
+                    ${producto.color || "-"}
+                </p>
+
+                <p>
+                    📏 Talla:
+                    ${producto.talla || "-"}
+                </p>
+
+                <p>
+                    🏷️ Lote:
+                    ${producto.lote || "-"}
+                </p>
+
+                <p>
+                    🏭 Proceso:
+                    ${producto.proceso || "-"}
+                </p>
+
+                <p>
+                    👤 Responsable:
+                    ${producto.responsable || "Sin asignar"}
+                </p>
+
+                <p>
+                    📍 Ubicación:
+                    ${producto.ubicacionActual || "-"}
+                </p>
+
+                <p>
+                    📊 Avance:
+                    ${producto.progreso || 0}%
+                </p>
+
+                <div class="progress-bar">
+
+                    <div
+                    class="progress-fill"
+                    style="width:${producto.progreso || 0}%">
+                    </div>
+
+                </div>
+
+                <button
+                onclick="verDetalle('${producto._id}')">
+
+                    Ver detalle
+
+                </button>
+
+            </div>
+
+            `;
+
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
 
 }
+
+function verDetalle(id) {
+
+    window.location.href =
+        "/historial?id=" + id;
+
+}
+
+cargarProductos();

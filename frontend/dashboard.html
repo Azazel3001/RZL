@@ -18,10 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
 
-    <!-- JS -->
-
     <script defer src="/js/auth.js"></script>
-
     <script defer src="/js/main.js"></script>
 
 </head>
@@ -48,65 +45,37 @@
 
             </div>
 
-            <!-- MENU -->
-
             <nav>
 
-                <a href="/dashboard" class="active">
-                    🏠 Inicio
-                </a>
+                <a href="/dashboard" class="active">🏠 Inicio</a>
 
-                <a href="/inventario">
-                    📦 Inventario
-                </a>
+                <a href="/inventario">📦 Inventario</a>
 
-                <a href="/produccion">
-                    🏭 Producción
-                </a>
+                <a href="/produccion">🏭 Producción</a>
 
-                <a href="/corte">
-                    ✂ Corte
-                </a>
+                <a href="/corte">✂ Corte</a>
 
-                <a href="/confeccion">
-                    🪡 Confección
-                </a>
+                <a href="/confeccion">🪡 Confección</a>
 
-                <a href="/acabados">
-                    🎨 Acabados
-                </a>
+                <a href="/acabados">🎨 Acabados</a>
 
-                <a href="/calidad">
-                    ✅ Calidad
-                </a>
+                <a href="/calidad">✅ Calidad</a>
 
-                <a href="/reportes">
-                    📊 Reportes
-                </a>
+                <a href="/reportes">📊 Reportes</a>
 
-                <a href="#" onclick="logout()">
-                    🚪 Salir
-                </a>
+                <a href="#" onclick="logout()">🚪 Salir</a>
 
             </nav>
-
-            <!-- SUPPORT -->
 
             <div class="support">
 
                 <h3>Asistencia</h3>
 
-                <p>
-                    📞 +52 4452197165
-                </p>
+                <p>📞 +52 4452197165</p>
 
-                <p>
-                    📘 Facebook Azazel RL
-                </p>
+                <p>📘 Facebook Azazel RL</p>
 
-                <p>
-                    💬 WhatsApp +52 4452197165
-                </p>
+                <p>💬 WhatsApp +52 4452197165</p>
 
                 <button onclick="logout()" class="logout-btn">
 
@@ -122,21 +91,16 @@
 
         <main class="main">
 
-            <!-- TOPBAR -->
-
             <header class="topbar">
 
                 <div>
 
                     <h2>
-
-                        Inventario &
-                        Seguimiento
-
+                        Seguimiento de Producción
                     </h2>
 
                     <span>
-                        Dashboard administrativo
+                        Dashboard Administrativo
                     </span>
 
                 </div>
@@ -163,80 +127,112 @@
 
             </header>
 
-            <!-- CARDS -->
+            <!-- TARJETAS -->
 
             <section class="cards">
 
-                <section class="cards">
+                <div class="card success">
 
-                    <div class="card success">
+                    <h3>✂ Corte</h3>
 
-                        <h3>✂ Corte</h3>
+                    <span id="corteCount">
+                        0
+                    </span>
 
-                        <span id="corteCount">
-                            0
-                        </span>
+                    <p>
+                        Órdenes en Corte
+                    </p>
 
-                        <p>
-                            Productos en corte
-                        </p>
+                </div>
 
-                    </div>
+                <div class="card warning">
 
-                    <div class="card warning">
+                    <h3>🪡 Confección</h3>
 
-                        <h3>🪡 Confección</h3>
+                    <span id="confeccionCount">
+                        0
+                    </span>
 
-                        <span id="confeccionCount">
-                            0
-                        </span>
+                    <p>
+                        Órdenes en Confección
+                    </p>
 
-                        <p>
-                            Productos en confección
-                        </p>
+                </div>
 
-                    </div>
+                <div class="card danger">
 
-                    <div class="card danger">
+                    <h3>🎨 Acabados</h3>
 
-                        <h3>🎨 Acabados</h3>
+                    <span id="acabadosCount">
+                        0
+                    </span>
 
-                        <span id="acabadosCount">
-                            0
-                        </span>
+                    <p>
+                        Órdenes en Acabados
+                    </p>
 
-                        <p>
-                            Productos en acabados
-                        </p>
+                </div>
 
-                    </div>
+                <div class="card success">
 
-                </section>
+                    <h3>✅ Calidad</h3>
+
+                    <span id="calidadCount">
+                        0
+                    </span>
+
+                    <p>
+                        Órdenes en Calidad
+                    </p>
+
+                </div>
+
+            </section>
+
+            <!-- RESUMEN -->
+
+            <section class="content-grid">
 
                 <div class="panel">
 
-                    <h3>Producto</h3>
+                    <h3>
+                        Resumen General
+                    </h3>
 
-                    <div class="product">
+                    <div class="stats">
 
-                        <img src="/logo.png">
+                        <div class="stat">
 
-                        <div>
-
-                            <h2>
-                                Playera Oversize
-                            </h2>
+                            <h1 id="totalProducciones">
+                                0
+                            </h1>
 
                             <p>
-                                Color negro
+                                Producciones
                             </p>
 
-                            <p>
-                                Talla M
-                            </p>
+                        </div>
+
+                        <div class="stat">
+
+                            <h1 id="totalPiezas">
+                                0
+                            </h1>
 
                             <p>
-                                50 piezas
+                                Piezas
+                            </p>
+
+                        </div>
+
+                        <div class="stat">
+
+                            <h1 id="avanceGeneral">
+                                0%
+                            </h1>
+
+                            <p>
+                                Avance General
                             </p>
 
                         </div>
@@ -247,66 +243,63 @@
 
             </section>
 
-            <!-- CRUD -->
+            <!-- FORMULARIO -->
 
             <section class="crud">
 
                 <h2>
-                    Administrar Productos
+                    Nueva Producción
                 </h2>
 
                 <form id="productForm">
 
-                    <input type="text" id="nombre" placeholder="Nombre">
+                    <input type="text" id="nombre" placeholder="Nombre" required>
 
-                    <input type="number" id="cantidad" placeholder="Cantidad">
+                    <input type="number" id="cantidad" placeholder="Cantidad" required>
 
-                    <input type="text" id="estado" placeholder="Estado">
+                    <input type="text" id="color" placeholder="Color">
+
+                    <input type="text" id="talla" placeholder="Talla">
+
+                    <input type="text" id="lote" placeholder="Lote">
+
+                    <select id="proceso">
+
+                        <option value="Corte">
+                            Corte
+                        </option>
+
+                        <option value="Confeccion">
+                            Confección
+                        </option>
+
+                        <option value="Acabados">
+                            Acabados
+                        </option>
+
+                        <option value="Calidad">
+                            Calidad
+                        </option>
+
+                    </select>
 
                     <button type="submit">
-                        <form id="productForm">
 
-                            <input type="text" id="nombre" placeholder="Nombre">
-
-                            <input type="number" id="cantidad" placeholder="Cantidad">
-
-                            <input type="text" id="color" placeholder="Color">
-
-                            <input type="text" id="talla" placeholder="Talla">
-
-                            <input type="text" id="lote" placeholder="Lote">
-
-                            <select id="proceso">
-
-                                <option value="Diseño">
-                                    Diseño
-                                </option>
-
-                                <option value="Corte">
-                                    Corte
-                                </option>
-
-                                <option value="Confección">
-                                    Confección
-                                </option>
-
-                                <option value="Acabados">
-                                    Acabados
-                                </option>
-
-                            </select>
-
-                            <button type="submit">
-                                Agregar
-                            </button>
-
-                        </form>
-
-                        Agregar
+                        Crear Producción
 
                     </button>
 
                 </form>
+
+            </section>
+
+            <!-- PRODUCCIONES -->
+
+            <section class="crud">
+
+                <h2>
+                    Producciones Activas
+                </h2>
 
                 <div id="productos">
 

@@ -2,9 +2,30 @@ const mongoose = require("mongoose");
 
 const LogSchema = new mongoose.Schema({
 
-    usuario: String,
+    usuario: {
+        type: String,
+        required: true
+    },
 
-    accion: String,
+    accion: {
+        type: String,
+        required: true
+    },
+
+    producto: {
+        type: String,
+        default: ""
+    },
+
+    proceso: {
+        type: String,
+        default: ""
+    },
+
+    comentario: {
+        type: String,
+        default: ""
+    },
 
     fecha: {
         type: Date,
@@ -13,4 +34,8 @@ const LogSchema = new mongoose.Schema({
 
 });
 
-module.exports = mongoose.model("Log", LogSchema);
+module.exports =
+    mongoose.model(
+        "Log",
+        LogSchema
+    );

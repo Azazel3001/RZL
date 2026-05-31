@@ -1,227 +1,190 @@
-const form =
-  document.getElementById(
-    "productForm"
-  );
-
-const productosDiv =
-  document.getElementById(
-    "productos"
-  );
-
-/* ================= GET PRODUCTS ================= */
+const form = document.getElementById("productForm");
+const productosDiv = document.getElementById("productos");
 
 async function cargarProductos() {
 
-  const res =
-    await fetch("/api/products");
-
-  const productos =
-    await res.json();
+  const res = await fetch("/api/products");
+  const productos = await res.json();
 
   productosDiv.innerHTML = "";
 
-  /* ================= COUNTS ================= */
-
   let corte = 0;
-
   let confeccion = 0;
-
   let acabados = 0;
+  let calidad = 0;
+
+  let totalProducciones = productos.length;
+  let totalPiezas = 0;
 
   productos.forEach(producto => {
 
-    /* CONTADORES */
+    totalPiezas += Number(producto.cantidad || 0);
 
-    if (producto.proceso === "Corte") {
-
-      corte++;
-
-    }
-
-    if (producto.proceso === "Confección") {
-
-      confeccion++;
-
-    }
-
-    if (producto.proceso === "Acabados") {
-
-      acabados++;
-
-    }
+    if (producto.proceso === "Corte") corte++;
+    if (producto.proceso === "Confeccion") confeccion++;
+    if (producto.proceso === "Acabados") acabados++;
+    if (producto.proceso === "Calidad") calidad++;
 
     productosDiv.innerHTML += `
 
-  <div class="product-item">
+        <div class="product-item">
 
-      <div>
+            <h2>${producto.nombre}</h2>
 
-          <h2>${producto.nombre}</h2>
+            <p><strong>Cantidad:</strong> ${producto.cantidad}</p>
 
-          <p>
-          Cantidad:
-          ${producto.cantidad}
-          </p>
+            <p><strong>Color:</strong> ${producto.color || "-"}</p>
 
-          <p>
-          Color:
-          ${producto.color}
-          </p>
+            <p><strong>Talla:</strong> ${producto.talla || "-"}</p>
 
-          <p>
-          Talla:
-          ${producto.talla}
-          </p>
+            <p><strong>Lote:</strong> ${producto.lote || "-"}</p>
 
-          <p>
-          Lote:
-          ${producto.lote}
-          </p>
+            <p><strong>Proceso:</strong> ${producto.proceso}</p>
 
-          <p>
-          Proceso:
-          ${producto.proceso}
-          </p>
+            <p><strong>Estado:</strong> ${producto.estado}</p>
 
-          <p>
-          Responsable:
-          ${producto.responsable || "Sin asignar"}
-          </p>
+            <p><strong>Responsable:</strong> ${producto.responsable || "Sin asignar"}</p>
 
-          <p>
-          Ubicación:
-          ${producto.ubicacionActual || "Sin ubicación"}
-          </p>
+            <p><strong>Ubicación:</strong> ${producto.ubicacionActual || "-"}</p>
 
-      </div>
+            <p><strong>Progreso:</strong> ${producto.progreso || 0}%</p>
 
-      <div>
+            <progress
+                value="${producto.progreso || 0}"
+                max="100">
+            </progress>
 
-          <button
-          onclick="eliminarProducto('${producto._id}')">
+            <h4>Historial</h4>
 
-              Eliminar
+            <ul>
 
-          </button>
+                ${(producto.historial || []).map(item => `
 
-      </div>
+                    <li>
 
-  </div>
+                        ${item.proceso}
+                        -
+                        ${item.estado}
+                        -
+                        ${item.usuario}
 
-  `;
+                    </li>
 
+                `).join("")}
+
+            </ul>
+
+            <button onclick="eliminarProducto('${producto._id}')">
+
+                Eliminar
+
+            </button>
+
+        </div>
+
+        `;
   });
 
+  const corteEl = document.getElementById("corteCount");
+  const confeccionEl = document.getElementById("confeccionCount");
+  const acabadosEl = document.getElementById("acabadosCount");
+  const calidadEl = document.getElementById("calidadCount");
+
+  if (corteEl) corteEl.innerText = corte;
+  if (confeccionEl) confeccionEl.innerText = confeccion;
+  if (acabadosEl) acabadosEl.innerText = acabados;
+  if (calidadEl) calidadEl.innerText = calidad;
+
+  const totalProduccionesEl =
+    document.getElementById("totalProducciones");
+
+  const totalPiezasEl =
+    document.getElementById("totalPiezas");
+
+  if (totalProduccionesEl)
+    totalProduccionesEl.innerText = totalProducciones;
+
+  if (totalPiezasEl)
+    totalPiezasEl.innerText = totalPiezas;
 }
-
-/* ACTUALIZAR TARJETAS */
-
-document.getElementById(
-  "corteCount"
-).innerText = corte;
-
-document.getElementById(
-  "confeccionCount"
-).innerText = confeccion;
-
-document.getElementById(
-  "acabadosCount"
-).innerText = acabados;
-
-/* ================= CREATE ================= */
 
 if (form) {
 
-  form.addEventListener(
-    "submit",
-    async (e) => {
+  form.addEventListener("submit", async (e) => {
 
-      e.preventDefault();
+    e.preventDefault();
 
-      const nuevoProducto = {
+    const nuevoProducto = {
 
-        nombre:
-          document.getElementById("nombre").value,
+      nombre:
+        document.getElementById("nombre").value,
 
-        cantidad:
-          document.getElementById("cantidad").value,
+      cantidad:
+        document.getElementById("cantidad").value,
 
-        color:
-          document.getElementById("color").value,
+      color:
+        document.getElementById("color").value,
 
-        talla:
-          document.getElementById("talla").value,
+      talla:
+        document.getElementById("talla").value,
 
-        lote:
-          document.getElementById("lote").value,
+      lote:
+        document.getElementById("lote").value,
 
-        proceso:
-          document.getElementById("proceso").value,
+      proceso:
+        document.getElementById("proceso").value,
 
-        progreso: 0,
+      progreso: 0,
 
-        estado: "En proceso",
+      estado: "Pendiente",
 
-        ubicacionActual:
-          document.getElementById("proceso").value,
+      ubicacionActual:
+        document.getElementById("proceso").value,
 
-        historial: [
+      historial: [
 
-          {
+        {
+          proceso:
+            document.getElementById("proceso").value,
 
-            proceso:
-              document.getElementById("proceso").value,
+          estado: "Creado",
 
-            estado: "Iniciado",
+          usuario: "Admin"
+        }
 
-            usuario: "Admin"
+      ]
+    };
 
-          }
+    await fetch("/api/products", {
 
-        ]
+      method: "POST",
 
-      };
+      headers: {
+        "Content-Type": "application/json"
+      },
 
-      await fetch("/api/products", {
-
-        method: "POST",
-
-        headers: {
-          "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify(
-          nuevoProducto
-        )
-
-      });
-
-      form.reset();
-
-      cargarProductos();
+      body: JSON.stringify(
+        nuevoProducto
+      )
 
     });
 
-}
+    form.reset();
 
-/* ================= DELETE ================= */
+    cargarProductos();
+
+  });
+}
 
 async function eliminarProducto(id) {
 
-  await fetch(
+  await fetch("/api/products/" + id, {
 
-    "/api/products/" + id,
+    method: "DELETE"
 
-    {
-
-      method: "DELETE"
-
-    }
-
-  );
+  });
 
   cargarProductos();
-
 }
 
 cargarProductos();
