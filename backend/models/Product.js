@@ -2,18 +2,30 @@ const mongoose = require("mongoose");
 
 const ProductSchema = new mongoose.Schema({
 
+    /* DATOS GENERALES */
+
     folio: {
         type: String,
         unique: true,
         sparse: true
     },
 
-    nombre: {
+    cliente: {
         type: String,
         required: true
     },
 
-    cliente: {
+    modelo: {
+        type: String,
+        default: ""
+    },
+
+    producto: {
+        type: String,
+        required: true
+    },
+
+    talla: {
         type: String,
         default: ""
     },
@@ -28,11 +40,6 @@ const ProductSchema = new mongoose.Schema({
         default: ""
     },
 
-    talla: {
-        type: String,
-        default: ""
-    },
-
     lote: {
         type: String,
         default: ""
@@ -43,24 +50,16 @@ const ProductSchema = new mongoose.Schema({
         default: ""
     },
 
-    proceso: {
-        type: String,
-        default: "Corte"
-    },
+    /* RESPONSABLE ACTUAL */
 
-    progreso: {
-        type: Number,
-        default: 0
-    },
-
-    responsable: {
+    usuarioResponsable: {
         type: String,
         default: ""
     },
 
-    ubicacionActual: {
+    areaActual: {
         type: String,
-        default: "Corte"
+        default: "Diseño"
     },
 
     estado: {
@@ -68,9 +67,28 @@ const ProductSchema = new mongoose.Schema({
         default: "Pendiente"
     },
 
-    maquilera: {
-        type: String,
-        default: ""
+    progreso: {
+        type: Number,
+        default: 0
+    },
+
+    /* PRIORIDAD */
+
+    urgente: {
+        type: Boolean,
+        default: false
+    },
+
+    /* CONTROL DE PRODUCCIÓN */
+
+    piezasDanadas: {
+        type: Number,
+        default: 0
+    },
+
+    piezasBuenas: {
+        type: Number,
+        default: 0
     },
 
     piezasEnviadas: {
@@ -88,13 +106,16 @@ const ProductSchema = new mongoose.Schema({
         default: 0
     },
 
-    historial: [
+    /* OBSERVACIONES */
+
+    observaciones: {
+        type: String,
+        default: ""
+    },
+
+    notas: [
 
         {
-
-            proceso: String,
-
-            estado: String,
 
             usuario: String,
 
@@ -109,6 +130,31 @@ const ProductSchema = new mongoose.Schema({
 
     ],
 
+    /* HISTORIAL */
+
+    historial: [
+
+        {
+
+            area: String,
+
+            usuario: String,
+
+            accion: String,
+
+            comentario: String,
+
+            fecha: {
+                type: Date,
+                default: Date.now
+            }
+
+        }
+
+    ],
+
+    /* FECHAS */
+
     creadoPor: {
         type: String,
         default: ""
@@ -119,7 +165,9 @@ const ProductSchema = new mongoose.Schema({
         default: Date.now
     },
 
-    fechaEntrega: Date
+    fechaEntrega: {
+        type: Date
+    }
 
 },
     {

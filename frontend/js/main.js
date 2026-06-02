@@ -1,11 +1,20 @@
 const form = document.getElementById("productForm");
 const productosDiv = document.getElementById("productos");
 
-/* ================= CARGAR PRODUCTOS ================= */
+const AREAS = [
+  "Diseño",
+  "Diseño Grafico",
+  "Corte",
+  "Confeccion",
+  "Bordado",
+  "DTF",
+  "Terminado"
+];
 
 async function cargarProductos() {
 
-  try {
+  ```
+try {
 
     const res = await fetch("/api/products");
     const productos = await res.json();
@@ -14,342 +23,399 @@ async function cargarProductos() {
 
     productosDiv.innerHTML = "";
 
-    let corte = 0;
-    let confeccion = 0;
-    let acabados = 0;
-    let calidad = 0;
-
     let totalProducciones = productos.length;
     let totalPiezas = 0;
     let sumaProgreso = 0;
 
+    const notificaciones = document.getElementById(
+        "notificacionesUrgentes"
+    );
+
+    if (notificaciones) {
+        notificaciones.innerHTML = "";
+    }
+
     productos.forEach(producto => {
 
-      totalPiezas += Number(producto.cantidad || 0);
-      sumaProgreso += Number(producto.progreso || 0);
+        totalPiezas += Number(producto.cantidad || 0);
+        sumaProgreso += Number(producto.progreso || 0);
 
-      const proceso =
-        (producto.proceso || "")
-          .toLowerCase();
+        if (producto.urgente && notificaciones) {
 
-      if (proceso.includes("corte"))
-        corte++;
+            notificaciones.innerHTML += 
 
-      else if (proceso.includes("confe"))
-        confeccion++;
-
-      else if (proceso.includes("acab"))
-        acabados++;
-
-      else if (proceso.includes("calidad"))
-        calidad++;
-
-      productosDiv.innerHTML += `
-
-            <div class="product-item">
-
-                <h2>${producto.nombre || "-"}</h2>
-
-                <p>
-                    <strong>Cantidad:</strong>
-                    ${producto.cantidad || 0}
-                </p>
-
-                <p>
-                    <strong>Color:</strong>
-                    ${producto.color || "-"}
-                </p>
-
-                <p>
-                    <strong>Talla:</strong>
-                    ${producto.talla || "-"}
-                </p>
-
-                <p>
-                    <strong>Lote:</strong>
-                    ${producto.lote || "-"}
-                </p>
-
-                <p>
-                    <strong>Proceso:</strong>
-                    ${producto.proceso || "-"}
-                </p>
-
-                <p>
-                    <strong>Estado:</strong>
-                    ${producto.estado || "-"}
-                </p>
-
-                <p>
-                    <strong>Responsable:</strong>
-                    ${producto.responsable || "Sin asignar"}
-                </p>
-
-                <p>
-                    <strong>Ubicación:</strong>
-                    ${producto.ubicacionActual || "-"}
-                </p>
-
-                <p>
-                    <strong>Progreso:</strong>
-                    ${producto.progreso || 0}%
-                </p>
-
-                <progress
-                    value="${producto.progreso || 0}"
-                    max="100">
-                </progress>
-
-                <h4>Historial</h4>
-
-                <ul>
-
-                    ${(producto.historial || [])
-          .map(item => `
-
-                        <li>
-                            ${item.proceso || "-"}
-                            -
-                            ${item.estado || "-"}
-                            -
-                            ${item.usuario || "-"}
-                        </li>
-
-                    `).join("")}
-
-                </ul>
-
-                <div class="acciones">
-
-                    <button
-                        onclick="moverProceso('${producto._id}','Corte')">
-                        Corte
-                    </button>
-
-                    <button
-                        onclick="moverProceso('${producto._id}','Confeccion')">
-                        Confección
-                    </button>
-
-                    <button
-                        onclick="moverProceso('${producto._id}','Acabados')">
-                        Acabados
-                    </button>
-
-                    <button
-                        onclick="moverProceso('${producto._id}','Calidad')">
-                        Calidad
-                    </button>
-
-                    <button
-                        onclick="eliminarProducto('${producto._id}')">
-                        Eliminar
-                    </button>
-
+                <div class="alerta-urgente">
+                    🚨 ${producto.cliente} -
+                    ${producto.producto} -
+                    ${producto.areaActual}
                 </div>
-
-            </div>
-
             `;
+}
 
+productosDiv.innerHTML += `
+            <tr>
+
+                <td>${producto.cliente || "-"}</td>
+
+                <td>${producto.modelo || "-"}</td>
+
+                <td>${producto.producto || "-"}</td>
+
+                <td>${producto.talla || "-"}</td>
+
+                <td>${producto.cantidad || 0}</td>
+
+                <td>
+                    <strong>
+                        ${producto.areaActual || "-"}
+                    </strong>
+                </td>
+
+                <td>
+                    ${producto.usuarioResponsable || "-"}
+                </td>
+
+                <td>
+                    ${producto.fechaEntrega
+    ? new Date(
+      producto.fechaEntrega
+    ).toLocaleDateString()
+    : "-"
+  }
+                </td>
+
+                <td>
+                    ${producto.urgente
+    ? "🚨 SI"
+    : "NO"
+  }
+                </td>
+
+                <td>
+
+                    <button onclick="siguienteArea('${producto._id}','${producto.areaActual}')">
+                        ➡ Siguiente
+                    </button>
+
+                    <button onclick="cambiarArea('${producto._id}')">
+                        🔄 Área
+                    </button>
+
+                    <button onclick="agregarNota('${producto._id}')">
+                        📝 Nota
+                    </button>
+
+                    <button onclick="eliminarProducto('${producto._id}')">
+                        🗑 Eliminar
+                    </button>
+
+                </td>
+
+            </tr>
+        ;
     });
 
     const avanceGeneral =
-      productos.length > 0
-        ? Math.round(
-          sumaProgreso /
-          productos.length
-        )
-        : 0;
+        productos.length > 0
+            ? Math.round(
+                  sumaProgreso /
+                      productos.length
+              )
+            : 0;
 
     actualizarTexto(
-      "corteCount",
-      corte
+        "totalProducciones",
+        totalProducciones
     );
 
     actualizarTexto(
-      "confeccionCount",
-      confeccion
+        "totalPiezas",
+        totalPiezas
     );
 
     actualizarTexto(
-      "acabadosCount",
-      acabados
+        "avanceGeneral",
+        avanceGeneral + "%"
     );
 
-    actualizarTexto(
-      "calidadCount",
-      calidad
-    );
-
-    actualizarTexto(
-      "totalProducciones",
-      totalProducciones
-    );
-
-    actualizarTexto(
-      "totalPiezas",
-      totalPiezas
-    );
-
-    actualizarTexto(
-      "avanceGeneral",
-      avanceGeneral + "%"
-    );
-
-  } catch (error) {
+} catch (error) {
 
     console.error(
-      "Error cargando productos:",
-      error
+        "Error cargando productos:",
+        error
     );
 
-  }
-
 }
-
-/* ================= ACTUALIZAR TEXTO ================= */
+```
 
 function actualizarTexto(id, valor) {
 
-  const elemento =
+  ```
+const elemento =
     document.getElementById(id);
 
-  if (elemento) {
+if (elemento) {
 
     elemento.innerText = valor;
 
-  }
+}
+```
 
 }
-
-/* ================= CREAR ================= */
 
 if (form) {
 
-  form.addEventListener(
+  ```
+form.addEventListener(
     "submit",
     async (e) => {
 
-      e.preventDefault();
+        e.preventDefault();
 
-      const proceso =
-        document.getElementById("proceso").value;
+        const nuevaOrden = {
 
-      const nuevoProducto = {
+            cliente:
+                document.getElementById(
+                    "cliente"
+                ).value,
 
-        nombre:
-          document.getElementById("nombre").value,
+            modelo:
+                document.getElementById(
+                    "modelo"
+                ).value,
 
-        cantidad:
-          document.getElementById("cantidad").value,
+            producto:
+                document.getElementById(
+                    "producto"
+                ).value,
 
-        color:
-          document.getElementById("color").value,
+            cantidad: Number(
+                document.getElementById(
+                    "cantidad"
+                ).value
+            ),
 
-        talla:
-          document.getElementById("talla").value,
+            talla:
+                document.getElementById(
+                    "talla"
+                ).value,
 
-        lote:
-          document.getElementById("lote").value,
+            usuarioResponsable:
+                document.getElementById(
+                    "usuarioResponsable"
+                ).value,
 
-        proceso,
+            areaActual:
+                document.getElementById(
+                    "areaActual"
+                ).value,
 
-        progreso: 0,
+            fechaInicio:
+                document.getElementById(
+                    "fechaInicio"
+                ).value,
 
-        estado: "Pendiente",
+            fechaEntrega:
+                document.getElementById(
+                    "fechaEntrega"
+                ).value,
 
-        ubicacionActual: proceso,
+            urgente:
+                document.getElementById(
+                    "urgente"
+                ).checked,
 
-        historial: [
+            piezasDanadas: Number(
+                document.getElementById(
+                    "piezasDanadas"
+                ).value
+            ),
 
-          {
-            proceso,
-            estado: "Creado",
-            usuario: "Admin"
-          }
+            observaciones:
+                document.getElementById(
+                    "observaciones"
+                ).value,
 
-        ]
+            estado: "Pendiente",
 
-      };
+            progreso: 0,
 
-      await fetch(
-        "/api/products",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type":
-              "application/json"
-          },
-          body: JSON.stringify(
-            nuevoProducto
-          )
-        }
-      );
+            notas: [],
 
-      form.reset();
+            historial: [
+                {
+                    area:
+                        document.getElementById(
+                            "areaActual"
+                        ).value,
 
-      cargarProductos();
+                    usuario: "Admin",
 
+                    accion:
+                        "Orden Creada",
+
+                    comentario:
+                        "Creación inicial"
+                }
+            ]
+        };
+
+        await fetch(
+            "/api/products",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
+                body: JSON.stringify(
+                    nuevaOrden
+                )
+            }
+        );
+
+        form.reset();
+
+        cargarProductos();
     }
-  );
+);
+```
 
 }
 
-/* ================= MOVER PROCESO ================= */
+async function cambiarArea(id) {
 
-async function moverProceso(id, proceso) {
+  ```
+const nuevaArea = prompt(
+    "Seleccione área:\n\nDiseño\nDiseño Grafico\nCorte\nConfeccion\nBordado\nDTF\nTerminado"
+);
 
-  let progreso = 25;
+if (!nuevaArea) return;
 
-  if (proceso === "Confeccion")
-    progreso = 50;
-
-  if (proceso === "Acabados")
-    progreso = 75;
-
-  if (proceso === "Calidad")
-    progreso = 100;
-
-  await fetch(
+await fetch(
     "/api/products/" + id,
     {
-      method: "PUT",
-      headers: {
-        "Content-Type":
-          "application/json"
-      },
-      body: JSON.stringify({
-        proceso,
-        ubicacionActual: proceso,
-        progreso
-      })
+        method: "PUT",
+        headers: {
+            "Content-Type":
+                "application/json"
+        },
+        body: JSON.stringify({
+            areaActual: nuevaArea
+        })
     }
-  );
+);
 
-  cargarProductos();
+cargarProductos();
+```
 
 }
 
-/* ================= ELIMINAR ================= */
+async function siguienteArea(
+  id,
+  areaActual
+) {
+
+  ```
+const index =
+    AREAS.indexOf(areaActual);
+
+if (index === -1) return;
+
+const siguiente =
+    AREAS[index + 1];
+
+if (!siguiente) {
+
+    alert(
+        "La orden ya está terminada"
+    );
+
+    return;
+}
+
+await fetch(
+    "/api/products/" + id,
+    {
+        method: "PUT",
+        headers: {
+            "Content-Type":
+                "application/json"
+        },
+        body: JSON.stringify({
+            areaActual: siguiente
+        })
+    }
+);
+
+cargarProductos();
+```
+
+}
+
+async function agregarNota(id) {
+
+  ```
+const comentario = prompt(
+    "Escribe la nota"
+);
+
+if (!comentario) return;
+
+const res = await fetch(
+    "/api/products/" + id
+);
+
+const producto =
+    await res.json();
+
+const notas =
+    producto.notas || [];
+
+notas.push({
+    usuario: "Admin",
+    comentario,
+    fecha: new Date()
+});
+
+await fetch(
+    "/api/products/" + id,
+    {
+        method: "PUT",
+        headers: {
+            "Content-Type":
+                "application/json"
+        },
+        body: JSON.stringify({
+            notas
+        })
+    }
+);
+
+cargarProductos();
+```
+
+}
 
 async function eliminarProducto(id) {
 
-  if (!confirm(
-    "¿Eliminar producto?"
-  )) return;
+  ```
+const confirmar = confirm(
+    "¿Eliminar esta orden?"
+);
 
-  await fetch(
+if (!confirmar) return;
+
+await fetch(
     "/api/products/" + id,
     {
-      method: "DELETE"
+        method: "DELETE"
     }
-  );
+);
 
-  cargarProductos();
+cargarProductos();
+```
 
 }
-
-/* ================= INICIO ================= */
 
 cargarProductos();

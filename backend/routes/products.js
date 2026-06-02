@@ -174,13 +174,18 @@ router.put("/:id/proceso", async (req, res) => {
 
 });
 
-/* ================= CHECKLIST ================= */
+/* ================= MOVER ORDEN ================= */
 
-router.put("/:id/checklist", async (req, res) => {
+router.put("/:id/mover", async (req, res) => {
 
     try {
 
-        const { area, campo, valor } = req.body;
+        const {
+            areaActual,
+            usuarioResponsable,
+            usuario,
+            comentario
+        } = req.body;
 
         const producto =
             await Product.findById(req.params.id);
@@ -188,23 +193,28 @@ router.put("/:id/checklist", async (req, res) => {
         if (!producto) {
 
             return res.status(404).json({
-                msg: "Producto no encontrado"
+                msg: "Orden no encontrada"
             });
 
         }
 
-        if (
-            !producto[area] ||
-            producto[area][campo] === undefined
-        ) {
+        producto.areaActual =
+            areaActual;
 
-            return res.status(400).json({
-                msg: "Campo inválido"
-            });
+        producto.usuarioResponsable =
+            usuarioResponsable;
 
-        }
+        producto.historial.push({
 
-        producto[area][campo] = valor;
+            area: areaActual,
+
+            usuario: usuario,
+
+            accion: "Cambio de área",
+
+            comentario: comentario || ""
+
+        });
 
         await producto.save();
 
@@ -220,28 +230,75 @@ router.put("/:id/checklist", async (req, res) => {
 
 });
 
-/* ================= ELIMINAR ================= */
+/* ================= AGREGAR NOTA ================= */
 
-router.delete("/:id", async (req, res) => {
+router.put("/:id/nota", async (req, res) => {
 
     try {
 
+        const {
+            usuario,
+            comentario
+        } = req.body;
+
         const producto =
-            await Product.findByIdAndDelete(
-                req.params.id
-            );
+            await Product.findById(req.params.id);
 
         if (!producto) {
 
             return res.status(404).json({
-                msg: "Producto no encontrado"
+                msg: "Orden no encontrada"
             });
 
         }
 
-        res.json({
-            msg: "Producto eliminado"
+        producto.notas.push({
+
+            usuario,
+            comentario
+
         });
+
+        await producto.save();
+
+        res.json(producto);
+
+    } catch (error) {
+
+        res.status(500).json({
+            error: error.message
+        });
+
+    }
+
+});
+
+/* ================= PIEZAS DAÑADAS ================= */
+
+router.put("/:id/danadas", async (req, res) => {
+
+    try {
+
+        const {
+            piezasDanadas
+        } = req.body;
+
+        const producto =
+            await Product.findByIdAndUpdate(
+
+                req.params.id,
+
+                {
+                    piezasDanadas
+                },
+
+                {
+                    new: true
+                }
+
+            );
+
+        res.json(producto);
 
     } catch (error) {
 

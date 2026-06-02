@@ -249,23 +249,35 @@
 
             <section class="crud">
 
-                <h2>
-                    Nueva Producción
-                </h2>
+                <h2>Nueva Orden de Producción</h2>
 
-                <form id="productForm">
+                <form id="productForm" class="production-form">
 
-                    <input type="text" id="nombre" placeholder="Nombre" required>
+                    <input type="text" id="cliente" placeholder="Cliente" required>
+
+                    <input type="text" id="modelo" placeholder="Modelo" required>
+
+                    <input type="text" id="producto" placeholder="Producto" required>
 
                     <input type="number" id="cantidad" placeholder="Cantidad" required>
 
-                    <input type="text" id="color" placeholder="Color">
-
                     <input type="text" id="talla" placeholder="Talla">
 
-                    <input type="text" id="lote" placeholder="Lote">
+                    <input type="date" id="fechaInicio">
 
-                    <select id="proceso">
+                    <input type="date" id="fechaEntrega">
+
+                    <input type="text" id="usuarioResponsable" placeholder="ID Usuario Responsable">
+
+                    <select id="areaActual">
+
+                        <option value="Diseño">
+                            Diseño
+                        </option>
+
+                        <option value="Diseño Grafico">
+                            Diseño Gráfico
+                        </option>
 
                         <option value="Corte">
                             Corte
@@ -275,20 +287,34 @@
                             Confección
                         </option>
 
-                        <option value="Acabados">
-                            Acabados
+                        <option value="Bordado">
+                            Bordado
                         </option>
 
-                        <option value="Calidad">
-                            Calidad
+                        <option value="DTF">
+                            DTF
+                        </option>
+
+                        <option value="Terminado">
+                            Terminado
                         </option>
 
                     </select>
 
+                    <label class="checkbox">
+
+                        <input type="checkbox" id="urgente">
+
+                        Pedido urgente
+
+                    </label>
+
+                    <input type="number" id="piezasDanadas" placeholder="Piezas dañadas" value="0">
+
+                    <textarea id="observaciones" placeholder="Observaciones"></textarea>
+
                     <button type="submit">
-
-                        Crear Producción
-
+                        Crear Orden
                     </button>
 
                 </form>
@@ -299,11 +325,44 @@
 
             <section class="crud">
 
-                <h2>
-                    Producciones Activas
-                </h2>
+                <h2>Órdenes Activas</h2>
 
-                <div id="productos">
+                <table class="tabla-produccion">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Cliente</th>
+                            <th>Modelo</th>
+                            <th>Producto</th>
+                            <th>Talla</th>
+                            <th>Cantidad</th>
+                            <th>Área</th>
+                            <th>Responsable</th>
+                            <th>Entrega</th>
+                            <th>Urgente</th>
+                            <th>Acciones</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="productos">
+
+                    </tbody>
+
+                </table>
+
+            </section>
+
+            <!-- NOTIFICACIONES -->
+
+            <section class="crud">
+
+                <h2>Notificaciones Urgentes</h2>
+
+                <div id="notificacionesUrgentes">
 
                 </div>
 
