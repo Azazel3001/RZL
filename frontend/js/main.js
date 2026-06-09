@@ -2,420 +2,416 @@ const form = document.getElementById("productForm");
 const productosDiv = document.getElementById("productos");
 
 const AREAS = [
-  "Diseño",
-  "Diseño Grafico",
-  "Corte",
-  "Confeccion",
-  "Bordado",
-  "DTF",
-  "Terminado"
+    "Diseño",
+    "Diseño Grafico",
+    "Corte",
+    "Confeccion",
+    "Bordado",
+    "DTF",
+    "Terminado"
 ];
 
 async function cargarProductos() {
 
-  ```
-try {
+    try {
 
-    const res = await fetch("/api/products");
-    const productos = await res.json();
+        const res = await fetch("/api/products");
+        const productos = await res.json();
 
-    if (!productosDiv) return;
+        if (!productosDiv) return;
 
-    productosDiv.innerHTML = "";
+        productosDiv.innerHTML = "";
 
-    let totalProducciones = productos.length;
-    let totalPiezas = 0;
-    let sumaProgreso = 0;
+        let totalProducciones = productos.length;
+        let totalPiezas = 0;
+        let sumaProgreso = 0;
 
-    const notificaciones = document.getElementById(
-        "notificacionesUrgentes"
-    );
+        const notificaciones = document.getElementById(
+            "notificacionesUrgentes"
+        );
 
-    if (notificaciones) {
-        notificaciones.innerHTML = "";
+        if (notificaciones) {
+            notificaciones.innerHTML = "";
+        }
+
+        productos.forEach(producto => {
+
+            totalPiezas += Number(producto.cantidad || 0);
+            sumaProgreso += Number(producto.progreso || 0);
+
+            if (producto.urgente && notificaciones) {
+
+                notificaciones.innerHTML +=
+                    <div class="alerta-urgente">
+                        🚨 ${producto.cliente} -
+                        ${producto.producto} -
+                        ${producto.areaActual}
+                    </div>
+                    ;
+            }
+
+            productosDiv.innerHTML +=
+                <tr>
+
+                    <td>${producto.cliente || "-"}</td>
+
+                    <td>${producto.modelo || "-"}</td>
+
+                    <td>${producto.producto || "-"}</td>
+
+                    <td>${producto.talla || "-"}</td>
+
+                    <td>${producto.cantidad || 0}</td>
+
+                    <td>
+                        <strong>
+                            ${producto.areaActual || "-"}
+                        </strong>
+                    </td>
+
+                    <td>
+                        ${producto.usuarioResponsable || "-"}
+                    </td>
+
+                    <td>
+                        ${
+                            producto.fechaEntrega
+                                ? new Date(
+                                    producto.fechaEntrega
+                                ).toLocaleDateString()
+                                : "-"
+                        }
+                    </td>
+
+                    <td>
+                        ${
+                            producto.urgente
+                                ? "🚨 SI"
+                                : "NO"
+                        }
+                    </td>
+
+                    <td>
+
+                        <button onclick="siguienteArea('${producto._id}','${producto.areaActual}')">
+                            ➡ Siguiente
+                        </button>
+
+                        <button onclick="cambiarArea('${producto._id}')">
+                            🔄 Área
+                        </button>
+
+                        <button onclick="agregarNota('${producto._id}')">
+                            📝 Nota
+                        </button>
+
+                        <button onclick="eliminarProducto('${producto._id}')">
+                            🗑 Eliminar
+                        </button>
+
+                    </td>
+
+                </tr>
+                ;
+        });
+
+        const avanceGeneral =
+            productos.length > 0
+                ? Math.round(
+                    sumaProgreso / productos.length
+                )
+                : 0;
+
+        actualizarTexto(
+            "totalProducciones",
+            totalProducciones
+        );
+
+        actualizarTexto(
+            "totalPiezas",
+            totalPiezas
+        );
+
+        actualizarTexto(
+            "avanceGeneral",
+            avanceGeneral + "%"
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Error cargando productos:",
+            error
+        );
+
     }
 
-    productos.forEach(producto => {
-
-        totalPiezas += Number(producto.cantidad || 0);
-        sumaProgreso += Number(producto.progreso || 0);
-
-        if (producto.urgente && notificaciones) {
-
-            notificaciones.innerHTML += 
-
-                <div class="alerta-urgente">
-                    🚨 ${producto.cliente} -
-                    ${producto.producto} -
-                    ${producto.areaActual}
-                </div>
-            `;
-}
-
-productosDiv.innerHTML += `
-            <tr>
-
-                <td>${producto.cliente || "-"}</td>
-
-                <td>${producto.modelo || "-"}</td>
-
-                <td>${producto.producto || "-"}</td>
-
-                <td>${producto.talla || "-"}</td>
-
-                <td>${producto.cantidad || 0}</td>
-
-                <td>
-                    <strong>
-                        ${producto.areaActual || "-"}
-                    </strong>
-                </td>
-
-                <td>
-                    ${producto.usuarioResponsable || "-"}
-                </td>
-
-                <td>
-                    ${producto.fechaEntrega
-    ? new Date(
-      producto.fechaEntrega
-    ).toLocaleDateString()
-    : "-"
-  }
-                </td>
-
-                <td>
-                    ${producto.urgente
-    ? "🚨 SI"
-    : "NO"
-  }
-                </td>
-
-                <td>
-
-                    <button onclick="siguienteArea('${producto._id}','${producto.areaActual}')">
-                        ➡ Siguiente
-                    </button>
-
-                    <button onclick="cambiarArea('${producto._id}')">
-                        🔄 Área
-                    </button>
-
-                    <button onclick="agregarNota('${producto._id}')">
-                        📝 Nota
-                    </button>
-
-                    <button onclick="eliminarProducto('${producto._id}')">
-                        🗑 Eliminar
-                    </button>
-
-                </td>
-
-            </tr>
-        ;
-    });
-
-    const avanceGeneral =
-        productos.length > 0
-            ? Math.round(
-                  sumaProgreso /
-                      productos.length
-              )
-            : 0;
-
-    actualizarTexto(
-        "totalProducciones",
-        totalProducciones
-    );
-
-    actualizarTexto(
-        "totalPiezas",
-        totalPiezas
-    );
-
-    actualizarTexto(
-        "avanceGeneral",
-        avanceGeneral + "%"
-    );
-
-} catch (error) {
-
-    console.error(
-        "Error cargando productos:",
-        error
-    );
 
 }
-```
 
 function actualizarTexto(id, valor) {
 
-  ```
-const elemento =
-    document.getElementById(id);
+    const elemento =
+        document.getElementById(id);
+
+}
 
 if (elemento) {
 
     elemento.innerText = valor;
 
 }
-```
 
-}
 
 if (form) {
 
-  ```
-form.addEventListener(
-    "submit",
-    async (e) => {
 
-        e.preventDefault();
+    form.addEventListener(
+        "submit",
+        async (e) => {
 
-        const nuevaOrden = {
+            e.preventDefault();
 
-            cliente:
-                document.getElementById(
-                    "cliente"
-                ).value,
+            const nuevaOrden = {
 
-            modelo:
-                document.getElementById(
-                    "modelo"
-                ).value,
+                cliente:
+                    document.getElementById(
+                        "cliente"
+                    ).value,
 
-            producto:
-                document.getElementById(
-                    "producto"
-                ).value,
+                modelo:
+                    document.getElementById(
+                        "modelo"
+                    ).value,
 
-            cantidad: Number(
-                document.getElementById(
-                    "cantidad"
-                ).value
-            ),
+                producto:
+                    document.getElementById(
+                        "producto"
+                    ).value,
 
-            talla:
-                document.getElementById(
-                    "talla"
-                ).value,
+                cantidad: Number(
+                    document.getElementById(
+                        "cantidad"
+                    ).value
+                ),
 
-            usuarioResponsable:
-                document.getElementById(
-                    "usuarioResponsable"
-                ).value,
+                talla:
+                    document.getElementById(
+                        "talla"
+                    ).value,
 
-            areaActual:
-                document.getElementById(
-                    "areaActual"
-                ).value,
+                usuarioResponsable:
+                    document.getElementById(
+                        "usuarioResponsable"
+                    ).value,
 
-            fechaInicio:
-                document.getElementById(
-                    "fechaInicio"
-                ).value,
+                areaActual:
+                    document.getElementById(
+                        "areaActual"
+                    ).value,
 
-            fechaEntrega:
-                document.getElementById(
-                    "fechaEntrega"
-                ).value,
+                fechaInicio:
+                    document.getElementById(
+                        "fechaInicio"
+                    ).value,
 
-            urgente:
-                document.getElementById(
-                    "urgente"
-                ).checked,
+                fechaEntrega:
+                    document.getElementById(
+                        "fechaEntrega"
+                    ).value,
 
-            piezasDanadas: Number(
-                document.getElementById(
-                    "piezasDanadas"
-                ).value
-            ),
+                urgente:
+                    document.getElementById(
+                        "urgente"
+                    ).checked,
 
-            observaciones:
-                document.getElementById(
-                    "observaciones"
-                ).value,
+                piezasDanadas: Number(
+                    document.getElementById(
+                        "piezasDanadas"
+                    ).value
+                ),
 
-            estado: "Pendiente",
+                observaciones:
+                    document.getElementById(
+                        "observaciones"
+                    ).value,
 
-            progreso: 0,
+                estado: "Pendiente",
 
-            notas: [],
+                progreso: 0,
 
-            historial: [
+                notas: [],
+
+                historial: [
+                    {
+                        area:
+                            document.getElementById(
+                                "areaActual"
+                            ).value,
+
+                        usuario: "Admin",
+
+                        accion:
+                            "Orden Creada",
+
+                        comentario:
+                            "Creación inicial"
+                    }
+                ]
+            };
+
+            await fetch(
+                "/api/products",
                 {
-                    area:
-                        document.getElementById(
-                            "areaActual"
-                        ).value,
-
-                    usuario: "Admin",
-
-                    accion:
-                        "Orden Creada",
-
-                    comentario:
-                        "Creación inicial"
+                    method: "POST",
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+                    body: JSON.stringify(
+                        nuevaOrden
+                    )
                 }
-            ]
-        };
+            );
 
-        await fetch(
-            "/api/products",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type":
-                        "application/json"
-                },
-                body: JSON.stringify(
-                    nuevaOrden
-                )
-            }
-        );
+            form.reset();
 
-        form.reset();
+            cargarProductos();
+        }
+    );
 
-        cargarProductos();
-    }
-);
-```
 
 }
 
 async function cambiarArea(id) {
 
-  ```
-const nuevaArea = prompt(
-    "Seleccione área:\n\nDiseño\nDiseño Grafico\nCorte\nConfeccion\nBordado\nDTF\nTerminado"
-);
+    const nuevaArea = prompt(
+        "Seleccione área:\n\nDiseño\nDiseño Grafico\nCorte\nConfeccion\nBordado\nDTF\nTerminado"
+    );
 
-if (!nuevaArea) return;
+    if (!nuevaArea) return;
 
-await fetch(
-    "/api/products/" + id,
-    {
-        method: "PUT",
-        headers: {
-            "Content-Type":
-                "application/json"
-        },
-        body: JSON.stringify({
-            areaActual: nuevaArea
-        })
-    }
-);
+    await fetch(
+        "/api/products/" + id,
+        {
+            method: "PUT",
+            headers: {
+                "Content-Type":
+                    "application/json"
+            },
+            body: JSON.stringify({
+                areaActual: nuevaArea
+            })
+        }
+    );
 
-cargarProductos();
-```
+    cargarProductos();
+
 
 }
 
 async function siguienteArea(
-  id,
-  areaActual
+    id,
+    areaActual
 ) {
 
-  ```
-const index =
-    AREAS.indexOf(areaActual);
 
-if (index === -1) return;
+    const index =
+        AREAS.indexOf(areaActual);
 
-const siguiente =
-    AREAS[index + 1];
+    if (index === -1) return;
 
-if (!siguiente) {
+    const siguiente =
+        AREAS[index + 1];
 
-    alert(
-        "La orden ya está terminada"
+    if (!siguiente) {
+
+        alert(
+            "La orden ya está terminada"
+        );
+
+        return;
+    }
+
+    await fetch(
+        "/api/products/" + id,
+        {
+            method: "PUT",
+            headers: {
+                "Content-Type":
+                    "application/json"
+            },
+            body: JSON.stringify({
+                areaActual: siguiente
+            })
+        }
     );
 
-    return;
-}
+    cargarProductos();
 
-await fetch(
-    "/api/products/" + id,
-    {
-        method: "PUT",
-        headers: {
-            "Content-Type":
-                "application/json"
-        },
-        body: JSON.stringify({
-            areaActual: siguiente
-        })
-    }
-);
-
-cargarProductos();
-```
 
 }
 
 async function agregarNota(id) {
 
-  ```
-const comentario = prompt(
-    "Escribe la nota"
-);
 
-if (!comentario) return;
+    const comentario = prompt(
+        "Escribe la nota"
+    );
 
-const res = await fetch(
-    "/api/products/" + id
-);
+    if (!comentario) return;
 
-const producto =
-    await res.json();
+    const res = await fetch(
+        "/api/products/" + id
+    );
 
-const notas =
-    producto.notas || [];
+    const producto =
+        await res.json();
 
-notas.push({
-    usuario: "Admin",
-    comentario,
-    fecha: new Date()
-});
+    const notas =
+        producto.notas || [];
 
-await fetch(
-    "/api/products/" + id,
-    {
-        method: "PUT",
-        headers: {
-            "Content-Type":
-                "application/json"
-        },
-        body: JSON.stringify({
-            notas
-        })
-    }
-);
+    notas.push({
+        usuario: "Admin",
+        comentario,
+        fecha: new Date()
+    });
 
-cargarProductos();
-```
+    await fetch(
+        "/api/products/" + id,
+        {
+            method: "PUT",
+            headers: {
+                "Content-Type":
+                    "application/json"
+            },
+            body: JSON.stringify({
+                notas
+            })
+        }
+    );
+
+    cargarProductos();
+
 
 }
 
 async function eliminarProducto(id) {
 
-  ```
-const confirmar = confirm(
-    "¿Eliminar esta orden?"
-);
 
-if (!confirmar) return;
+    const confirmar = confirm(
+        "¿Eliminar esta orden?"
+    );
 
-await fetch(
-    "/api/products/" + id,
-    {
-        method: "DELETE"
-    }
-);
+    if (!confirmar) return;
 
-cargarProductos();
-```
+    await fetch(
+        "/api/products/" + id,
+        {
+            method: "DELETE"
+        }
+    );
+
+    cargarProductos();
 
 }
-
-cargarProductos();
