@@ -6,8 +6,7 @@ const ProductSchema = new mongoose.Schema({
 
     folio: {
         type: String,
-        unique: true,
-        sparse: true
+        default: ""
     },
 
     cliente: {
