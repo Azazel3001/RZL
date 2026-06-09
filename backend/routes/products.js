@@ -59,14 +59,18 @@ router.post("/", async (req, res) => {
 
     try {
 
-        const producto =
-            new Product(req.body);
+        console.log("BODY:", req.body);
+
+        const producto = new Product(req.body);
 
         await producto.save();
 
         res.status(201).json(producto);
 
     } catch (error) {
+
+        console.log("ERROR MONGO:");
+        console.log(error);
 
         res.status(500).json({
             error: error.message
@@ -75,7 +79,6 @@ router.post("/", async (req, res) => {
     }
 
 });
-
 /* ================= ACTUALIZAR ================= */
 
 router.put("/:id", async (req, res) => {
