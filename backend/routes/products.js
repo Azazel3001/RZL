@@ -360,4 +360,34 @@ router.get("/stats/resumen", async (req, res) => {
 
 });
 
+/* ================= ELIMINAR ================= */
+
+router.delete("/:id", async (req, res) => {
+
+    try {
+
+        const producto = await Product.findByIdAndDelete(req.params.id);
+
+        if (!producto) {
+
+            return res.status(404).json({
+                msg: "Producto no encontrado"
+            });
+
+        }
+
+        res.json({
+            msg: "Producto eliminado correctamente"
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            error: error.message
+        });
+
+    }
+
+});
+
 module.exports = router;
