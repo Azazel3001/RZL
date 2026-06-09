@@ -2,7 +2,12 @@ const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
 
-    username: {
+    nombre: {
+        type: String,
+        required: true
+    },
+
+    usuario: {
         type: String,
         required: true,
         unique: true
@@ -13,37 +18,13 @@ const UserSchema = new mongoose.Schema({
         required: true
     },
 
-    role: {
+    rol: {
         type: String,
-        enum: [
-            "admin",
-            "corte",
-            "confeccion",
-            "acabados",
-            "calidad"
-        ],
-        default: "corte"
-    },
-
-    nombre: {
-        type: String,
-        default: ""
-    },
-
-    activo: {
-        type: Boolean,
-        default: true
-    },
-
-    fechaCreacion: {
-        type: Date,
-        default: Date.now
+        default: "operador"
     }
 
+}, {
+    timestamps: true
 });
 
-module.exports =
-    mongoose.model(
-        "User",
-        UserSchema
-    );
+module.exports = mongoose.model("User", UserSchema);

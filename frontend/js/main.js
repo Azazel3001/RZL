@@ -237,3 +237,41 @@ async function eliminarProducto(id) {
 /* ================= INICIO ================= */
 
 cargarProductos();
+
+const userForm = document.getElementById("userForm");
+
+if (userForm) {
+
+    userForm.addEventListener("submit", async (e) => {
+
+        e.preventDefault();
+
+        const nuevoUsuario = {
+
+            nombre: document.getElementById("nombreUser").value,
+            usuario: document.getElementById("usuarioUser").value,
+            password: document.getElementById("passwordUser").value,
+            rol: document.getElementById("rolUser").value
+
+        };
+
+        const res = await fetch("/api/users", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(nuevoUsuario)
+        });
+
+        if (!res.ok) {
+            alert("Error creando usuario");
+            return;
+        }
+
+        alert("Usuario creado correctamente");
+
+        userForm.reset();
+
+    });
+
+}
