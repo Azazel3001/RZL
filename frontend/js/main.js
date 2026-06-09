@@ -145,11 +145,13 @@ if (form) {
             });
 
             if (!res.ok) {
-                throw new Error("Error al guardar la orden");
-            }
 
-            form.reset();
-            cargarProductos();
+                const errorData = await res.json();
+
+                console.log("ERROR BACKEND:", errorData);
+
+                throw new Error(errorData.error || "Error al guardar la orden");
+            }
 
         } catch (error) {
 
