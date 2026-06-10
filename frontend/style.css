@@ -1006,3 +1006,65 @@ body {
     cursor: pointer;
     border-radius: 5px;
 }
+
+/* ===== TABLA ÓRDENES ACTIVAS ===== */
+
+.tabla-produccion {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.tabla-produccion thead {
+    background: #111827;
+}
+
+.tabla-produccion th {
+    color: #ffffff;
+    padding: 14px;
+    text-align: left;
+}
+
+.tabla-produccion tbody tr {
+    background: #ffffff !important;
+}
+
+.tabla-produccion tbody td {
+    background: #ffffff !important;
+    color: #111827 !important;
+    padding: 14px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.tabla-produccion tbody tr:hover td {
+    background: #f3f4f6 !important;
+}
+
+.fila {
+    opacity: 1 !important;
+}
+
+.area {
+    font-weight: 600;
+    color: #2563eb;
+}
+
+.urgente {
+    color: #dc2626;
+    font-weight: bold;
+}
+
+.normal {
+    color: #16a34a;
+    font-weight: bold;
+}
+
+.acciones button {
+    padding: 6px 10px;
+    margin: 2px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
