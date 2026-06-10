@@ -96,14 +96,11 @@ app.use((req, res, next) => {
 /* DASHBOARD */
 
 app.get("/dashboard", (req, res) => {
+  res.sendFile(path.join(frontendPath, "dashboard.html"));
+});
 
-  res.sendFile(
-    path.join(
-      frontendPath,
-      "dashboard.html"
-    )
-  );
-
+app.get("*", (req, res) => {
+  res.sendFile(path.join(frontendPath, "index.html"));
 });
 
 /* INVENTARIO */
