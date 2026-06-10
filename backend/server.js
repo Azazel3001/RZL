@@ -38,13 +38,13 @@ mongoose.connect(process.env.MONGO_URI)
 const frontendPath =
   path.join(__dirname, "../frontend");
 
-/* STATIC FILES */
+/* ================= STATIC FILES ================= */
 
 app.use(
   express.static(frontendPath)
 );
 
-/* UPLOADS */
+/* ================= UPLOADS ================= */
 
 app.use(
   "/uploads",
@@ -79,16 +79,13 @@ app.use(
 
 /* LOGIN */
 
-app.use((req, res, next) => {
+app.get("/", (req, res) => {
 
-  if (req.path.startsWith("/api")) {
-    return res.status(404).json({
-      error: "API route not found"
-    });
-  }
-
-  res.status(404).sendFile(
-    path.join(frontendPath, "index.html")
+  res.sendFile(
+    path.join(
+      frontendPath,
+      "index.html"
+    )
   );
 
 });
@@ -96,10 +93,15 @@ app.use((req, res, next) => {
 /* DASHBOARD */
 
 app.get("/dashboard", (req, res) => {
-  res.sendFile(path.join(frontendPath, "dashboard.html"));
+
+  res.sendFile(
+    path.join(
+      frontendPath,
+      "dashboard.html"
+    )
+  );
+
 });
-
-
 
 /* INVENTARIO */
 
@@ -185,21 +187,19 @@ app.get("/calidad", (req, res) => {
 
 });
 
+/* MAQUILERAS */
 
 app.get("/maquileras", (req, res) => {
 
   res.sendFile(
-
     path.join(
       frontendPath,
       "pages",
       "maquileras.html"
     )
-
   );
 
 });
-
 
 /* REPORTES */
 
@@ -218,6 +218,14 @@ app.get("/reportes", (req, res) => {
 /* ================= 404 ================= */
 
 app.use((req, res) => {
+
+  if (req.path.startsWith("/api")) {
+
+    return res.status(404).json({
+      error: "API route not found"
+    });
+
+  }
 
   res.status(404).sendFile(
     path.join(
