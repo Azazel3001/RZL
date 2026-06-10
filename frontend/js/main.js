@@ -19,60 +19,59 @@ async function cargarProductos() {
 
         if (!productosDiv) return;
 
-        productosDiv.innerHTML = "";
+        productosDiv.innerHTML += `
+<tr class="fila">
 
-        let totalProducciones = productos.length;
-        let totalPiezas = 0;
-        let sumaProgreso = 0;
+    <td>
+        <strong>${producto.cliente || "-"}</strong>
+    </td>
 
-        productos.forEach(producto => {
+    <td>
+        ${producto.producto || "-"}
+        <br>
+        <small>${producto.modelo || ""}</small>
+    </td>
 
-            totalPiezas += Number(producto.cantidad || 0);
-            sumaProgreso += Number(producto.progreso || 0);
+    <td>
+        Cantidad: ${producto.cantidad || 0}
+        <br>
+        Talla: ${producto.talla || "-"}
+    </td>
 
-            productosDiv.innerHTML += `
-                <tr>
-                    <td>${producto.cliente || "-"}</td>
-                    <td>${producto.modelo || "-"}</td>
-                    <td>${producto.producto || "-"}</td>
-                    <td>${producto.talla || "-"}</td>
-                    <td>${producto.cantidad || 0}</td>
+    <td>
+        <span class="area">
+            ${producto.areaActual || "-"}
+        </span>
+    </td>
 
-                    <td>
-                        <strong>${producto.areaActual || "-"}</strong>
-                    </td>
+    <td>
+        ${producto.usuarioResponsable || "Sin asignar"}
+    </td>
 
-                    <td>
-                        ${producto.usuarioResponsable || "-"}
-                    </td>
+    <td>
+        ${producto.fechaEntrega
+                ? new Date(producto.fechaEntrega).toLocaleDateString()
+                : "-"}
+    </td>
 
-                    <td>
-                        ${producto.fechaEntrega
-                    ? new Date(producto.fechaEntrega).toLocaleDateString()
-                    : "-"
-                }
-                    </td>
+    <td>
+        <span class="${producto.urgente ? "urgente" : "normal"}">
+            ${producto.urgente ? "🚨 Urgente" : "Normal"}
+        </span>
+    </td>
 
-                    <td>
-                        ${producto.urgente ? "🚨 SI" : "NO"}
-                    </td>
+    <td class="acciones">
 
-                    <td>
-                        <button onclick="cambiarArea('${producto._id}')">
-                            Cambiar Área
-                        </button>
+        <button onclick="cambiarArea('${producto._id}')">🔄</button>
 
-                        <button onclick="agregarNota('${producto._id}')">
-                            Nota
-                        </button>
+        <button onclick="agregarNota('${producto._id}')">📝</button>
 
-                        <button onclick="eliminarProducto('${producto._id}')">
-                            Eliminar
-                        </button>
-                    </td>
-                </tr>
-            `;
-        });
+        <button onclick="eliminarProducto('${producto._id}')">🗑</button>
+
+    </td>
+
+</tr>
+`;
 
         const avanceGeneral =
             productos.length > 0
