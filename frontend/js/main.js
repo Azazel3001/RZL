@@ -3,6 +3,7 @@
 const form = document.getElementById("productForm");
 const productosDiv = document.getElementById("productos");
 
+
 /* ================= CARGAR ORDENES ================= */
 
 async function cargarProductos() {
@@ -19,71 +20,113 @@ async function cargarProductos() {
 
         if (!productosDiv) return;
 
-        productosDiv.innerHTML += `
-<tr class="fila">
+        productosDiv.innerHTML = "";
 
-    <td>
-        <strong>${producto.cliente || "-"}</strong>
-    </td>
+        let totalProducciones = productos.length;
+        let totalPiezas = 0;
+        let sumaProgreso = 0;
 
-    <td>
-        ${producto.producto || "-"}
-        <br>
-        <small>${producto.modelo || ""}</small>
-    </td>
+        productos.forEach(producto => {
 
-    <td>
-        Cantidad: ${producto.cantidad || 0}
-        <br>
-        Talla: ${producto.talla || "-"}
-    </td>
+            totalPiezas += Number(producto.cantidad || 0);
+            sumaProgreso += Number(producto.progreso || 0);
 
-    <td>
-        <span class="area">
-            ${producto.areaActual || "-"}
-        </span>
-    </td>
+            productosDiv.innerHTML += `
+                <tr class="fila">
 
-    <td>
-        ${producto.usuarioResponsable || "Sin asignar"}
-    </td>
+                    <td>
+                        <strong>${producto.cliente || "-"}</strong>
+                    </td>
 
-    <td>
-        ${producto.fechaEntrega
-                ? new Date(producto.fechaEntrega).toLocaleDateString()
-                : "-"}
-    </td>
+                    <td>
+                        ${producto.producto || "-"}
+                        <br>
+                        <small>${producto.modelo || ""}</small>
+                    </td>
 
-    <td>
-        <span class="${producto.urgente ? "urgente" : "normal"}">
-            ${producto.urgente ? "🚨 Urgente" : "Normal"}
-        </span>
-    </td>
+                    <td>
+                        Cantidad: ${producto.cantidad || 0}
+                        <br>
+                        Talla: ${producto.talla || "-"}
+                    </td>
 
-    <td class="acciones">
+                    <td>
+                        <span class="area">
+                            ${producto.areaActual || "-"}
+                        </span>
+                    </td>
 
-        <button onclick="cambiarArea('${producto._id}')">🔄</button>
+                    <td>
+                        ${producto.usuarioResponsable || "Sin asignar"}
+                    </td>
 
-        <button onclick="agregarNota('${producto._id}')">📝</button>
+                    <td>
+                        ${producto.fechaEntrega
+                    ? new Date(producto.fechaEntrega).toLocaleDateString()
+                    : "-"
+                }
+                    </td>
 
-        <button onclick="eliminarProducto('${producto._id}')">🗑</button>
+                    <td>
+                        <span class="${producto.urgente ? "urgente" : "normal"
+                }">
+                            ${producto.urgente
+                    ? "🚨 Urgente"
+                    : "Normal"
+                }
+                        </span>
+                    </td>
 
-    </td>
+                    <td class="acciones">
 
-</tr>
-`;
+                        <button onclick="cambiarArea('${producto._id}')">
+                            🔄
+                        </button>
+
+                        <button onclick="agregarNota('${producto._id}')">
+                            📝
+                        </button>
+
+                        <button onclick="eliminarProducto('${producto._id}')">
+                            🗑
+                        </button>
+
+                    </td>
+
+                </tr>
+            `;
+
+        });
 
         const avanceGeneral =
             productos.length > 0
-                ? Math.round(sumaProgreso / productos.length)
+                ? Math.round(
+                    sumaProgreso / productos.length
+                )
                 : 0;
 
-        actualizarTexto("totalProducciones", totalProducciones);
-        actualizarTexto("totalPiezas", totalPiezas);
-        actualizarTexto("avanceGeneral", avanceGeneral + "%");
+        actualizarTexto(
+            "totalProducciones",
+            totalProducciones
+        );
+
+        actualizarTexto(
+            "totalPiezas",
+            totalPiezas
+        );
+
+        actualizarTexto(
+            "avanceGeneral",
+            avanceGeneral + "%"
+        );
 
     } catch (error) {
-        console.error("Error cargando productos:", error);
+
+        console.error(
+            "Error cargando productos:",
+            error
+        );
+
     }
 
 }
@@ -110,19 +153,33 @@ if (form) {
 
         const nuevaOrden = {
             cliente: document.getElementById("cliente").value,
+
             modelo: document.getElementById("modelo").value,
+
             producto: document.getElementById("producto").value,
+
             cantidad: Number(document.getElementById("cantidad").value),
+
             talla: document.getElementById("talla").value,
+
             usuarioResponsable: document.getElementById("usuarioResponsable").value,
+
             areaActual: document.getElementById("areaActual").value,
+
             fechaInicio: document.getElementById("fechaInicio").value,
+
             fechaEntrega: document.getElementById("fechaEntrega").value,
+
             urgente: document.getElementById("urgente").checked,
+
             piezasDanadas: Number(document.getElementById("piezasDanadas").value),
+
             observaciones: document.getElementById("observaciones").value,
+
             estado: "Pendiente",
+
             progreso: 0,
+
             historial: [
                 {
                     area: document.getElementById("areaActual").value,
