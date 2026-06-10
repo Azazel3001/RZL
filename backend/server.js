@@ -99,9 +99,7 @@ app.get("/dashboard", (req, res) => {
   res.sendFile(path.join(frontendPath, "dashboard.html"));
 });
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(frontendPath, "index.html"));
-});
+
 
 /* INVENTARIO */
 
