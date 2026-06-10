@@ -1068,3 +1068,24 @@ body {
     border-radius: 8px;
     cursor: pointer;
 }
+
+.acciones {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.acciones button {
+    min-width: 80px;
+    padding: 8px 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.acciones button:hover {
+    transform: translateY(-1px);
+}
