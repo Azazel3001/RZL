@@ -79,13 +79,16 @@ app.use(
 
 /* LOGIN */
 
-app.get("/", (req, res) => {
+app.use((req, res, next) => {
 
-  res.sendFile(
-    path.join(
-      frontendPath,
-      "index.html"
-    )
+  if (req.path.startsWith("/api")) {
+    return res.status(404).json({
+      error: "API route not found"
+    });
+  }
+
+  res.status(404).sendFile(
+    path.join(frontendPath, "index.html")
   );
 
 });
