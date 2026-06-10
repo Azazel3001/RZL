@@ -545,31 +545,19 @@ body {
 }
 
 .logo-animated .l {
-
-    background: linear-gradient(180deg,
-            #ff1b1b,
-            #7a0000);
-
+    background: linear-gradient(180deg, #ff1b1b, #7a0000);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .logo-animated .z {
-
-    background: linear-gradient(180deg,
-            #c000ff,
-            #5f00a3);
-
+    background: linear-gradient(180deg, #c000ff, #5f00a3);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .logo-animated .r {
-
-    background: linear-gradient(180deg,
-            #ff1b1b,
-            #4d0000);
-
+    background: linear-gradient(180deg, #ff1b1b, #4d0000);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }

@@ -1,35 +1,30 @@
 const express = require("express");
 const router = express.Router();
-
 const User = require("../models/User");
 
-/* CREAR USUARIO */
-router.post("/", async (req, res) => {
+/* LOGIN SIMPLE */
+router.post("/login", async (req, res) => {
 
     try {
 
-        const user = new User(req.body);
-        await user.save();
+        const { username, password } = req.body;
 
-        res.status(201).json(user);
-
-    } catch (error) {
-
-        res.status(500).json({
-            error: error.message
+        const user = await User.findOne({
+            usuario: username,
+            password: password
         });
 
-    }
+        if (!user) {
+            return res.status(401).json({
+                msg: "Usuario o contraseña incorrectos"
+            });
+        }
 
-});
-
-/* OBTENER USUARIOS */
-router.get("/", async (req, res) => {
-
-    try {
-
-        const users = await User.find();
-        res.json(users);
+        res.json({
+            usuario: user.usuario,
+            nombre: user.nombre,
+            rol: user.rol
+        });
 
     } catch (error) {
 
