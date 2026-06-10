@@ -1,11 +1,8 @@
 const express = require("express");
 const router = express.Router();
-
-const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
-/* LOGIN */
-
+/* LOGIN SIMPLE */
 router.post("/login", async (req, res) => {
 
     try {
@@ -13,41 +10,20 @@ router.post("/login", async (req, res) => {
         const { username, password } = req.body;
 
         const user = await User.findOne({
-            username
+            usuario: username,
+            password: password
         });
 
         if (!user) {
-
-            return res.status(400).json({
-                msg: "Usuario no encontrado"
+            return res.status(401).json({
+                msg: "Usuario o contraseña incorrectos"
             });
-
         }
-
-        if (user.password !== password) {
-
-            return res.status(400).json({
-                msg: "Contraseña incorrecta"
-            });
-
-        }
-
-        const token = jwt.sign(
-            {
-                id: user._id,
-                username: user.username,
-                role: user.role
-            },
-            "lzr_secret",
-            {
-                expiresIn: "7d"
-            }
-        );
 
         res.json({
-            token,
-            username: user.username,
-            role: user.role
+            usuario: user.usuario,
+            nombre: user.nombre,
+            rol: user.rol
         });
 
     } catch (error) {
