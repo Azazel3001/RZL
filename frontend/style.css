@@ -162,23 +162,18 @@ body {
 
 /* ================= MAIN ================= */
 
-.main {
-
-    flex: 1;
-
-    padding: 35px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 30px;
-
-    position: relative;
-
-    z-index: 1;
+.main{
+    flex:1;
+    padding:30px;
+    display:flex;
+    flex-direction:column;
+    gap:25px;
+    overflow-x:hidden;
 }
 
+.main > *{
+    width:100%;
+}
 /* ================= TOPBAR ================= */
 
 .topbar {
@@ -236,14 +231,10 @@ body {
 
 /* ================= CARDS ================= */
 
-.cards {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(auto-fit, minmax(240px, 1fr));
-
-    gap: 20px;
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
 }
 
 .card {
@@ -332,15 +323,10 @@ body {
     gap: 20px;
 }
 
-.stat {
-
-    background: #181818;
-
-    padding: 25px;
-
-    border-radius: 18px;
-
-    text-align: center;
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:20px;
 }
 
 .stat h1 {
@@ -373,30 +359,22 @@ body {
 
 /* ================= CRUD ================= */
 
-.crud {
-
-    background: #101010;
-
-    border-radius: 22px;
-
-    padding: 25px;
-
-    border: 1px solid #1d1d1d;
+.crud{
+    background:#101010;
+    border-radius:22px;
+    padding:25px;
+    border:1px solid #1d1d1d;
+    overflow:hidden;
 }
-
 .crud h2 {
     margin-bottom: 20px;
 }
 
-#productForm {
-
-    display: grid;
-
-    grid-template-columns: repeat(4, 1fr);
-
-    gap: 15px;
+#productForm{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
 }
-
 #productForm input {
 
     padding: 16px;
@@ -955,56 +933,103 @@ body {
 
 }
 
-.table-container {
-    overflow-x: auto;
+.table-container{
+    overflow-x:auto;
+    border-radius:20px;
 }
 
-.tabla-produccion {
-    width: 100%;
-    border-collapse: collapse;
-    background: #fff;
-    border-radius: 10px;
-    overflow: hidden;
+.tabla-produccion{
+    width:100%;
+    min-width:1100px;
+    border-collapse:collapse;
+    background:#ffffff;
 }
 
-.tabla-produccion th {
-    background: #111;
-    color: white;
-    padding: 12px;
-    text-align: left;
+.tabla-produccion thead{
+    background:#111827;
 }
 
-.tabla-produccion td {
-    padding: 12px;
-    border-bottom: 1px solid #eee;
+.tabla-produccion th{
+    color:#fff;
+    padding:16px;
+    text-align:left;
+    font-size:14px;
+    white-space:nowrap;
 }
 
-.fila:hover {
-    background: #f5f5f5;
+.tabla-produccion td{
+    padding:16px;
+    color:#111827;
+    border-bottom:1px solid #e5e7eb;
+    vertical-align:middle;
 }
 
-.area {
-    padding: 4px 8px;
-    border-radius: 5px;
-    background: #eee;
-    font-size: 12px;
+.tabla-produccion tbody tr{
+    transition:.2s;
 }
 
-.urgente {
-    color: red;
-    font-weight: bold;
+.tabla-produccion tbody tr:hover{
+    background:#f8fafc;
 }
 
-.normal {
-    color: green;
+.tabla-produccion img{
+    width:60px;
+    height:60px;
+    object-fit:cover;
+    border-radius:12px;
+    border:1px solid #ddd;
 }
 
-.acciones button {
-    margin-right: 5px;
-    padding: 5px 8px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
+.area{
+    display:inline-block;
+    padding:6px 12px;
+    border-radius:20px;
+    background:#eff6ff;
+    color:#2563eb;
+    font-weight:600;
+    font-size:13px;
+}
+
+.urgente{
+    color:#dc2626;
+    font-weight:700;
+}
+
+.normal{
+    color:#16a34a;
+    font-weight:700;
+}
+
+.acciones{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.acciones button{
+    border:none;
+    border-radius:10px;
+    padding:8px 12px;
+    font-size:13px;
+    cursor:pointer;
+    transition:.2s;
+    color:#fff;
+}
+
+.acciones button:nth-child(1){
+    background:#2563eb;
+}
+
+.acciones button:nth-child(2){
+    background:#f59e0b;
+}
+
+.acciones button:nth-child(3){
+    background:#dc2626;
+}
+
+.acciones button:hover{
+    transform:translateY(-2px);
 }
 
 /* ===== TABLA ÓRDENES ACTIVAS ===== */
@@ -1088,4 +1113,24 @@ body {
 
 .acciones button:hover {
     transform: translateY(-1px);
+}
+@media(max-width:768px){
+
+    .main{
+        padding:15px;
+    }
+
+    .topbar{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:20px;
+    }
+
+    .sidebar{
+        padding:20px;
+    }
+
+    .tabla-produccion{
+        min-width:950px;
+    }
 }

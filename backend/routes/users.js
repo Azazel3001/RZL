@@ -9,11 +9,42 @@ router.post("/", async (req, res) => {
 
     try {
 
-        const user = new User(req.body);
+        const {
+            nombre,
+            usuario,
+            password,
+            rol,
+            area
+        } = req.body;
+
+        const existe = await User.findOne({
+            usuario
+        });
+
+        if (existe) {
+
+            return res.status(400).json({
+                msg: "El usuario ya existe"
+            });
+
+        }
+
+        const user = new User({
+
+            nombre,
+            usuario,
+            password,
+            rol: rol || "operador",
+            area: area || ""
+
+        });
 
         await user.save();
 
-        res.status(201).json(user);
+        res.status(201).json({
+            msg: "Usuario creado correctamente",
+            usuario: user.usuario
+        });
 
     } catch (error) {
 
@@ -31,7 +62,10 @@ router.get("/", async (req, res) => {
 
     try {
 
-        const users = await User.find();
+        const users = await User.find(
+            {},
+            "-password"
+        );
 
         res.json(users);
 
@@ -51,11 +85,16 @@ router.post("/login", async (req, res) => {
 
     try {
 
-        const { username, password } = req.body;
+        const {
+            username,
+            password
+        } = req.body;
 
         const user = await User.findOne({
+
             usuario: username,
             password: password
+
         });
 
         if (!user) {
@@ -67,10 +106,12 @@ router.post("/login", async (req, res) => {
         }
 
         res.json({
+
             usuario: user.usuario,
             nombre: user.nombre,
             rol: user.rol,
-            area: user.area
+            area: user.area || ""
+
         });
 
     } catch (error) {
@@ -84,3 +125,4 @@ router.post("/login", async (req, res) => {
 });
 
 module.exports = router;
+
