@@ -20,7 +20,22 @@ const UserSchema = new mongoose.Schema({
 
     rol: {
         type: String,
+        enum: ["admin", "operador"],
         default: "operador"
+    },
+
+    area: {
+        type: String,
+        enum: [
+            "Diseño",
+            "Diseño Grafico",
+            "Corte",
+            "Confeccion",
+            "Bordado",
+            "DTF",
+            "Terminado"
+        ],
+        default: "Diseño"
     }
 
 }, {

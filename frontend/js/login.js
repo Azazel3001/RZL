@@ -4,7 +4,7 @@ if (btn) {
 
     btn.addEventListener("click", async () => {
 
-        const username = document.getElementById("username").value;
+        const username = document.getElementById("username").value.trim();
         const password = document.getElementById("password").value;
         const errorMsg = document.getElementById("errorMsg");
 
@@ -26,14 +26,17 @@ if (btn) {
             if (!res.ok) {
 
                 if (errorMsg) {
-                    errorMsg.innerText = data.msg || "Error de login";
+                    errorMsg.innerText =
+                        data.msg || "Usuario o contraseña incorrectos";
                 }
 
                 return;
             }
 
-            // guardar usuario simple (sin token por ahora)
-            localStorage.setItem("user", JSON.stringify(data));
+            localStorage.setItem(
+                "user",
+                JSON.stringify(data)
+            );
 
             window.location.href = "/dashboard";
 

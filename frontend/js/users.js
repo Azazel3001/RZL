@@ -21,9 +21,11 @@ router.post("/login", async (req, res) => {
         }
 
         res.json({
+            _id: user._id,
             usuario: user.usuario,
             nombre: user.nombre,
-            rol: user.rol
+            rol: user.rol,
+            area: user.area
         });
 
     } catch (error) {

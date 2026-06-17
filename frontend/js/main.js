@@ -1,8 +1,8 @@
+```javascript
 /* ================= ELEMENTOS ================= */
 
 const form = document.getElementById("productForm");
 const productosDiv = document.getElementById("productos");
-
 
 /* ================= CARGAR ORDENES ================= */
 
@@ -61,19 +61,22 @@ async function cargarProductos() {
                     </td>
 
                     <td>
-                        ${producto.fechaEntrega
-                    ? new Date(producto.fechaEntrega).toLocaleDateString()
-                    : "-"
-                }
+                        ${
+                            producto.fechaEntrega
+                                ? new Date(producto.fechaEntrega).toLocaleDateString()
+                                : "-"
+                        }
                     </td>
 
                     <td>
-                        <span class="${producto.urgente ? "urgente" : "normal"
-                }">
-                            ${producto.urgente
-                    ? "🚨 Urgente"
-                    : "Normal"
-                }
+                        <span class="${
+                            producto.urgente ? "urgente" : "normal"
+                        }">
+                            ${
+                                producto.urgente
+                                    ? "🚨 Urgente"
+                                    : (producto.estado || "Pendiente")
+                            }
                         </span>
                     </td>
 
@@ -100,9 +103,7 @@ async function cargarProductos() {
 
         const avanceGeneral =
             productos.length > 0
-                ? Math.round(
-                    sumaProgreso / productos.length
-                )
+                ? Math.round(sumaProgreso / productos.length)
                 : 0;
 
         actualizarTexto(
@@ -151,74 +152,128 @@ if (form) {
 
         e.preventDefault();
 
+        const usuarioActual =
+            JSON.parse(localStorage.getItem("user"));
+
         const nuevaOrden = {
-            cliente: document.getElementById("cliente").value,
 
-            modelo: document.getElementById("modelo").value,
+            cliente:
+                document.getElementById("cliente").value,
 
-            producto: document.getElementById("producto").value,
+            modelo:
+                document.getElementById("modelo").value,
 
-            cantidad: Number(document.getElementById("cantidad").value),
+            producto:
+                document.getElementById("producto").value,
 
-            talla: document.getElementById("talla").value,
+            cantidad:
+                Number(
+                    document.getElementById("cantidad").value
+                ),
 
-            usuarioResponsable: document.getElementById("usuarioResponsable").value,
+            talla:
+                document.getElementById("talla").value,
 
-            areaActual: document.getElementById("areaActual").value,
+            usuarioResponsable:
+                document.getElementById("usuarioResponsable").value,
 
-            fechaInicio: document.getElementById("fechaInicio").value,
+            areaActual:
+                document.getElementById("areaActual").value,
 
-            fechaEntrega: document.getElementById("fechaEntrega").value,
+            fechaInicio:
+                document.getElementById("fechaInicio").value,
 
-            urgente: document.getElementById("urgente").checked,
+            fechaEntrega:
+                document.getElementById("fechaEntrega").value,
 
-            piezasDanadas: Number(document.getElementById("piezasDanadas").value),
+            urgente:
+                document.getElementById("urgente").checked,
 
-            observaciones: document.getElementById("observaciones").value,
+            piezasDanadas:
+                Number(
+                    document.getElementById("piezasDanadas").value
+                ),
+
+            observaciones:
+                document.getElementById("observaciones").value,
 
             estado: "Pendiente",
 
             progreso: 0,
 
+            creadoPor:
+                usuarioActual?.usuario || "Admin",
+
             historial: [
                 {
-                    area: document.getElementById("areaActual").value,
-                    usuario: "Admin",
+                    area:
+                        document.getElementById("areaActual").value,
+
+                    usuario:
+                        usuarioActual?.usuario || "Admin",
+
                     accion: "Creado",
+
                     comentario: "Orden creada"
                 }
             ]
+
         };
 
         try {
 
             const res = await fetch("/api/products", {
+
                 method: "POST",
+
                 headers: {
                     "Content-Type": "application/json"
                 },
+
                 body: JSON.stringify(nuevaOrden)
+
             });
 
             if (!res.ok) {
 
                 const errorData = await res.json();
 
-                console.log("ERROR BACKEND:", errorData);
+                console.log(
+                    "ERROR BACKEND:",
+                    errorData
+                );
 
-                throw new Error(errorData.error || "Error al guardar la orden");
+                throw new Error(
+                    errorData.error ||
+                    "Error al guardar la orden"
+                );
+
             }
+
+            form.reset();
+
+            await cargarProductos();
+
+            alert("Orden creada correctamente");
 
         } catch (error) {
 
-            console.error("Error guardando orden:", error);
-            alert("No se pudo guardar la orden");
+            console.error(
+                "Error guardando orden:",
+                error
+            );
+
+            alert(
+                error.message ||
+                "No se pudo guardar la orden"
+            );
 
         }
 
     });
 
 }
+
 
 /* ================= CAMBIAR AREA ================= */
 
@@ -230,17 +285,33 @@ async function cambiarArea(id) {
 
     if (!nuevaArea) return;
 
-    await fetch("/api/products/" + id, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            areaActual: nuevaArea
-        })
-    });
+    try {
 
-    cargarProductos();
+        const res = await fetch("/api/products/" + id, {
+
+            method: "PUT",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                areaActual: nuevaArea
+            })
+
+        });
+
+        if (!res.ok) {
+            throw new Error();
+        }
+
+        await cargarProductos();
+
+    } catch {
+
+        alert("No se pudo cambiar el área");
+
+    }
 
 }
 
@@ -252,27 +323,47 @@ async function agregarNota(id) {
 
     if (!nota) return;
 
-    const res = await fetch("/api/products/" + id);
-    const producto = await res.json();
+    try {
 
-    const notas = producto.notas || [];
+        const res = await fetch("/api/products/" + id);
 
-    notas.push({
-        usuario: "Admin",
-        comentario: nota
-    });
+        const producto = await res.json();
 
-    await fetch("/api/products/" + id, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            notas
-        })
-    });
+        const notas = producto.notas || [];
 
-    cargarProductos();
+        const usuarioActual =
+            JSON.parse(localStorage.getItem("user"));
+
+        notas.push({
+
+            usuario:
+                usuarioActual?.usuario || "Admin",
+
+            comentario: nota
+
+        });
+
+        await fetch("/api/products/" + id, {
+
+            method: "PUT",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                notas
+            })
+
+        });
+
+        cargarProductos();
+
+    } catch {
+
+        alert("No se pudo agregar la nota");
+
+    }
 
 }
 
@@ -280,13 +371,29 @@ async function agregarNota(id) {
 
 async function eliminarProducto(id) {
 
-    if (!confirm("¿Eliminar orden?")) return;
+    if (!confirm("¿Eliminar esta orden?")) return;
 
-    await fetch("/api/products/" + id, {
-        method: "DELETE"
-    });
+    try {
 
-    cargarProductos();
+        const res = await fetch("/api/products/" + id, {
+
+            method: "DELETE"
+
+        });
+
+        if (!res.ok) {
+            throw new Error();
+        }
+
+        alert("Orden eliminada");
+
+        cargarProductos();
+
+    } catch {
+
+        alert("No se pudo eliminar");
+
+    }
 
 }
 
@@ -294,7 +401,49 @@ async function eliminarProducto(id) {
 
 cargarProductos();
 
-const userForm = document.getElementById("userForm");
+/* ================= MOSTRAR USUARIO LOGUEADO ================= */
+
+const usuarioActual =
+    JSON.parse(localStorage.getItem("user"));
+
+if (usuarioActual) {
+
+    const avatar =
+        document.querySelector(".avatar");
+
+    const nombre =
+        document.querySelector(".user strong");
+
+    const rol =
+        document.querySelector(".user p");
+
+    if (avatar) {
+
+        avatar.innerText =
+            usuarioActual.nombre?.charAt(0) || "U";
+
+    }
+
+    if (nombre) {
+
+        nombre.innerText =
+            usuarioActual.nombre || "Usuario";
+
+    }
+
+    if (rol) {
+
+        rol.innerText =
+            usuarioActual.rol || "Operador";
+
+    }
+
+}
+
+/* ================= CREAR USUARIOS ================= */
+
+const userForm =
+    document.getElementById("userForm");
 
 if (userForm) {
 
@@ -304,29 +453,58 @@ if (userForm) {
 
         const nuevoUsuario = {
 
-            nombre: document.getElementById("nombreUser").value,
-            usuario: document.getElementById("usuarioUser").value,
-            password: document.getElementById("passwordUser").value,
-            rol: document.getElementById("rolUser").value
+            nombre:
+                document.getElementById("nombreUser").value,
+
+            usuario:
+                document.getElementById("usuarioUser").value,
+
+            password:
+                document.getElementById("passwordUser").value,
+
+            rol:
+                document.getElementById("rolUser").value
 
         };
 
-        const res = await fetch("/api/users", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(nuevoUsuario)
-        });
+        try {
 
-        if (!res.ok) {
-            alert("Error creando usuario");
-            return;
+            const res = await fetch("/api/users", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify(nuevoUsuario)
+
+            });
+
+            if (!res.ok) {
+
+                const error =
+                    await res.json();
+
+                alert(
+                    error.error ||
+                    error.msg ||
+                    "Error creando usuario"
+                );
+
+                return;
+
+            }
+
+            alert("Usuario creado correctamente");
+
+            userForm.reset();
+
+        } catch {
+
+            alert("Error de conexión");
+
         }
-
-        alert("Usuario creado correctamente");
-
-        userForm.reset();
 
     });
 

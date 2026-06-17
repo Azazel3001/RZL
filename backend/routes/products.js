@@ -131,8 +131,9 @@ router.put("/:id/proceso", async (req, res) => {
 
         }
 
-        producto.proceso = proceso;
-        producto.ubicacionActual = proceso;
+        producto.progreso = Math.round(
+            (producto.piezasEnviadas / producto.cantidad) * 100
+        );
 
         switch (proceso) {
 

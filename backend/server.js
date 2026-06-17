@@ -215,6 +215,22 @@ app.get("/reportes", (req, res) => {
 
 });
 
+
+
+/* ================= ERROR ================= */
+
+app.use((err, req, res, next) => {
+
+  console.log(err);
+
+  res.status(500).json({
+
+    msg: "Error servidor"
+
+  });
+
+});
+
 /* ================= 404 ================= */
 
 app.use((req, res) => {
@@ -233,20 +249,6 @@ app.use((req, res) => {
       "index.html"
     )
   );
-
-});
-
-/* ================= ERROR ================= */
-
-app.use((err, req, res, next) => {
-
-  console.log(err);
-
-  res.status(500).json({
-
-    msg: "Error servidor"
-
-  });
 
 });
 
